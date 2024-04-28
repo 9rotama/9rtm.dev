@@ -4,9 +4,15 @@
 
   /* fontsize */
   --sitetitle-font-size: 1.5rem;
+  --name-font-size: 1.5rem;
 
   /* spacing */
   --sitetitle-letter-spacing: -0.05em;
+  --name-letter-spacing: -0.05em;
+
+  /* weight */
+  --sitetitle-font-weight: 600;
+  --name-font-weight: bold;
 }
 
 * {

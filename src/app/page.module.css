@@ -1,0 +1,54 @@
+.hero {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.avatar {
+  border-radius: 50%;
+}
+
+.name {
+  font-weight: var(--name-font-weight);
+  font-size: var(--name-font-size);
+  color: rgb(255 102 231);
+}
+
+.at {
+  color: rgb(255 255 255 / 24%);
+}
+
+.snslinks {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+}
+
+.snslogo {
+  width: 24px;
+  height: 24px;
+  background: rgb(255 255 255);
+  transition-property: background;
+  transition-duration: 150ms;
+}
+
+.snslogo:hover {
+  background: rgb(255 102 231);
+}
+
+.github {
+  mask-image: url("/sns/github.svg");
+}
+
+.itchio {
+  mask-image: url("/sns/itch-io.svg");
+}
+
+.zenn {
+  mask-image: url("/sns/zenn.svg");
+}

@@ -24,7 +24,7 @@ export default function RootLayout({
         <div className={styles.center}>
           <WidthContainer>
             <Navbar />
-            {children}
+            <div className={styles.main}>{children}</div>
           </WidthContainer>
         </div>
       </body>
