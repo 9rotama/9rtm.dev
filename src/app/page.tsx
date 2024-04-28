@@ -2,6 +2,7 @@ import Image from "next/image";
 import styles from "./page.module.css";
 import Link from "next/link";
 import clsx from "clsx";
+import ProjectCard from "@/components/home/project-card";
 
 export default function Home() {
   return (
@@ -35,6 +36,7 @@ export default function Home() {
         </p>
         <p>birthday: 2001/09/09</p>
         <p>live: fukushima → chiba</p>
+
         <h2>like</h2>
         <ul>
           <li>
@@ -55,7 +57,15 @@ export default function Home() {
             </ul>
           </li>
         </ul>
+
         <h2>hobby projects</h2>
+        <div style={{ width: "250px", height: "200px" }}>
+          <ProjectCard
+            id="dumb-slides-maker"
+            name="dumb-slides-maker"
+            imageSrc="/projects/dumb-slides-maker.png"
+          />
+        </div>
       </article>
     </main>
   );
