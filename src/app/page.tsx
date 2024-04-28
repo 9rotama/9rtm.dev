@@ -27,6 +27,36 @@ export default function Home() {
           ))}
         </ul>
       </div>
+      <article className={styles.article}>
+        <h2>about</h2>
+        <p>
+          i&apos;m a junior front-end developer in japan, making wasteful web
+          apps and experimenting 3d technologies
+        </p>
+        <p>birthday: 2001/09/09</p>
+        <p>live: fukushima → chiba</p>
+        <h2>like</h2>
+        <ul>
+          <li>
+            fonts
+            <ul>
+              <li>JIYUKOBO Ltd. (e.g. Hiragino series, Yu Series)</li>
+              <li>TYPE-LABO (e.g. Nitarago, September)</li>
+            </ul>
+          </li>
+          <li>
+            rhythm games
+            <ul>
+              <li>i&apos;ve been playing jubeat, Arcaea and SDVX currently</li>
+              <li>
+                i enjoy designing levels myself, consider playability and
+                aesthetics
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <h2>hobby projects</h2>
+      </article>
     </main>
   );
 }

@@ -23,7 +23,9 @@ export default function RootLayout({
       <body className={inter.className}>
         <div className={styles.center}>
           <WidthContainer>
-            <Navbar />
+            <header>
+              <Navbar />
+            </header>
             <div className={styles.main}>{children}</div>
           </WidthContainer>
         </div>
