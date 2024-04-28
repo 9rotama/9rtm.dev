@@ -64,6 +64,7 @@
 .article h2 {
   font-size: var(--h2-font-size);
   font-weight: var(--h2-font-weight);
+  letter-spacing: var(--h2-letter-spacing);
   color: rgb(var(--h2-font-color));
   margin-top: 40px;
   margin-bottom: 12px;
