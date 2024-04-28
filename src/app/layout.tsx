@@ -5,6 +5,7 @@ import "./globals.css";
 import Navbar from "@/components/layout/navbar";
 import WidthContainer from "@/components/layout/width-container";
 import styles from "./layout.module.css";
+import Footer from "@/components/layout/footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,6 +29,7 @@ export default function RootLayout({
             </header>
             <div className={styles.main}>{children}</div>
           </WidthContainer>
+          <Footer />
         </div>
       </body>
     </html>
