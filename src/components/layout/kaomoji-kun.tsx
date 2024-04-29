@@ -51,7 +51,7 @@ function KaomojiKunScene() {
         </Float>
       </Center>
       <OrbitControls makeDefault />
-      <Sparkles scale={15} count={200} />
+      <Sparkles scale={15} count={200} size={1} />
       <Cloud position={[6, 2, 6]} scale={1} opacity={0.3} />
       <Cloud
         position={[0, 14, 5]}
