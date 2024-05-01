@@ -59,12 +59,16 @@ export default function Home() {
         </ul>
 
         <h2>hobby projects</h2>
-        <div style={{ width: "250px", height: "200px" }}>
-          <ProjectCard
-            id="dumb-slides-maker"
-            name="dumb-slides-maker"
-            imageSrc="/projects/dumb-slides-maker.png"
-          />
+        <div className={styles.cards}>
+          {hobbyProjects.map((proj) => (
+            <div key={proj.id} className={styles.card}>
+              <ProjectCard
+                id={proj.id}
+                name={proj.name}
+                previewSrc={proj.previewSrc}
+              />
+            </div>
+          ))}
         </div>
       </article>
     </main>
@@ -92,5 +96,62 @@ const snsLinks: SnsLink[] = [
     name: "itch.io",
     href: "https://9rotama.itch.io/",
     class: styles.itchio,
+  },
+  {
+    name: "unityroom",
+    href: "https://unityroom.com/users/yvjut4emw1hza62bnif5",
+    class: styles.unityroom,
+  },
+];
+
+type Project = {
+  id: string;
+  name: string;
+  previewSrc: string;
+  links?: { label: string; href: string }[];
+  description: string;
+};
+
+const hobbyProjects: Project[] = [
+  {
+    id: "yahtzee-scoresheet",
+    name: "yahtzee-scoresheet",
+    previewSrc: "/projects/yahtzee-scoresheet.png",
+    links: [
+      {
+        label: "github",
+        href: "https://github.com/9rotama/yahtzee-scoresheet",
+      },
+      { label: "link", href: "https://yahtzee-scoresheet-five.vercel.app/" },
+    ],
+    description: "aaa",
+  },
+  {
+    id: "dumb-slides-maker",
+    name: "dumb-slides-maker",
+    previewSrc: "/projects/dumb-slides-maker.png",
+    links: [
+      { label: "github", href: "https://github.com/9rotama/dumb-slides-maker" },
+      { label: "link", href: "https://dumb-slides-maker.vercel.app/" },
+    ],
+    description: "aaa",
+  },
+  {
+    id: "polyforce",
+    name: "POLYFORCE",
+    previewSrc: "/projects/polyforce.png",
+    links: [
+      { label: "unityroom", href: "https://unityroom.com/games/polyforce" },
+    ],
+    description: "aaa",
+  },
+  {
+    id: "re-translate-bot",
+    name: "re-translate-bot",
+    previewSrc: "/projects/re-translate-bot.png",
+    links: [
+      { label: "github", href: "https://github.com/9rotama/re-translate-bot" },
+    ],
+    description: "aaa",
   },
 ];

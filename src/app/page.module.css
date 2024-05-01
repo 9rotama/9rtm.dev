@@ -38,6 +38,9 @@
   background: rgb(255 255 255);
   transition-property: background;
   transition-duration: 150ms;
+  mask-size: contain;
+  mask-position: center;
+  mask-repeat: no-repeat;
 }
 
 .snslogo:hover {
@@ -54,6 +57,10 @@
 
 .zenn {
   mask-image: url("/sns/zenn.svg");
+}
+
+.unityroom {
+  mask-image: url("/sns/unityroom.svg");
 }
 
 .article {
@@ -79,8 +86,15 @@
   margin-bottom: 4px;
 }
 
-.projects {
-  display: flex;
+.cards {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.card {
+  aspect-ratio: 2 / 1;
 }
 
 @keyframes fadeinup {

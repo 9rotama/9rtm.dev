@@ -19,6 +19,7 @@
   opacity: 0;
   font-weight: bold;
   color: white;
+  text-shadow: rgb(20 0 20 / 80%) 0 4px 4px;
   transition-duration: 160ms;
   transition-property: opacity;
 }
