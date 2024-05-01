@@ -1,3 +1,10 @@
 .container {
   width: 640px;
 }
+
+@media screen and (width < 700px) {
+  .container {
+    width: 100%;
+    padding: 0 5vw;
+  }
+}
