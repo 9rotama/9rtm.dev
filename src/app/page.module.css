@@ -1,0 +1,120 @@
+.hero {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  animation: 400ms ease 200ms fadeinup;
+  animation-fill-mode: both;
+  overflow: hidden;
+}
+
+.avatar {
+  border-radius: 50%;
+}
+
+.name {
+  font-weight: var(--name-font-weight);
+  font-size: var(--name-font-size);
+  color: rgb(255 102 231);
+}
+
+.at {
+  color: rgb(255 255 255 / 24%);
+}
+
+.snslinks {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+}
+
+.snslogo {
+  width: 24px;
+  height: 24px;
+  background: rgb(255 255 255);
+  transition-property: background;
+  transition-duration: 150ms;
+  mask-size: contain;
+  mask-position: center;
+  mask-repeat: no-repeat;
+}
+
+.snslogo:hover {
+  background: rgb(255 102 231);
+}
+
+.github {
+  mask-image: url("/sns/github.svg");
+}
+
+.itchio {
+  mask-image: url("/sns/itch-io.svg");
+}
+
+.zenn {
+  mask-image: url("/sns/zenn.svg");
+}
+
+.unityroom {
+  mask-image: url("/sns/unityroom.svg");
+}
+
+.article {
+  animation: 400ms ease 400ms fadeinup;
+  animation-fill-mode: both;
+}
+
+.article h2 {
+  font-size: var(--h2-font-size);
+  font-weight: var(--h2-font-weight);
+  letter-spacing: var(--h2-letter-spacing);
+  color: rgb(var(--h2-font-color));
+  margin-top: 40px;
+  margin-bottom: 12px;
+}
+
+.article ul {
+  margin-left: 4px;
+  padding-left: 12px;
+}
+
+.article li {
+  margin-bottom: 4px;
+}
+
+.cards {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.card {
+  aspect-ratio: 2 / 1;
+}
+
+@media screen and (width < 700px) {
+  .cards {
+    grid-template-columns: 1fr;
+  }
+
+  .card {
+    aspect-ratio: 3 / 1;
+  }
+}
+
+@keyframes fadeinup {
+  from {
+    transform: translateY(12px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

@@ -1,0 +1,47 @@
+.card {
+  position: relative;
+  border-radius: 20px;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+  transition-duration: 160ms;
+  transition-property: transform;
+}
+
+.name {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  opacity: 0;
+  font-weight: bold;
+  color: white;
+  text-shadow: rgb(20 0 20 / 80%) 0 4px 4px;
+  transition-duration: 160ms;
+  transition-property: opacity;
+}
+
+.darker {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(rgba(93 4 103 / 70%), rgba(16 0 87 / 90%));
+  opacity: 0;
+  transition-duration: 160ms;
+  transition-property: opacity;
+}
+
+.card:hover {
+  transform: scale(1.015) translateY(-0.8%);
+}
+
+.card:hover .darker {
+  opacity: 1;
+}
+
+.card:hover .name {
+  opacity: 1;
+}
