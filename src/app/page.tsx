@@ -23,7 +23,7 @@ export default function Home() {
         <ul className={styles.snslinks}>
           {snsLinks.map((sns) => (
             <li key={sns.name}>
-              <Link href={sns.href}>
+              <Link href={sns.href} aria-label={sns.name}>
                 <div className={clsx(styles.snslogo, sns.class)} />
               </Link>
             </li>
