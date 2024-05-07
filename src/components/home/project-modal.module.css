@@ -72,6 +72,12 @@
   background: rgba(255 134 245 / 10%);
 }
 
+@media screen and (width < 700px) {
+  .content {
+    width: 100%;
+  }
+}
+
 @keyframes scaleDown {
   from {
     scale: 1.03;
