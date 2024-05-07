@@ -8,11 +8,14 @@ import {
   Sparkles,
   Text3D,
 } from "@react-three/drei";
+import { Suspense } from "react";
 
 export default function KaomojiKun() {
   return (
     <Canvas style={{ width: "100%", height: "200px" }}>
-      <KaomojiKunScene />
+      <Suspense fallback={null}>
+        <KaomojiKunScene />
+      </Suspense>
     </Canvas>
   );
 }
