@@ -88,13 +88,15 @@
 
 .cards {
   position: relative;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
   gap: 24px;
 }
 
 .card {
   aspect-ratio: 2 / 1;
+  width: calc(50% - 12px);
 }
 
 @media screen and (width < 700px) {
@@ -104,6 +106,7 @@
 
   .card {
     aspect-ratio: 3 / 1;
+    width: 100%;
   }
 }
 

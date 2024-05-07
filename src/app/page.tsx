@@ -3,6 +3,8 @@ import styles from "./page.module.css";
 import Link from "next/link";
 import clsx from "clsx";
 import ProjectCard from "@/components/home/project-card";
+import ProjectModal from "@/components/home/project-modal";
+import ProjectModalContent from "@/components/home/project-modal-content";
 
 export default function Home() {
   return (
@@ -21,7 +23,7 @@ export default function Home() {
         <ul className={styles.snslinks}>
           {snsLinks.map((sns) => (
             <li key={sns.name}>
-              <Link href={sns.href}>
+              <Link href={sns.href} aria-label={sns.name}>
                 <div className={clsx(styles.snslogo, sns.class)} />
               </Link>
             </li>
@@ -62,10 +64,26 @@ export default function Home() {
         <div className={styles.cards}>
           {hobbyProjects.map((proj) => (
             <div key={proj.id} className={styles.card}>
-              <ProjectCard
-                id={proj.id}
-                name={proj.name}
-                previewSrc={proj.previewSrc}
+              <ProjectModal
+                card={
+                  <ProjectCard
+                    id={proj.id}
+                    name={proj.name}
+                    previewSrc={proj.previewSrc}
+                  />
+                }
+                content={
+                  <ProjectModalContent
+                    id={proj.id}
+                    name={proj.name}
+                    previewSrc={proj.previewSrc}
+                    links={proj.links}
+                    githubHref={proj.githubHref}
+                    description={proj.description}
+                    tags={proj.tags}
+                  />
+                }
+                title={proj.name}
               />
             </div>
           ))}
@@ -97,19 +115,16 @@ const snsLinks: SnsLink[] = [
     href: "https://9rotama.itch.io/",
     class: styles.itchio,
   },
-  {
-    name: "unityroom",
-    href: "https://unityroom.com/users/yvjut4emw1hza62bnif5",
-    class: styles.unityroom,
-  },
 ];
 
-type Project = {
+export type Project = {
   id: string;
   name: string;
   previewSrc: string;
   links?: { label: string; href: string }[];
+  githubHref?: string;
   description: string;
+  tags?: string[];
 };
 
 const hobbyProjects: Project[] = [
@@ -119,39 +134,44 @@ const hobbyProjects: Project[] = [
     previewSrc: "/projects/yahtzee-scoresheet.png",
     links: [
       {
-        label: "github",
-        href: "https://github.com/9rotama/yahtzee-scoresheet",
+        label: "yahtzee-scoresheet-five.vercel.app",
+        href: "https://yahtzee-scoresheet-five.vercel.app/",
       },
-      { label: "link", href: "https://yahtzee-scoresheet-five.vercel.app/" },
     ],
-    description: "aaa",
+    githubHref: "https://github.com/9rotama/yahtzee-scoresheet",
+    description: "ヤッツィー/ヤムスの得点表アプリです。",
+    tags: ["nextjs", "dexie", "web"],
   },
   {
     id: "dumb-slides-maker",
     name: "dumb-slides-maker",
     previewSrc: "/projects/dumb-slides-maker.png",
     links: [
-      { label: "github", href: "https://github.com/9rotama/dumb-slides-maker" },
-      { label: "link", href: "https://dumb-slides-maker.vercel.app/" },
+      {
+        label: "dumb-slides-maker.vercel.app",
+        href: "https://dumb-slides-maker.vercel.app/",
+      },
     ],
-    description: "aaa",
+    githubHref: "https://github.com/9rotama/dumb-slides-maker",
+    description: "野暮ったいスライドをmarkdownで作れるwebアプリです。",
+    tags: ["svelte", "sveltekit", "marp", "web"],
   },
   {
     id: "polyforce",
     name: "POLYFORCE",
     previewSrc: "/projects/polyforce.png",
     links: [
-      { label: "unityroom", href: "https://unityroom.com/games/polyforce" },
+      { label: "unityroom.com", href: "https://unityroom.com/games/polyforce" },
     ],
-    description: "aaa",
+    description: "重力を反転させ、キューブをうまく操ろう",
+    tags: ["unity", "game"],
   },
   {
     id: "re-translate-bot",
     name: "re-translate-bot",
     previewSrc: "/projects/re-translate-bot.png",
-    links: [
-      { label: "github", href: "https://github.com/9rotama/re-translate-bot" },
-    ],
-    description: "aaa",
+    githubHref: "https://github.com/9rotama/re-translate-bot",
+    description: "discord上の会話を勝手に再翻訳して置き換えてくれるbotです。",
+    tags: ["python", "discordbot"],
   },
 ];
