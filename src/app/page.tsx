@@ -11,6 +11,7 @@ export default function Home() {
     <main>
       <div className={styles.hero}>
         <Image
+          loading="eager"
           src="https://avatars.githubusercontent.com/u/65887771?v=4"
           alt="avatar"
           width={276}
