@@ -1,0 +1,113 @@
+.contentContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #0007;
+  display: grid;
+  place-items: center;
+  animation: fadeIn 160ms;
+}
+
+.content {
+  position: absolute;
+  padding: 52px 40px 32px;
+  background: rgb(var(--bg-color));
+  width: 640px;
+  border: 1px solid #f700ff21;
+  border-radius: 24px;
+  color: rgb(var(--body-font-color));
+  filter: drop-shadow(0 15px 15px #000a);
+}
+
+.content[data-state="open"] {
+  animation:
+    fadeIn 160ms,
+    scaleDown 160ms;
+}
+
+.card {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  background: transparent;
+  border: none;
+}
+
+.header {
+  position: absolute;
+  left: 30px;
+  right: 10px;
+  top: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.close {
+  all: unset;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  transition-duration: 160ms;
+  transition-property: background;
+}
+
+.title {
+  color: white;
+  font-size: 1.1rem;
+  letter-spacing: var(--h2-letter-spacing);
+}
+
+.cross {
+  color: rgb(var(--body-font-color));
+  width: 16px;
+  height: 16px;
+}
+
+.close:hover {
+  background: rgba(255 134 245 / 10%);
+}
+
+@keyframes scaleDown {
+  from {
+    scale: 1.03;
+  }
+
+  to {
+    scale: 1;
+  }
+}
+
+@keyframes scaleUp {
+  from {
+    scale: 1;
+  }
+
+  to {
+    scale: 1.03;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
