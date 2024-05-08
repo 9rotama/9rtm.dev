@@ -12,6 +12,7 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "9rtm.dev",
   description: "9rotama profile site",
+  metadataBase: new URL("https://9rtm.dev"),
 };
 
 export default function RootLayout({
