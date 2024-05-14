@@ -107,6 +107,12 @@
   width: calc(50% - 12px);
 }
 
+.kaomoji {
+  margin-left: calc(((100vw - 100%) / 2) * -1);
+  margin-right: calc(((100vw - 100%) / 2) * -1);
+  overflow: hidden;
+}
+
 @media screen and (width < 700px) {
   .cards {
     grid-template-columns: 1fr;

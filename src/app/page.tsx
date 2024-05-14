@@ -5,6 +5,7 @@ import clsx from "clsx";
 import ProjectCard from "@/components/home/project-card";
 import ProjectModal from "@/components/home/project-modal";
 import ProjectModalContent from "@/components/home/project-modal-content";
+import KaomojiKun from "@/components/home/kaomoji-kun";
 
 export default function Home() {
   return (
@@ -34,18 +35,19 @@ export default function Home() {
       <article className={styles.article}>
         <h2>about</h2>
         <p>
-          Webフロントエンドや3Dレンダリング周りの技術に興味があります。趣味は音ゲーと落描き。見習い
+          Webフロントエンドや3Dレンダリング周りの技術に興味があります。趣味は音ゲーと落描き。見習いです🐣
         </p>
         <p>🎂: 2001/09/09</p>
         <p>🗾: 福島 → 千葉</p>
+        <p>🎓: UoA</p>
         <h2>like</h2>
         <h3>フォント</h3>
         <ul>
           <li>欧文</li>
           <ul>
             <li>Helvetica Now</li>
-            <li>Inter</li>
             <li>Avenir</li>
+            <li>Inter</li>
           </ul>
           <li>和文</li>
           <ul>
@@ -61,7 +63,6 @@ export default function Home() {
           <li>やってた: Cytus, BMS</li>
         </ul>
         <h2>used</h2>
-
         <h3>メイン</h3>
         <ul>
           <li>TypeScript</li>
@@ -79,6 +80,7 @@ export default function Home() {
           <li>Gatsby.js</li>
           <li>LINEBot SDK</li>
           <li>Prisma</li>
+          <li>MongoDB</li>
         </ul>
         <h3>勉強中</h3>
         <ul>
@@ -113,6 +115,10 @@ export default function Home() {
               />
             </div>
           ))}
+        </div>
+        <h2>emoti-kun</h2>
+        <div className={styles.kaomoji}>
+          <KaomojiKun />
         </div>
       </article>
     </main>
@@ -166,7 +172,7 @@ const hobbyProjects: Project[] = [
     ],
     githubHref: "https://github.com/9rotama/yahtzee-scoresheet",
     description: "ヤッツィー/ヤムスの得点表アプリです。",
-    tags: ["nextjs", "dexie", "web"],
+    tags: ["nextjs", "dexie", "web", "radix-ui", "framer-motion"],
   },
   {
     id: "dumb-slides-maker",
@@ -180,7 +186,7 @@ const hobbyProjects: Project[] = [
     ],
     githubHref: "https://github.com/9rotama/dumb-slides-maker",
     description: "野暮ったいスライドをmarkdownで作れるwebアプリです。",
-    tags: ["svelte", "sveltekit", "marp", "web"],
+    tags: ["svelte", "sveltekit", "marp", "nord", "web"],
   },
   {
     id: "polyforce",
