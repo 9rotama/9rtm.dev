@@ -15,7 +15,7 @@
   padding: 52px 40px 32px;
   background: rgb(var(--bg-color));
   width: 640px;
-  border: 1px solid #f700ff21;
+  border: 2px solid #fca2ff1a;
   border-radius: 24px;
   color: rgb(var(--body-font-color));
   filter: drop-shadow(0 15px 15px #000a);

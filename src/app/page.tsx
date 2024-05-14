@@ -34,33 +34,58 @@ export default function Home() {
       <article className={styles.article}>
         <h2>about</h2>
         <p>
-          i&apos;m a junior front-end developer in japan, making wasteful web
-          apps and experimenting 3d technologies
+          Webフロントエンドや3Dレンダリング周りの技術に興味があります。趣味は音ゲーと落描き。見習い
         </p>
-        <p>birthday: 2001/09/09</p>
-        <p>live: fukushima → chiba</p>
-
+        <p>🎂: 2001/09/09</p>
+        <p>🗾: 福島 → 千葉</p>
         <h2>like</h2>
+        <h3>フォント</h3>
         <ul>
-          <li>
-            fonts
-            <ul>
-              <li>JIYUKOBO Ltd. (e.g. Hiragino series, Yu Series)</li>
-              <li>TYPE-LABO (e.g. Nitarago, September)</li>
-            </ul>
-          </li>
-          <li>
-            rhythm games
-            <ul>
-              <li>i&apos;ve been playing jubeat, Arcaea and SDVX currently</li>
-              <li>
-                i enjoy designing levels myself, consider playability and
-                aesthetics
-              </li>
-            </ul>
-          </li>
+          <li>欧文</li>
+          <ul>
+            <li>Helvetica Now</li>
+            <li>Inter</li>
+            <li>Avenir</li>
+          </ul>
+          <li>和文</li>
+          <ul>
+            <li>ニタラゴルイカ</li>
+            <li>ラグランパンチ</li>
+            <li>M PLUS</li>
+          </ul>
         </ul>
+        <h3>ゲーム</h3>
+        <ul>
+          <li>やってる: Arcaea, jubeat, DJMAX, EZ2ON</li>
+          <li>始めた: SDVX, Dynamix</li>
+          <li>やってた: Cytus, BMS</li>
+        </ul>
+        <h2>used</h2>
 
+        <h3>メイン</h3>
+        <ul>
+          <li>TypeScript</li>
+          <li>JavaScript</li>
+          <li>Next.js</li>
+          <li>Three.js(r3f)</li>
+        </ul>
+        <h3>使ったことある</h3>
+        <ul>
+          <li>C#(Unity)</li>
+          <li>C++</li>
+          <li>Python</li>
+          <li>CUDA</li>
+          <li>OptiX</li>
+          <li>Gatsby.js</li>
+          <li>LINEBot SDK</li>
+          <li>Prisma</li>
+        </ul>
+        <h3>勉強中</h3>
+        <ul>
+          <li>Svelte</li>
+          <li>GLSL</li>
+          <li>Rust</li>
+        </ul>
         <h2>hobby projects</h2>
         <div className={styles.cards}>
           {hobbyProjects.map((proj) => (
