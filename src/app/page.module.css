@@ -68,6 +68,10 @@
   animation-fill-mode: both;
 }
 
+.article p {
+  margin-bottom: 4px;
+}
+
 .article h2 {
   font-size: var(--h2-font-size);
   font-weight: var(--h2-font-weight);
@@ -75,6 +79,10 @@
   color: rgb(var(--h2-font-color));
   margin-top: 40px;
   margin-bottom: 12px;
+}
+
+.article h3 {
+  color: white;
 }
 
 .article ul {
@@ -97,6 +105,12 @@
 .card {
   aspect-ratio: 2 / 1;
   width: calc(50% - 12px);
+}
+
+.kaomoji {
+  margin-left: calc(((100vw - 100%) / 2) * -1);
+  margin-right: calc(((100vw - 100%) / 2) * -1);
+  overflow: hidden;
 }
 
 @media screen and (width < 700px) {

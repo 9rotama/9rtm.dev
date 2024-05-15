@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import localFont from "next/font/local";
 import "modern-css-reset";
 import "./globals.css";
 import Navbar from "@/components/layout/navbar";
@@ -7,7 +7,9 @@ import WidthContainer from "@/components/layout/width-container";
 import styles from "./layout.module.css";
 import Footer from "@/components/layout/footer";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = localFont({
+  src: "./InterVariable.woff2",
+});
 
 export const metadata: Metadata = {
   title: "9rtm.dev",
