@@ -116,6 +116,7 @@
 @media screen and (width < 700px) {
   .cards {
     grid-template-columns: 1fr;
+    gap: 12px;
   }
 
   .card {
