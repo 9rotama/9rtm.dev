@@ -6,6 +6,7 @@ import Navbar from "@/components/layout/navbar";
 import WidthContainer from "@/components/layout/width-container";
 import styles from "./layout.module.css";
 import Footer from "@/components/layout/footer";
+import { siteUrl } from "@/constants/meta";
 
 const inter = localFont({
   src: "../InterVariable.woff2",
@@ -14,7 +15,10 @@ const inter = localFont({
 export const metadata: Metadata = {
   title: "9rtm.dev",
   description: "9rotama profile site",
-  metadataBase: new URL("https://9rtm.dev"),
+  metadataBase: siteUrl,
+  alternates: {
+    canonical: "/",
+  },
 };
 
 export default function RootLayout({
