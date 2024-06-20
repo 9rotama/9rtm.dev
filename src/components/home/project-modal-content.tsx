@@ -1,4 +1,4 @@
-import { Project } from "@/app/page";
+import { Project } from "@/app/(routes)/page";
 import Image from "next/image";
 import styles from "./project-modal-content.module.css";
 import Link from "next/link";
