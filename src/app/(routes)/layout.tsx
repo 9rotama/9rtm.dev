@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
 import "modern-css-reset";
 import "@/app/globals.css";
 import Navbar from "@/components/layout/navbar";
@@ -7,10 +6,8 @@ import WidthContainer from "@/components/layout/width-container";
 import styles from "./layout.module.css";
 import Footer from "@/components/layout/footer";
 import { siteUrl } from "@/constants/meta";
-
-const inter = localFont({
-  src: "../InterVariable.woff2",
-});
+import { exo2, mPlus2 } from "@/lib/fonts";
+import clsx from "clsx";
 
 export const metadata: Metadata = {
   title: "9rtm.dev",
@@ -28,7 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={clsx(mPlus2.variable, exo2.variable)}>
         <div className={styles.center}>
           <WidthContainer>
             <header>
