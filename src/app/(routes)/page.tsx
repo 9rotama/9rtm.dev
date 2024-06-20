@@ -19,18 +19,23 @@ export default function Home() {
           height={276}
           className={styles.avatar}
         />
-        <p className={styles.name}>
-          <span className={styles.at}>@</span>9rotama
-        </p>
-        <ul className={styles.snslinks}>
-          {snsLinks.map((sns) => (
-            <li key={sns.name}>
-              <Link href={sns.href} aria-label={sns.name}>
-                <div className={clsx(styles.snslogo, sns.class)} />
-              </Link>
-            </li>
-          ))}
-        </ul>
+        <div>
+          <div className={styles.intro}>
+            <p>hi there,</p>
+            <p>
+              i&apos;m <span className={styles.name}>9rotama</span> 👋
+            </p>
+          </div>
+          <ul className={styles.snslinks}>
+            {snsLinks.map((sns) => (
+              <li key={sns.name}>
+                <Link href={sns.href} aria-label={sns.name}>
+                  <div className={clsx(styles.snslogo, sns.class)} />
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
       <article className={styles.article}>
         <h2>about</h2>
