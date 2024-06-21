@@ -47,7 +47,7 @@ export default function Home() {
             </div>
           ))}
         </div>
-        <h2>recent posts</h2>
+        <h2>notes</h2>
 
         <h2>emoti-kun</h2>
         <div className={styles.kaomoji}>

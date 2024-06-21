@@ -5,16 +5,16 @@
   --modal-bg-color: 13 4 18;
 
   /* fontsize */
-  --sitetitle-font-size: 1.5rem;
+  --nav-link-font-size: 1.2rem;
   --name-font-size: 1.5rem;
   --small-font-size: 0.875rem;
-  --h2-font-size: 2rem;
-  --h3-font-size: 1.5rem;
+  --h2-font-size: 1.5rem;
+  --h3-font-size: 1.3rem;
 
   /* spacing */
-  --sitetitle-letter-spacing: -0.02em;
+  --nav-link-letter-spacing: -0.02em;
   --name-letter-spacing: -0.02em;
-  --h2-letter-spacing: -0.02em;
+  --h2-letter-spacing: -0.03em;
   --h3-letter-spacing: -0.02em;
 
   /* weight */
