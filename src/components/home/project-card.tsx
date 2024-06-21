@@ -1,20 +1,32 @@
-import clsx from "clsx";
 import styles from "./project-card.module.css";
+import { Project } from "@/app/(routes)/page";
+import { ExternalLinkIcon, GitHubLogoIcon } from "@radix-ui/react-icons";
 
 type Props = {
-  id: string;
-  name: string;
-  previewSrc: string;
+  data: Project;
 };
 
-export default function ProjectCard({ id, name, previewSrc }: Props) {
+export default function ProjectCard({ data }: Props) {
   return (
-    <div
-      className={clsx(styles.card)}
-      style={{ backgroundImage: `url(${previewSrc})` }}
-    >
-      <div className={styles.darker} />
-      <div className={styles.name}>{name}</div>
+    <div className={styles.card}>
+      <div className={styles.header}>
+        <div className={styles.tag}>{data.tag}</div>
+        <div className={styles.links}>
+          {data.githubHref && (
+            <a href={data.githubHref}>
+              <GitHubLogoIcon className={styles.link} />
+            </a>
+          )}
+          {data.links &&
+            data.links.map((l) => (
+              <a key={l.href} href={l.href}>
+                <ExternalLinkIcon className={styles.link} />
+              </a>
+            ))}
+        </div>
+      </div>
+      <div className={styles.name}>{data.name}</div>
+      <div className={styles.description}>{data.description}</div>
     </div>
   );
 }
