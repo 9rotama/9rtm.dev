@@ -31,8 +31,9 @@
 html,
 body {
   /* fonts */
-  --normal-fonts: var(--font-exo-2), var(--font-m-plus-2), sans-serif;
-  --monospace-fonts: var(--font-jetbrains-mono), var(--font-m-plus-2), monospace;
+  --normal-fonts: var(--font-line-seed-jp), sans-serif;
+  --monospace-fonts: var(--font-jetbrains-mono), var(--font-line-seed-jp),
+    monospace;
 
   max-width: 100vw;
   overflow-x: hidden;

@@ -1,11 +1,5 @@
-import { Exo_2, JetBrains_Mono, M_PLUS_2 } from "next/font/google";
-
-export const mPlus2 = M_PLUS_2({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-m-plus-2",
-  weight: ["400", "800"],
-});
+import { JetBrains_Mono } from "next/font/google";
+import localFont from "next/font/local";
 
 export const jetBrainsMono = JetBrains_Mono({
   subsets: ["latin"],
@@ -14,9 +8,25 @@ export const jetBrainsMono = JetBrains_Mono({
   weight: ["400", "800"],
 });
 
-export const exo2 = Exo_2({
-  subsets: ["latin"],
+export const lineSeedJp = localFont({
+  src: [
+    {
+      path: "../assets/fonts/line-seed/LINESeedJP_OTF_Eb.woff2",
+      weight: " 900",
+    },
+    {
+      path: "../assets/fonts/line-seed/LINESeedJP_OTF_Bd.woff2",
+      weight: " 600",
+    },
+    {
+      path: "../assets/fonts/line-seed/LINESeedJP_OTF_Rg.woff2",
+      weight: " 400",
+    },
+    {
+      path: "../assets/fonts/line-seed/LINESeedJP_OTF_Th.woff2",
+      weight: "200",
+    },
+  ],
   display: "swap",
-  variable: "--font-exo-2",
-  weight: ["400", "800"],
+  variable: "--font-line-seed-jp",
 });

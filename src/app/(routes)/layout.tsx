@@ -6,7 +6,7 @@ import WidthContainer from "@/components/layout/width-container";
 import styles from "./layout.module.css";
 import Footer from "@/components/layout/footer";
 import { siteUrl } from "@/constants/meta";
-import { exo2, mPlus2 } from "@/lib/fonts";
+import { lineSeedJp } from "@/lib/fonts";
 import clsx from "clsx";
 
 export const metadata: Metadata = {
@@ -25,7 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={clsx(mPlus2.variable, exo2.variable)}>
+      <body className={clsx(lineSeedJp.variable)}>
         <div className={styles.center}>
           <WidthContainer>
             <header>
