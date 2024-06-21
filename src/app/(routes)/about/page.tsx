@@ -2,6 +2,7 @@ import Link from "next/link";
 import styles from "./page.module.css";
 import clsx from "clsx";
 import Image from "next/image";
+import Article from "@/components/common/article";
 type SnsLink = {
   name: string;
   href: string;
@@ -26,10 +27,10 @@ const snsLinks: SnsLink[] = [
   },
 ];
 
-export default function Home() {
+export default function About() {
   return (
     <main>
-      <article className={styles.article}>
+      <Article>
         <Image
           loading="eager"
           src="https://avatars.githubusercontent.com/u/65887771?v=4"
@@ -38,7 +39,6 @@ export default function Home() {
           height={276}
           className={styles.avatar}
         />
-
         <ul className={styles.snslinks}>
           {snsLinks.map((sns) => (
             <li key={sns.name}>
@@ -105,7 +105,7 @@ export default function Home() {
           <li>GLSL</li>
           <li>Rust</li>
         </ul>
-      </article>
+      </Article>
     </main>
   );
 }

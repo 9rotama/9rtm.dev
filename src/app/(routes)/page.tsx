@@ -3,39 +3,62 @@ import styles from "./page.module.css";
 import ProjectCard from "@/components/home/project-card";
 import KaomojiKun from "@/components/home/kaomoji-kun";
 import { Tech } from "@/constants/tech";
+import Article from "@/components/common/article";
+import { getZennArticles } from "@/api/zenn/get-articles";
+import { formatDate } from "date-fns";
 
-export default function Home() {
+export default async function Home() {
+  const notes = (await getZennArticles()).articles;
   return (
     <main>
       <div className={styles.hero}>
-        <div>
-          <div className={styles.intro}>
-            <p>hi there,</p>
-            <p>
-              i&apos;m <span className={styles.name}>9rotama</span> 👋
-            </p>
-          </div>
+        <div className={styles.intro}>
+          <p>hi there,</p>
+          <p>
+            i&apos;m <span className={styles.name}>9rotama</span> 👋
+          </p>
         </div>
       </div>
-      <article className={styles.article}>
-        <h2>⌨️ hobby projects</h2>
-        <div className={styles.cards}>
-          {hobbyProjects.map(
-            (proj) =>
-              proj.display && (
-                <div key={proj.id} className={styles.card}>
-                  <ProjectCard data={proj} />
+      <div className={styles.article}>
+        <Article>
+          <h2>⌨️ hobby projects</h2>
+          <div className={styles.cards}>
+            {hobbyProjects.map(
+              (proj) =>
+                proj.display && (
+                  <div key={proj.id} className={styles.card}>
+                    <ProjectCard data={proj} />
+                  </div>
+                ),
+            )}
+          </div>
+          <h2>📃 recent notes</h2>
+          <div className={styles.notes}>
+            {notes.map((a) => (
+              <div className={styles.note} key={a.id}>
+                <div className={styles.noteEmoji}>{a.emoji}</div>
+                <div className={styles.noteContent}>
+                  <a
+                    href={"https://zenn.dev" + a.path}
+                    className={styles.noteTitle}
+                  >
+                    {a.title}
+                  </a>
+                  <div className={styles.noteDate}>
+                    {"zenn / " +
+                      formatDate(new Date(a.published_at), "yyyy年MM月dd日")}
+                  </div>
                 </div>
-              ),
-          )}
-        </div>
-        <h2>📃 notes</h2>
+              </div>
+            ))}
+          </div>
 
-        <h2>💜 emoti-kun</h2>
-        <div className={styles.kaomoji}>
-          <KaomojiKun />
-        </div>
-      </article>
+          <h2>💜 emoti-kun</h2>
+          <div className={styles.kaomoji}>
+            <KaomojiKun />
+          </div>
+        </Article>
+      </div>
     </main>
   );
 }
