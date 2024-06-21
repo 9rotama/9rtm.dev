@@ -2,6 +2,7 @@ import styles from "./page.module.css";
 
 import ProjectCard from "@/components/home/project-card";
 import KaomojiKun from "@/components/home/kaomoji-kun";
+import { Tech } from "@/constants/tech";
 
 export default function Home() {
   return (
@@ -19,11 +20,14 @@ export default function Home() {
       <article className={styles.article}>
         <h2>⌨️ hobby projects</h2>
         <div className={styles.cards}>
-          {hobbyProjects.map((proj) => (
-            <div key={proj.id} className={styles.card}>
-              <ProjectCard data={proj} />
-            </div>
-          ))}
+          {hobbyProjects.map(
+            (proj) =>
+              proj.display && (
+                <div key={proj.id} className={styles.card}>
+                  <ProjectCard data={proj} />
+                </div>
+              ),
+          )}
         </div>
         <h2>📃 notes</h2>
 
@@ -43,6 +47,8 @@ export type Project = {
   githubHref?: string;
   description: string;
   tag: "web" | "pages" | "game";
+  techs: Tech[];
+  display: true | false;
 };
 
 const hobbyProjects: Project[] = [
@@ -58,6 +64,8 @@ const hobbyProjects: Project[] = [
     githubHref: "https://github.com/9rotama/yahtzee-scoresheet",
     description: "ヤッツィー/ヤムスの得点表アプリです。",
     tag: "web",
+    techs: ["nextjs", "framer"],
+    display: true,
   },
   {
     id: "dumb-slides-maker",
@@ -71,6 +79,8 @@ const hobbyProjects: Project[] = [
     githubHref: "https://github.com/9rotama/dumb-slides-maker",
     description: "野暮ったいスライドをmarkdownで作れるwebアプリです。",
     tag: "web",
+    techs: ["svelte"],
+    display: true,
   },
   {
     id: "polyforce",
@@ -79,7 +89,9 @@ const hobbyProjects: Project[] = [
       { label: "unityroom.com", href: "https://unityroom.com/games/polyforce" },
     ],
     description: "重力を反転させ、キューブをうまく操ろう",
-    tag: "web",
+    tag: "game",
+    techs: ["unity"],
+    display: true,
   },
   {
     id: "re-translate-bot",
@@ -87,5 +99,7 @@ const hobbyProjects: Project[] = [
     githubHref: "https://github.com/9rotama/re-translate-bot",
     description: "discord上の会話を勝手に再翻訳して置き換えてくれるbotです。",
     tag: "web",
+    techs: ["python"],
+    display: true,
   },
 ];

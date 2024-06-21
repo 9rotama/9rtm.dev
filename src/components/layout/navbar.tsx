@@ -24,7 +24,7 @@ export default function Navbar() {
             about
           </Link>
           <Link href="/" className={styles.link}>
-            posts
+            notes
           </Link>
         </div>
       </div>
