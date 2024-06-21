@@ -16,7 +16,7 @@ export const lineSeedJp = localFont({
     },
     {
       path: "../assets/fonts/line-seed/LINESeedJP_OTF_Bd.woff2",
-      weight: " 600",
+      weight: " 700",
     },
     {
       path: "../assets/fonts/line-seed/LINESeedJP_OTF_Rg.woff2",
