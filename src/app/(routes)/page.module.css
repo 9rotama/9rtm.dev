@@ -15,7 +15,7 @@
 }
 
 .name {
-  color: rgb(255 102 231);
+  color: rgb(var(--accent-color));
 }
 
 .at {

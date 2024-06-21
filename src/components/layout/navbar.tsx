@@ -1,6 +1,5 @@
 import Link from "next/link";
 import styles from "./navbar.module.css";
-import clsx from "clsx";
 import Image from "next/image";
 import Icon from "@/assets/icon.png";
 
@@ -8,7 +7,7 @@ export default function Navbar() {
   return (
     <nav className={styles.nav}>
       <div className={styles.navLeft}>
-        <Link href="/" className={clsx(styles.title, styles.link)}>
+        <Link href="/">
           <Image
             alt="site logo"
             src={Icon}

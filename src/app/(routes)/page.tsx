@@ -19,7 +19,7 @@ export default function Home() {
         </div>
       </div>
       <article className={styles.article}>
-        <h2>hobby projects</h2>
+        <h2>⌨️ hobby projects</h2>
         <div className={styles.cards}>
           {hobbyProjects.map((proj) => (
             <div key={proj.id} className={styles.card}>
@@ -47,9 +47,9 @@ export default function Home() {
             </div>
           ))}
         </div>
-        <h2>notes</h2>
+        <h2>📃 notes</h2>
 
-        <h2>emoti-kun</h2>
+        <h2>💜 emoti-kun</h2>
         <div className={styles.kaomoji}>
           <KaomojiKun />
         </div>
