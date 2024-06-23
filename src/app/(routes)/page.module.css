@@ -4,14 +4,7 @@
   flex-direction: row;
   align-items: center;
   gap: 48px;
-  animation: 400ms ease 200ms fadeinup;
-  animation-fill-mode: both;
   overflow: hidden;
-}
-
-.article {
-  animation: 400ms ease 400ms fadeinup;
-  animation-fill-mode: both;
 }
 
 .notes {
@@ -91,17 +84,5 @@
 
   .card {
     width: 100%;
-  }
-}
-
-@keyframes fadeinup {
-  from {
-    transform: translateY(12px);
-    opacity: 0;
-  }
-
-  to {
-    transform: translateY(0);
-    opacity: 1;
   }
 }

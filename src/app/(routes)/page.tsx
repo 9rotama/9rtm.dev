@@ -6,20 +6,24 @@ import { Tech } from "@/constants/tech";
 import Article from "@/components/common/article";
 import { getZennArticles } from "@/api/zenn/get-articles";
 import { formatDate } from "date-fns";
+import SlideUp from "@/components/common/slide-up";
 
 export default async function Home() {
   const notes = (await getZennArticles()).articles;
   return (
     <main>
-      <div className={styles.hero}>
-        <div className={styles.intro}>
-          <p>hi there,</p>
-          <p>
-            i&apos;m <span className={styles.name}>9rotama</span> 👋
-          </p>
+      <SlideUp delay={200}>
+        <div className={styles.hero}>
+          <div className={styles.intro}>
+            <p>hi there,</p>
+            <p>
+              i&apos;m <span className={styles.name}>9rotama</span> 👋
+            </p>
+          </div>
         </div>
-      </div>
-      <div className={styles.article}>
+      </SlideUp>
+
+      <SlideUp delay={400}>
         <Article>
           <h2>⌨️ hobby projects</h2>
           <div className={styles.cards}>
@@ -58,7 +62,7 @@ export default async function Home() {
             <KaomojiKun />
           </div>
         </Article>
-      </div>
+      </SlideUp>
     </main>
   );
 }

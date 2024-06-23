@@ -5,6 +5,7 @@ import Zenn from "@/assets/sns/zenn.svg";
 import ItchIo from "@/assets/sns/itch-io.svg";
 
 import styles from "./page.module.css";
+import SlideUp from "@/components/common/slide-up";
 
 export type Sns = {
   name: string;
@@ -34,21 +35,25 @@ export default function About() {
   return (
     <main>
       <Article>
-        <h1>about</h1>
-        <h2>🪪 me</h2>
-        <p>
-          Web フロントエンドを勉強しています。普段は Next.js, React, Typescript
-          を使って開発しています。WebGL
-          やレイトレなど、3DCG周りの技術に興味があります。
-        </p>
-        <div className={styles.snsLinks}>
-          {snsLinks.map((sns) => (
-            <SnsLink key={sns.name} {...sns} />
-          ))}
-        </div>
+        <SlideUp delay={200}>
+          <h1>about</h1>
+        </SlideUp>
+        <SlideUp delay={400}>
+          <h2>🪪 me</h2>
+          <p>
+            Web フロントエンドを勉強しています。普段は Next.js, React,
+            Typescript を使って開発しています。WebGL
+            やレイトレなど、3DCG周りの技術に興味があります。
+          </p>
+          <div className={styles.snsLinks}>
+            {snsLinks.map((sns) => (
+              <SnsLink key={sns.name} {...sns} />
+            ))}
+          </div>
 
-        <h2>💫 like</h2>
-        <p>リズムゲーム / お絵描き / フォント</p>
+          <h2>💫 like</h2>
+          <p>リズムゲーム / お絵描き / フォント</p>
+        </SlideUp>
       </Article>
     </main>
   );
