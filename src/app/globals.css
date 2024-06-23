@@ -9,7 +9,7 @@
   --nav-link-font-size: 1rem;
   --small-font-size: 0.875rem;
   --h2-font-size: 1.5rem;
-  --h3-font-size: 1.1rem;
+  --h3-font-size: 1.1ｖrem;
 
   /* spacing */
   --nav-link-letter-spacing: 0.075rem;
@@ -39,6 +39,7 @@ body {
   background-color: rgb(var(--bg-color));
   color: rgb(var(--body-font-color));
   font-family: var(--normal-fonts);
+  scrollbar-gutter: stable;
 }
 
 a {
