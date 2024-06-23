@@ -1,6 +1,11 @@
 .article p {
   margin-bottom: 4px;
-  line-height: 2;
+  line-height: 1.75;
+}
+
+.article h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
 }
 
 .article h2 {
@@ -9,7 +14,7 @@
   letter-spacing: var(--h2-letter-spacing);
   color: rgb(var(--h2-font-color));
   margin-top: 40px;
-  margin-bottom: 12px;
+  margin-bottom: 20px;
 }
 
 .article h3 {
@@ -17,6 +22,8 @@
   font-weight: var(--h3-font-weight);
   letter-spacing: var(--h3-letter-spacing);
   color: rgb(var(--h3-font-color));
+  margin-top: 20px;
+  margin-bottom: 8px;
 }
 
 .article ul {
