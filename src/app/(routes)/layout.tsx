@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import "modern-css-reset";
 import "@/app/globals.css";
-import Navbar from "@/components/layout/navbar";
-import WidthContainer from "@/components/layout/width-container";
+import Navbar from "@/components/navbar";
+import WidthContainer from "@/components/width-container";
 import styles from "./layout.module.css";
-import Footer from "@/components/layout/footer";
+import Footer from "@/components/footer";
 import { siteUrl } from "@/constants/meta";
 import { lineSeedJp } from "@/lib/fonts";
 import clsx from "clsx";

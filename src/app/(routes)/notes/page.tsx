@@ -1,5 +1,5 @@
-import Article from "@/components/common/article";
-import SlideUp from "@/components/common/slide-up";
+import Article from "@/components/article";
+import SlideUp from "@/components/slide-up";
 
 export default function About() {
   return (

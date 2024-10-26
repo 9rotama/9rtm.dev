@@ -1,11 +1,11 @@
-import SnsLink from "@/components/about/sns-link";
-import Article from "@/components/common/article";
+import SnsLink from "@/features/about/components/sns-link";
+import Article from "@/components/article";
 import GitHub from "@/assets/sns/github.svg";
 import Zenn from "@/assets/sns/zenn.svg";
 import ItchIo from "@/assets/sns/itch-io.svg";
 
 import styles from "./page.module.css";
-import SlideUp from "@/components/common/slide-up";
+import SlideUp from "@/components/slide-up";
 
 export type Sns = {
   name: string;

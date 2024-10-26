@@ -1,12 +1,12 @@
 import styles from "./page.module.css";
 
-import ProjectCard from "@/components/home/project-card";
-import KaomojiKun from "@/components/home/kaomoji-kun";
-import { Tech } from "@/constants/tech";
-import Article from "@/components/common/article";
-import { getZennArticles } from "@/api/zenn/get-articles";
+import ProjectCard from "@/features/projects/components/project-card";
+import Article from "@/components/article";
+import { getZennArticles } from "@/features/articles/lib/api";
 import { formatDate } from "date-fns";
-import SlideUp from "@/components/common/slide-up";
+import SlideUp from "@/components/slide-up";
+import EmotiKun from "@/features/emoti-kun/components/emoti-kun";
+import { Tech } from "@/features/projects/constants/tech";
 
 export default async function Home() {
   const notes = (await getZennArticles()).articles;
@@ -59,7 +59,7 @@ export default async function Home() {
 
           <h2>💜 emoti-kun</h2>
           <div className={styles.kaomoji}>
-            <KaomojiKun />
+            <EmotiKun />
           </div>
         </Article>
       </SlideUp>

@@ -10,7 +10,7 @@ import {
 } from "@react-three/drei";
 import { Suspense } from "react";
 
-export default function KaomojiKun() {
+export default function EmotiKun() {
   return (
     <Canvas style={{ width: "100%", height: "200px" }}>
       <Suspense fallback={null}>

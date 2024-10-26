@@ -1,4 +1,4 @@
-import { Tech, techs } from "@/constants/tech";
+import { Tech, techs } from "../constants/tech";
 import styles from "./tech-icon.module.css";
 
 export default function TechIcon({ tech }: { tech: Tech }) {
