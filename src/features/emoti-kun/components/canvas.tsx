@@ -2,11 +2,10 @@
 import { Canvas } from "@react-three/fiber";
 import { Suspense } from "react";
 import { KaomojiKunScene } from "./scene";
-import styles from "./canvas.module.css";
 
 export default function EmotiKun() {
   return (
-    <Canvas className={styles.canvas}>
+    <Canvas style={{ width: "100vw", height: "200px" }}>
       <Suspense fallback={null}>
         <KaomojiKunScene />
       </Suspense>
