@@ -1,5 +1,3 @@
-"use client";
-import { Canvas } from "@react-three/fiber";
 import {
   Center,
   Cloud,
@@ -8,17 +6,6 @@ import {
   Sparkles,
   Text3D,
 } from "@react-three/drei";
-import { Suspense } from "react";
-
-export default function EmotiKun() {
-  return (
-    <Canvas style={{ width: "100%", height: "200px" }}>
-      <Suspense fallback={null}>
-        <KaomojiKunScene />
-      </Suspense>
-    </Canvas>
-  );
-}
 
 const kaomojis = [
   "(=_=)",
@@ -30,7 +17,7 @@ const kaomojis = [
   "(#_#)",
 ];
 
-function KaomojiKunScene() {
+export function KaomojiKunScene() {
   return (
     <>
       <Center>

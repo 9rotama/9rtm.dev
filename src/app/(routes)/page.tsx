@@ -5,7 +5,7 @@ import Article from "@/components/article";
 import { getZennArticles } from "@/features/articles/lib/api";
 import { formatDate } from "date-fns";
 import SlideUp from "@/components/slide-up";
-import EmotiKun from "@/features/emoti-kun/components/emoti-kun";
+import EmotiKun from "@/features/emoti-kun/components/canvas";
 import { Tech } from "@/features/projects/constants/tech";
 
 export default async function Home() {
