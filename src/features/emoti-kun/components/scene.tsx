@@ -6,6 +6,7 @@ import {
   Sparkles,
   Text3D,
 } from "@react-three/drei";
+import { useState } from "react";
 
 const kaomojis = [
   "(=_=)",
@@ -18,6 +19,12 @@ const kaomojis = [
 ];
 
 export function KaomojiKunScene() {
+  const [mouth, setMouth] = useState("_");
+  const [outlines, setOutlines] = useState({ left: "(", right: ")" });
+  const [eyes, setEyes] = useState({ left: "o", right: "o" });
+
+  const emoti = `${outlines.left}${eyes.left}${mouth}${eyes.right}${outlines.right}`;
+
   return (
     <>
       <Center>
@@ -28,7 +35,7 @@ export function KaomojiKunScene() {
             scale={2.5}
             rotation={[0, -0.5 * Math.PI, 0]}
           >
-            {kaomojis[0]}
+            {emoti}
             <meshStandardMaterial
               attach="material"
               color={0xdd88ff}
