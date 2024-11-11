@@ -1,5 +1,3 @@
-import styles from "./page.module.css";
-
 import ProjectCard from "@/features/projects/components/project-card";
 import Article from "@/components/article";
 import { getZennArticles } from "@/features/articles/lib/api";
@@ -13,12 +11,12 @@ export default async function Home() {
   return (
     <main>
       <SlideUp delay={200}>
-        <div className={styles.hero}>
-          <div className={styles.intro}>
-            <p>hi there,</p>
-            <p>
-              i&apos;m <span className={styles.name}>9rotama</span> 👋
-            </p>
+        <div className="flex w-full flex-row items-center gap-12 overflow-hidden">
+          <div className="space-y-5 text-4xl font-extrabold">
+            <div>hi there,</div>
+            <div>
+              i&apos;m <span className="text-accent">9rotama</span> 👋
+            </div>
           </div>
         </div>
       </SlideUp>
@@ -26,29 +24,29 @@ export default async function Home() {
       <SlideUp delay={400}>
         <Article>
           <h2>⌨️ hobby projects</h2>
-          <div className={styles.cards}>
+          <div className="grid grid-cols-1 gap-3 md:grid md:w-full md:grid-cols-2 md:gap-6">
             {hobbyProjects.map(
               (proj) =>
                 proj.display && (
-                  <div key={proj.id} className={styles.card}>
+                  <div key={proj.id} className="w-full">
                     <ProjectCard data={proj} />
                   </div>
                 ),
             )}
           </div>
           <h2>📃 recent notes</h2>
-          <div className={styles.notes}>
+          <div className="flex flex-col items-start gap-6">
             {notes.map((a) => (
-              <div className={styles.note} key={a.id}>
-                <div className={styles.noteEmoji}>{a.emoji}</div>
-                <div className={styles.noteContent}>
+              <div className="flex flex-row items-center gap-6" key={a.id}>
+                <div className="text-5xl">{a.emoji}</div>
+                <div className="flex flex-col items-start gap-3">
                   <a
                     href={"https://zenn.dev" + a.path}
-                    className={styles.noteTitle}
+                    className="hover: text-xl font-bold decoration-dotted hover:underline"
                   >
                     {a.title}
                   </a>
-                  <div className={styles.noteDate}>
+                  <div className="text-sm">
                     {"zenn / " +
                       formatDate(new Date(a.published_at), "yyyy年MM月dd日")}
                   </div>
@@ -58,7 +56,7 @@ export default async function Home() {
           </div>
 
           <h2>💜 emoti-kun</h2>
-          <div className={styles.kaomoji}>
+          <div className="w-full overflow-hidden rounded-lg ">
             <EmotiKun />
           </div>
         </Article>

@@ -5,7 +5,7 @@ import { KaomojiKunScene } from "./scene";
 
 export default function EmotiKun() {
   return (
-    <Canvas style={{ width: "100vw", height: "200px" }}>
+    <Canvas style={{ width: "100%", height: "200px" }}>
       <Suspense fallback={null}>
         <KaomojiKunScene />
       </Suspense>

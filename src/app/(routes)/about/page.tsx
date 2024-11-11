@@ -3,8 +3,6 @@ import Article from "@/components/article";
 import GitHub from "@/assets/sns/github.svg";
 import Zenn from "@/assets/sns/zenn.svg";
 import ItchIo from "@/assets/sns/itch-io.svg";
-
-import styles from "./page.module.css";
 import SlideUp from "@/components/slide-up";
 
 export type Sns = {
@@ -45,7 +43,7 @@ export default function About() {
             Typescript を使って開発しています。WebGL
             やレイトレなど、3DCG周りの技術に興味があります。
           </p>
-          <div className={styles.snsLinks}>
+          <div className="mt-6 flex flex-row flex-wrap gap-3  ">
             {snsLinks.map((sns) => (
               <SnsLink key={sns.name} {...sns} />
             ))}
