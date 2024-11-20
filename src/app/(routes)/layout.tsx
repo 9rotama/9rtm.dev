@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import "@/app/globals.css";
 import Navbar from "@/components/navbar";
 import WidthContainer from "@/components/width-container";
-import styles from "./layout.module.css";
 import Footer from "@/components/footer";
 import { siteUrl } from "@/constants/meta";
 import { lineSeedJp } from "@/lib/fonts";

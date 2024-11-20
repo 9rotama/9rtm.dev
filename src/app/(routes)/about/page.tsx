@@ -1,11 +1,12 @@
-import SnsLink from "@/features/about/components/sns-link";
-import Article from "@/components/article";
 import GitHub from "@/assets/sns/github.svg";
-import Zenn from "@/assets/sns/zenn.svg";
 import ItchIo from "@/assets/sns/itch-io.svg";
+import Zenn from "@/assets/sns/zenn.svg";
+import Article from "@/components/article";
 import SlideUp from "@/components/slide-up";
+import SnsLink from "@/features/about/components/sns-link";
 
 export type Sns = {
+  svgId: string;
   name: string;
   href: string;
   iconSrc: string;
@@ -13,16 +14,19 @@ export type Sns = {
 
 const snsLinks: Sns[] = [
   {
+    svgId: "github",
     name: "GitHub",
     href: "https://github.com/9rotama",
     iconSrc: GitHub.src,
   },
   {
+    svgId: "zenn",
     name: "Zenn",
     href: "https://zenn.dev/9rotama",
     iconSrc: Zenn.src,
   },
   {
+    svgId: "itchio",
     name: "itch.io",
     href: "https://9rotama.itch.io/",
     iconSrc: ItchIo.src,

@@ -1,5 +1,3 @@
-import styles from "./slide-up.module.css";
-
 export default function SlideUp({
   delay,
   children,
@@ -8,7 +6,7 @@ export default function SlideUp({
   children: React.ReactNode;
 }) {
   return (
-    <div className={styles.slideUp} style={{ animationDelay: `${delay}ms` }}>
+    <div className="animate-slideUp" style={{ animationDelay: `${delay}ms` }}>
       {children}
     </div>
   );
