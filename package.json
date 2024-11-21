@@ -17,16 +17,11 @@
     "@react-three/drei": "^9.105.5",
     "@react-three/fiber": "^8.16.2",
     "@types/three": "^0.164.0",
-    "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
-    "eslint-plugin-unused-imports": "^3.1.0",
     "framer-motion-3d": "^11.1.7",
-    "modern-css-reset": "^1.4.0",
     "next": "14.2.3",
     "react": "^18",
     "react-dom": "^18",
-    "stylelint": "^16.4.0",
-    "stylelint-config-standard": "^36.0.0",
     "three": "^0.164.1",
     "zod": "^3.23.8"
   },
@@ -43,21 +38,25 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@typescript-eslint/parser": "^8.13.0",
+    "autoprefixer": "^10.4.20",
+    "clsx": "^2.1.1",
     "eslint": "^8",
     "eslint-config-next": "14.2.3",
     "eslint-plugin-storybook": "^0.8.0",
+    "eslint-plugin-tailwindcss": "^3.17.5",
+    "eslint-plugin-unused-imports": "^3.1.0",
     "husky": "^9.0.11",
     "lint-staged": "^15.2.2",
+    "postcss": "^8.4.47",
     "prettier": "^3.2.5",
     "storybook": "^8.0.9",
+    "tailwindcss": "^3.4.14",
     "typescript": "^5"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
+    "*.{js,jsx,ts,tsx,css}": [
       "prettier --write"
-    ],
-    "*.css": [
-      "stylelint"
     ]
   }
 }

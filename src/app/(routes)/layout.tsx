@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
-import "modern-css-reset";
 import "@/app/globals.css";
-import Navbar from "@/components/layout/navbar";
-import WidthContainer from "@/components/layout/width-container";
-import styles from "./layout.module.css";
-import Footer from "@/components/layout/footer";
+import Navbar from "@/components/navbar";
+import WidthContainer from "@/components/width-container";
+import Footer from "@/components/footer";
 import { siteUrl } from "@/constants/meta";
 import { lineSeedJp } from "@/lib/fonts";
 import clsx from "clsx";
@@ -25,13 +23,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={clsx(lineSeedJp.variable)}>
-        <div className={styles.center}>
+      <body
+        className={clsx(
+          lineSeedJp.variable,
+          "overflow-x-hidden bg-bg-primary text-text-body [scrollbar-gutter:stable]",
+        )}
+      >
+        <div className="flex flex-col items-center">
           <WidthContainer>
             <header>
               <Navbar />
             </header>
-            <div className={styles.main}>{children}</div>
+            <div className="mt-12">{children}</div>
           </WidthContainer>
           <Footer />
         </div>

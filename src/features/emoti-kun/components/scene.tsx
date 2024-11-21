@@ -1,5 +1,3 @@
-"use client";
-import { Canvas } from "@react-three/fiber";
 import {
   Center,
   Cloud,
@@ -8,17 +6,7 @@ import {
   Sparkles,
   Text3D,
 } from "@react-three/drei";
-import { Suspense } from "react";
-
-export default function KaomojiKun() {
-  return (
-    <Canvas style={{ width: "100%", height: "200px" }}>
-      <Suspense fallback={null}>
-        <KaomojiKunScene />
-      </Suspense>
-    </Canvas>
-  );
-}
+import { useState } from "react";
 
 const kaomojis = [
   "(=_=)",
@@ -30,7 +18,13 @@ const kaomojis = [
   "(#_#)",
 ];
 
-function KaomojiKunScene() {
+export function KaomojiKunScene() {
+  const [mouth, setMouth] = useState("_");
+  const [outlines, setOutlines] = useState({ left: "(", right: ")" });
+  const [eyes, setEyes] = useState({ left: "o", right: "o" });
+
+  const emoti = `${outlines.left}${eyes.left}${mouth}${eyes.right}${outlines.right}`;
+
   return (
     <>
       <Center>
@@ -41,7 +35,7 @@ function KaomojiKunScene() {
             scale={2.5}
             rotation={[0, -0.5 * Math.PI, 0]}
           >
-            {kaomojis[0]}
+            {emoti}
             <meshStandardMaterial
               attach="material"
               color={0xdd88ff}

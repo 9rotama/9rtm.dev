@@ -1,10 +1,9 @@
-import { Tech, techs } from "@/constants/tech";
-import styles from "./tech-icon.module.css";
+import { Tech, techs } from "../constants/tech";
 
 export default function TechIcon({ tech }: { tech: Tech }) {
   return (
     <div
-      className={styles.icon}
+      className="size-6 bg-light/35"
       style={{ maskImage: `url(${techs[tech].iconSrc})` }}
     />
   );
