@@ -1,10 +1,10 @@
-import ProjectCard from "@/features/projects/components/project-card";
-import Article from "@/components/article";
-import { getZennArticles } from "@/features/articles/lib/api";
-import { formatDate } from "date-fns";
+import { ArticleH2 } from "@/components/article";
 import SlideUp from "@/components/slide-up";
+import { getZennArticles } from "@/features/articles/lib/api";
 import EmotiKun from "@/features/emoti-kun/components/canvas";
+import ProjectCard from "@/features/projects/components/project-card";
 import { Tech } from "@/features/projects/constants/tech";
+import { formatDate } from "date-fns";
 
 export default async function Home() {
   const notes = (await getZennArticles()).articles;
@@ -22,44 +22,42 @@ export default async function Home() {
       </SlideUp>
 
       <SlideUp delay={400}>
-        <Article>
-          <h2>⌨️ hobby projects</h2>
-          <div className="grid grid-cols-1 gap-3 md:grid md:w-full md:grid-cols-2 md:gap-6">
-            {hobbyProjects.map(
-              (proj) =>
-                proj.display && (
-                  <div key={proj.id} className="w-full">
-                    <ProjectCard data={proj} />
-                  </div>
-                ),
-            )}
-          </div>
-          <h2>📃 recent notes</h2>
-          <div className="flex flex-col items-start gap-6">
-            {notes.map((a) => (
-              <div className="flex flex-row items-center gap-6" key={a.id}>
-                <div className="text-5xl">{a.emoji}</div>
-                <div className="flex flex-col items-start gap-3">
-                  <a
-                    href={"https://zenn.dev" + a.path}
-                    className="hover: text-xl font-bold decoration-dotted hover:underline"
-                  >
-                    {a.title}
-                  </a>
-                  <div className="text-sm">
-                    {"zenn / " +
-                      formatDate(new Date(a.published_at), "yyyy年MM月dd日")}
-                  </div>
+        <ArticleH2>⌨️ hobby projects</ArticleH2>
+        <div className="grid grid-cols-1 gap-3 md:grid md:w-full md:grid-cols-2 md:gap-6">
+          {hobbyProjects.map(
+            (proj) =>
+              proj.display && (
+                <div key={proj.id} className="w-full">
+                  <ProjectCard data={proj} />
+                </div>
+              ),
+          )}
+        </div>
+        <ArticleH2>📃 recent notes</ArticleH2>
+        <div className="flex flex-col items-start gap-6">
+          {notes.map((a) => (
+            <div className="flex flex-row items-center gap-6" key={a.id}>
+              <div className="text-5xl">{a.emoji}</div>
+              <div className="flex flex-col items-start gap-3">
+                <a
+                  href={"https://zenn.dev" + a.path}
+                  className="hover: text-xl font-bold decoration-dotted hover:underline"
+                >
+                  {a.title}
+                </a>
+                <div className="text-sm">
+                  {"zenn / " +
+                    formatDate(new Date(a.published_at), "yyyy年MM月dd日")}
                 </div>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
+        </div>
 
-          <h2>💜 emoti-kun</h2>
-          <div className="w-full overflow-hidden rounded-lg ">
-            <EmotiKun />
-          </div>
-        </Article>
+        <ArticleH2>💜 emoti-kun</ArticleH2>
+        <div className="w-full overflow-hidden rounded-lg ">
+          <EmotiKun />
+        </div>
       </SlideUp>
     </main>
   );
