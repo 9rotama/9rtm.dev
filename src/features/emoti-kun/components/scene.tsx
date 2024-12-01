@@ -5,6 +5,7 @@ import {
   OrbitControls,
   Sparkles,
   Text3D,
+  useTexture,
 } from "@react-three/drei";
 import { useState } from "react";
 
@@ -21,7 +22,8 @@ const kaomojis = [
 export function KaomojiKunScene() {
   const [mouth, setMouth] = useState("_");
   const [outlines, setOutlines] = useState({ left: "(", right: ")" });
-  const [eyes, setEyes] = useState({ left: "o", right: "o" });
+  const [eyes, setEyes] = useState({ left: ">", right: "<" });
+  const hat = useTexture("/santa-hat.png");
 
   const emoti = `${outlines.left}${eyes.left}${mouth}${eyes.right}${outlines.right}`;
 
@@ -45,6 +47,14 @@ export function KaomojiKunScene() {
               opacity={1}
             />
           </Text3D>
+          <sprite position={[0, 4, 4.0]} scale={4}>
+            <spriteMaterial
+              attach="material"
+              map={hat}
+              color={0xffffff}
+              transparent={true}
+            />
+          </sprite>
         </Float>
       </Center>
       <OrbitControls makeDefault />
