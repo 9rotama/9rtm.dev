@@ -5,10 +5,10 @@ export default function SnsLink({ svgId, href, name, iconSrc }: Sns) {
   return (
     <a
       href={href}
-      className="group/link flex flex-row items-center gap-3 rounded border-2 border-border-snsLink px-3 py-2"
+      className="group/link border-border flex flex-row items-center gap-3 rounded-sm border-2 px-3 py-2"
       aria-label={name}
     >
-      <svg className="size-5 fill-light/30 transition-colors group-hover/link:fill-white/100">
+      <svg className="fill-light/30 size-5 transition-colors group-hover/link:fill-white/100">
         <use href={`${iconSrc}#${svgId}`} />
       </svg>
       <div className="text-sm">{name}</div>

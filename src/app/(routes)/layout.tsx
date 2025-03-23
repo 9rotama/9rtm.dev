@@ -26,7 +26,7 @@ export default function RootLayout({
       <body
         className={clsx(
           lineSeedJp.variable,
-          "overflow-x-hidden bg-bg-primary text-text-body [scrollbar-gutter:stable]",
+          "overflow-x-hidden bg-bg text-fg-primary",
         )}
       >
         <div className="flex flex-col items-center">
