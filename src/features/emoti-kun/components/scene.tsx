@@ -47,14 +47,6 @@ export function KaomojiKunScene() {
               opacity={1}
             />
           </Text3D>
-          <sprite position={[0, 4, 4.0]} scale={4}>
-            <spriteMaterial
-              attach="material"
-              map={hat}
-              color={0xffffff}
-              transparent={true}
-            />
-          </sprite>
         </Float>
       </Center>
       <OrbitControls makeDefault />
