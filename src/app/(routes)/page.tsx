@@ -1,27 +1,32 @@
+import GitHub from "@/assets/sns/github.svg";
+import Zenn from "@/assets/sns/zenn.svg";
 import { ArticleH2 } from "@/components/article";
 import SlideUp from "@/components/slide-up";
-import { getZennArticles } from "@/features/articles/lib/api";
+import SnsLink from "@/components/sns-link";
 import EmotiKun from "@/features/emoti-kun/components/canvas";
 import ProjectCard from "@/features/projects/components/project-card";
 import { Tech } from "@/features/projects/constants/tech";
-import { formatDate } from "date-fns";
 
 export default async function Home() {
-  const notes = (await getZennArticles()).articles;
   return (
     <main>
-      <SlideUp delay={200}>
-        <div className="flex w-full flex-row items-center gap-12 overflow-hidden">
+      <SlideUp delay={0}>
+        <div className="flex w-full flex-col items-start gap-8 mb-8">
           <div className="space-y-5 text-4xl font-extrabold">
             <div>hi there,</div>
             <div>
               i&apos;m <span className="text-accent">9rotama</span> 👋
             </div>
           </div>
+          <div className="flex flex-row gap-4">
+            {snsLinks.map((sns) => (
+              <SnsLink key={sns.name} {...sns} />
+            ))}
+          </div>
         </div>
       </SlideUp>
 
-      <SlideUp delay={400}>
+      <SlideUp delay={100}>
         <ArticleH2>⌨️ hobby projects</ArticleH2>
         <div className="grid grid-cols-1 gap-3 md:grid md:w-full md:grid-cols-2 md:gap-6">
           {hobbyProjects.map(
@@ -32,26 +37,6 @@ export default async function Home() {
                 </div>
               ),
           )}
-        </div>
-        <ArticleH2>📃 recent notes</ArticleH2>
-        <div className="flex flex-col items-start gap-6">
-          {notes.map((a) => (
-            <div className="flex flex-row items-center gap-6" key={a.id}>
-              <div className="text-5xl">{a.emoji}</div>
-              <div className="flex flex-col items-start gap-3">
-                <a
-                  href={"https://zenn.dev" + a.path}
-                  className="hover: text-xl font-bold decoration-dotted hover:underline"
-                >
-                  {a.title}
-                </a>
-                <div className="text-sm">
-                  {"zenn / " +
-                    formatDate(new Date(a.published_at), "yyyy年MM月dd日")}
-                </div>
-              </div>
-            </div>
-          ))}
         </div>
 
         <ArticleH2>💜 emoti-kun</ArticleH2>
@@ -124,5 +109,27 @@ const hobbyProjects: Project[] = [
     tag: "web",
     techs: ["python"],
     display: true,
+  },
+];
+
+export type Sns = {
+  svgId: string;
+  name: string;
+  href: string;
+  iconSrc: string;
+};
+
+const snsLinks: Sns[] = [
+  {
+    svgId: "github",
+    name: "GitHub",
+    href: "https://github.com/9rotama",
+    iconSrc: GitHub.src,
+  },
+  {
+    svgId: "zenn",
+    name: "Zenn",
+    href: "https://zenn.dev/9rotama",
+    iconSrc: Zenn.src,
   },
 ];

@@ -7,11 +7,11 @@
   --color-accent: rgb(235 102 255);
   --color-border: rgb(201 150 255 / 12%);
   --color-light: rgb(255 220 255);
-  --animate-slide-up: slide-up 400ms ease 200ms both;
+  --animate-slide-up: slide-up 200ms ease both;
 
   @keyframes slide-up {
     0% {
-      transform: translateY(12px);
+      transform: translateY(8px);
       opacity: 0;
     }
     100% {
@@ -28,4 +28,17 @@ body {
     var(--font-jetbrains-mono), var(--font-line-seed-jp), monospace;
 
   font-family: var(--normal-fonts);
+}
+:root {
+  color-scheme: dark;
+  scrollbar-gutter: stable;
+}
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+}
+* {
+  scrollbar-width: thin;
 }
