@@ -44,5 +44,8 @@
       "@types/react": "19.1.7",
       "@types/react-dom": "19.1.6"
     }
+  },
+  "volta": {
+    "node": "22.16.0"
   }
 }
