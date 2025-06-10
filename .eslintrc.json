@@ -1,9 +1,5 @@
 {
-  "extends": [
-    "next/core-web-vitals",
-    "plugin:storybook/recommended",
-    "plugin:tailwindcss/recommended"
-  ],
+  "extends": ["next/core-web-vitals"],
   "overrides": [
     {
       "files": ["*.ts", "*.tsx", "*.js"],
