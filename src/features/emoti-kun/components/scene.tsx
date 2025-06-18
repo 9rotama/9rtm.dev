@@ -11,7 +11,7 @@ import { useState } from "react";
 export function KaomojiKunScene() {
   const [mouth] = useState("_");
   const [outlines] = useState({ left: "(", right: ")" });
-  const [eyes] = useState({ left: "O", right: "O" });
+  const [eyes] = useState({ left: "o", right: "o" });
 
   const emoti = `${outlines.left}${eyes.left}${mouth}${eyes.right}${outlines.right}`;
 
@@ -20,7 +20,7 @@ export function KaomojiKunScene() {
       <Center>
         <Float floatIntensity={2} rotationIntensity={2} speed={1.5}>
           <Text3D
-            font="/fonts/noto_sans_bold.json"
+            font="/three-fonts/michroma.json"
             height={0.1}
             scale={2.5}
             rotation={[0, -0.5 * Math.PI, 0]}
