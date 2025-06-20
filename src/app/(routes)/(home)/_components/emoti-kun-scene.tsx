@@ -8,7 +8,7 @@ import {
 } from "@react-three/drei";
 import { useState } from "react";
 
-export function KaomojiKunScene() {
+export function EmotiKunScene() {
   const [mouth] = useState("_");
   const [outlines] = useState({ left: "(", right: ")" });
   const [eyes] = useState({ left: "o", right: "o" });

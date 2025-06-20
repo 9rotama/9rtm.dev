@@ -1,10 +1,10 @@
+import EmotiKun from "@/app/(routes)/(home)/_components/emoti-kun";
+import ProjectCard from "@/app/(routes)/(home)/_components/project-card";
+import SnsLink from "@/app/(routes)/(home)/_components/sns-link";
+import { Tech } from "@/app/(routes)/(home)/_lib/tech";
 import GitHub from "@/assets/sns/github.svg";
 import Zenn from "@/assets/sns/zenn.svg";
 import { ArticleH2 } from "@/components/article";
-import SnsLink from "@/components/sns-link";
-import EmotiKun from "@/features/emoti-kun/components/canvas";
-import ProjectCard from "@/features/projects/components/project-card";
-import { Tech } from "@/features/projects/constants/tech";
 
 export default async function Home() {
   return (

@@ -1,8 +1,8 @@
+import Footer from "@/app/(routes)/_components/footer";
+import Navbar from "@/app/(routes)/_components/navbar";
+import WidthContainer from "@/app/(routes)/_components/width-container";
 import "@/app/globals.css";
-import Footer from "@/components/footer";
-import Navbar from "@/components/navbar";
-import WidthContainer from "@/components/width-container";
-import { siteUrl } from "@/constants/meta";
+import { siteUrl } from "@/lib/meta";
 import clsx from "clsx";
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";

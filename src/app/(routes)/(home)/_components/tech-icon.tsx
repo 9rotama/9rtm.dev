@@ -1,4 +1,4 @@
-import { Tech, techs } from "../constants/tech";
+import { Tech, techs } from "../_lib/tech";
 
 export default function TechIcon({ tech }: { tech: Tech }) {
   return (

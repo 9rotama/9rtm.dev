@@ -1,4 +1,4 @@
-import { Project } from "@/app/(routes)/page";
+import { Project } from "@/app/(routes)/(home)/page";
 import { ExternalLinkIcon, GitHubLogoIcon } from "@radix-ui/react-icons";
 import TechIcon from "./tech-icon";
 
