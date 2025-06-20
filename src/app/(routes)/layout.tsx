@@ -3,7 +3,7 @@ import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
 import WidthContainer from "@/components/width-container";
 import { siteUrl } from "@/constants/meta";
-import { lineSeedJp } from "@/lib/fonts";
+import "@fontsource-variable/geist";
 import clsx from "clsx";
 import type { Metadata } from "next";
 
@@ -23,12 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja">
-      <body
-        className={clsx(
-          lineSeedJp.variable,
-          "overflow-x-hidden bg-bg text-fg-primary",
-        )}
-      >
+      <body className={clsx("overflow-x-hidden bg-bg text-fg-primary")}>
         <div className="flex flex-col items-center">
           <WidthContainer>
             <header>
