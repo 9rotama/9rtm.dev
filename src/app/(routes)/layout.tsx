@@ -14,7 +14,7 @@ const geist = Geist({
 
 export const metadata: Metadata = {
   title: "9rtm.dev",
-  description: "9rotama profile site",
+  description: "a small sandbox",
   metadataBase: siteUrl,
   alternates: {
     canonical: "/",
