@@ -1,49 +1,44 @@
+import EmotiKun from "@/app/(routes)/(home)/_components/emoti-kun";
+import ProjectCard from "@/app/(routes)/(home)/_components/project-card";
+import SnsLink from "@/app/(routes)/(home)/_components/sns-link";
+import { Tech } from "@/app/(routes)/(home)/_lib/tech";
 import GitHub from "@/assets/sns/github.svg";
 import Zenn from "@/assets/sns/zenn.svg";
 import { ArticleH2 } from "@/components/article";
-import SlideUp from "@/components/slide-up";
-import SnsLink from "@/components/sns-link";
-import EmotiKun from "@/features/emoti-kun/components/canvas";
-import ProjectCard from "@/features/projects/components/project-card";
-import { Tech } from "@/features/projects/constants/tech";
 
 export default async function Home() {
   return (
     <main>
-      <SlideUp delay={0}>
-        <div className="flex w-full flex-col items-start gap-8 mb-8">
-          <div className="space-y-5 text-4xl font-extrabold">
-            <div>hi there,</div>
-            <div>
-              i&apos;m <span className="text-accent">9rotama</span> 👋
-            </div>
-          </div>
-          <div className="flex flex-row gap-4">
-            {snsLinks.map((sns) => (
-              <SnsLink key={sns.name} {...sns} />
-            ))}
+      <div className="flex w-full flex-col items-start gap-8 mb-8">
+        <div className="space-y-2 text-4xl font-bold">
+          <div>hi there,</div>
+          <div>
+            i&apos;m <span className="text-accent">9rotama</span> 👋
           </div>
         </div>
-      </SlideUp>
-
-      <SlideUp delay={100}>
-        <ArticleH2>⌨️ hobby projects</ArticleH2>
-        <div className="grid grid-cols-1 gap-3 md:grid md:w-full md:grid-cols-2 md:gap-6">
-          {hobbyProjects.map(
-            (proj) =>
-              proj.display && (
-                <div key={proj.id} className="w-full">
-                  <ProjectCard data={proj} />
-                </div>
-              ),
-          )}
+        <div className="flex flex-row gap-4">
+          {snsLinks.map((sns) => (
+            <SnsLink key={sns.name} {...sns} />
+          ))}
         </div>
+      </div>
 
-        <ArticleH2>💜 emoti-kun</ArticleH2>
-        <div className="w-full overflow-hidden rounded-lg ">
-          <EmotiKun />
-        </div>
-      </SlideUp>
+      <ArticleH2>⌨️ hobby projects</ArticleH2>
+      <div className="grid grid-cols-1 gap-3 md:grid md:w-full md:grid-cols-2 md:gap-6 mt-4">
+        {hobbyProjects.map(
+          (proj) =>
+            proj.display && (
+              <div key={proj.id} className="w-full">
+                <ProjectCard data={proj} />
+              </div>
+            ),
+        )}
+      </div>
+
+      <ArticleH2>💜 emoti-kun</ArticleH2>
+      <div className="w-full overflow-hidden rounded-lg mt-4">
+        <EmotiKun />
+      </div>
     </main>
   );
 }

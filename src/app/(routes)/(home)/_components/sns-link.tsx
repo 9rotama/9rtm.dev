@@ -1,4 +1,4 @@
-import { Sns } from "@/app/(routes)/page";
+import { Sns } from "@/app/(routes)/(home)/page";
 import { ExternalLinkIcon } from "@radix-ui/react-icons";
 
 export default function SnsLink({ svgId, href, name, iconSrc }: Sns) {
