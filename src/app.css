@@ -1,1 +1,16 @@
-@import 'tailwindcss';
+@import "tailwindcss";
+
+@theme {
+  --color-background: oklch(0.1656 0.058 291.05);
+  --color-foreground: oklch(0.8315 0.0533 291.05);
+  --color-muted: oklch(0.6942 0.0923 291.05);
+  --color-accent: oklch(0.6839 0.163 291.05);
+
+  --font-display: "Michroma", sans-serif;
+  --font-body: "Exo 2", "M PLUS 2", sans-serif;
+}
+
+html {
+  @apply bg-background text-foreground;
+  @apply font-body;
+}

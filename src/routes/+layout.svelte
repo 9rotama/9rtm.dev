@@ -1,7 +1,14 @@
 <script lang="ts">
-	import '../app.css';
+  import "@fontsource/exo-2";
+  import "@fontsource/m-plus-2";
+  import "@fontsource/michroma";
+  import "../app.css";
+  import Header from "./_components/header.svelte";
 
-	let { children } = $props();
+  let { children } = $props();
 </script>
 
-{@render children()}
+<main class="mx-auto max-w-2xl px-8">
+  <Header />
+  {@render children()}
+</main>
