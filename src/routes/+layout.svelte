@@ -8,7 +8,9 @@
   let { children } = $props();
 </script>
 
-<main class="mx-auto max-w-2xl px-8">
+<div class="mx-auto max-w-2xl px-4">
   <Header />
-  {@render children()}
-</main>
+  <div class="mt-10">
+    {@render children()}
+  </div>
+</div>
