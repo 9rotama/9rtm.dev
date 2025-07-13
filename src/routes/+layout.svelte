@@ -8,9 +8,12 @@
   let { children } = $props();
 </script>
 
+<svelte:head>
+  <title>9rtm.dev</title>
+  <meta name="description" content="9rotamaの個人サイト" />
+</svelte:head>
+
 <div class="mx-auto max-w-2xl px-4">
   <Header />
-  <div class="mt-10">
-    {@render children()}
-  </div>
+  {@render children()}
 </div>
