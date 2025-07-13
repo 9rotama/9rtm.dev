@@ -15,8 +15,8 @@
   );
 </script>
 
-<T.Mesh rotation={[Math.PI * -0.5, 0, 0]} position={[0, -2, 0]}>
-  <T.PlaneGeometry args={[6,6]} />
+<T.Mesh rotation={[Math.PI * -0.4, 0, 0]} position={[0, -3, -1]}>
+  <T.PlaneGeometry args={[8,8]} />
   <T.ShaderMaterial
     fragmentShader={EmotiKunFloorFrag}
     vertexShader={EmotiKunFloorVert}
