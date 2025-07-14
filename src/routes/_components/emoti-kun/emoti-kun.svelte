@@ -3,7 +3,9 @@
   import EmotiKunScene from "./emoti-kun-scene.svelte";
 </script>
 
-<div class="aspect-square w-full max-w-[480px] mx-auto">
+<div
+  class="mx-auto aspect-square w-full max-w-[600px] overflow-clip rounded-lg md:aspect-[4/3]"
+>
   <Canvas>
     <EmotiKunScene />
   </Canvas>
