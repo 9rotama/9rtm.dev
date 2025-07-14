@@ -2,7 +2,7 @@
   import { T } from "@threlte/core";
   import { Float } from "@threlte/extras";
   import EmotiKunFloor from "./emoti-kun-floor.svelte";
-  import { OrbitControls } from '@threlte/extras'
+  import { OrbitControls } from "@threlte/extras";
 </script>
 
 <Float floatIntensity={[2, 2, 2]} speed={5} rotationIntensity={2}>
@@ -13,11 +13,7 @@
 </Float>
 <EmotiKunFloor />
 
-<T.PerspectiveCamera
-  makeDefault
-  fov={50}
-  position={[0, 2, 8]}
->
+<T.PerspectiveCamera makeDefault fov={50} position={[0, 2, 8]}>
   <OrbitControls enableDamping />
 </T.PerspectiveCamera>
 

@@ -16,7 +16,7 @@
 </script>
 
 <T.Mesh rotation={[Math.PI * -0.5, 0, 0]} position={[0, -2.5, 0]}>
-  <T.PlaneGeometry args={[10,10]} />
+  <T.PlaneGeometry args={[10, 10]} />
   <T.ShaderMaterial
     fragmentShader={EmotiKunFloorFrag}
     vertexShader={EmotiKunFloorVert}
@@ -24,6 +24,5 @@
       u_time: { value: 0 },
     }}
     uniforms.u_time.value={time}
-
   />
 </T.Mesh>

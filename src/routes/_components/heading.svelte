@@ -5,7 +5,7 @@
   let { text }: Props = $props();
 </script>
 
-<div class="flex flex-row items-center justify-center gap-2 mt-8">
+<div class="mt-8 flex flex-row items-center justify-center gap-2">
   <img
     alt="title frame"
     src="title-frame.svg"
