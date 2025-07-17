@@ -17,7 +17,7 @@
 <div class="mx-auto max-w-2xl px-4">
   <Header />
   <div
-    class="border-accent/20 from-header-background-upper/20 via-background to-header-background-upper/20 mx-2 mb-10 rounded-lg border-x border-b bg-gradient-to-r p-4"
+    class="border-accent/20 from-header-background-upper/20 via-background to-header-background-upper/20 mx-2 mb-10 rounded-lg border-x border-b bg-gradient-to-r py-4"
   >
     {@render children()}
   </div>
