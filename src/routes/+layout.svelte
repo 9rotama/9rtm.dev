@@ -1,10 +1,8 @@
 <script lang="ts">
-  import "@fontsource/exo-2";
-  import "@fontsource/m-plus-2";
-  import "@fontsource/michroma";
+  import "@fontsource-variable/funnel-display";
+  import "@fontsource-variable/m-plus-1";
   import "../app.css";
   import Footer from "./_components/footer.svelte";
-  import Header from "./_components/header.svelte";
 
   let { children } = $props();
 </script>
@@ -15,11 +13,10 @@
 </svelte:head>
 
 <div class="mx-auto max-w-2xl px-4">
-  <Header />
-  <div
-    class="border-accent/20 from-header-background-upper/20 via-background to-header-background-upper/20 mx-2 mb-10 rounded-lg border-x border-b bg-gradient-to-r py-4"
-  >
+  <div class="mx-2">
     {@render children()}
   </div>
-  <Footer />
+  <div class="mt-20">
+    <Footer />
+  </div>
 </div>

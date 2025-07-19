@@ -2,21 +2,23 @@
 
 @theme {
   --color-background: oklch(0.1656 0.058 291.05);
-  --color-foreground: oklch(0.8315 0.0533 291.05);
-  --color-muted: oklch(0.6007 0.1092 291.05);
-  --color-accent: oklch(0.6839 0.163 291.05);
-  --color-header-background-upper: oklch(
-    from var(--color-accent) calc(l - 0.4) calc(c - 0.08) h
+  --color-foreground: oklch(
+    from var(--color-background) calc(l + 0.75) calc(c + 0.05) h
   );
-  --color-header-background-lower: oklch(
-    from var(--color-accent) calc(l - 0.5) calc(c - 0.08) h
+  --color-muted: oklch(
+    from var(--color-foreground) calc(l - 0.15) calc(c + 0.04) h
+  );
+  --color-accent: oklch(
+    from var(--color-background) calc(l + 0.7) calc(c + 0.3) h
+  );
+  --color-border: oklch(
+    from var(--color-foreground) calc(l - 0.5) calc(c + 0.05) h
   );
 
-  --font-display: "Michroma", "M PLUS 2", sans-serif;
-  --font-body: "Exo 2", "M PLUS 2", sans-serif;
+  --font-body: "Funnel Display Variable", "M PLUS 1 Variable", sans-serif;
 }
 
 html {
-  @apply bg-background text-foreground;
-  @apply font-body;
+  @apply  text-foreground;
+  @apply font-body subpixel-antialiased;
 }
