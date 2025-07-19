@@ -12,11 +12,11 @@
   <meta name="description" content="9rotamaの個人サイト" />
 </svelte:head>
 
-<div class="mx-auto max-w-2xl px-4">
+<div class="mx-auto max-w-2xl px-4 pb-12">
   <div class="mx-2">
     {@render children()}
   </div>
-  <div class="mt-20">
+  <div class="mt-30">
     <Footer />
   </div>
 </div>

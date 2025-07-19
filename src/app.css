@@ -19,6 +19,6 @@
 }
 
 html {
-  @apply  text-foreground;
+  @apply text-foreground;
   @apply font-body subpixel-antialiased;
 }
