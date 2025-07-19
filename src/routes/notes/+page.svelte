@@ -4,6 +4,19 @@
   import Note from "./_components/note.svelte";
 
   let { data }: PageProps = $props();
+
+  let searchQuery = $state("");
+
+  const filteredNotes = $derived.by(() => {
+    if (!searchQuery.trim()) return data.notes;
+
+    const query = searchQuery.toLowerCase();
+    const filtered = data.notes.filter((note) =>
+      note.title.toLowerCase().includes(query),
+    );
+
+    return filtered;
+  });
 </script>
 
 <main class="mx-auto mt-16 max-w-lg">
@@ -32,11 +45,12 @@
         type="search"
         placeholder="search notes..."
         class="placeholder-muted w-full max-w-[400px] text-sm shadow-sm focus:outline-none"
+        bind:value={searchQuery}
       />
     </label>
 
-    <div class="mt-16 flex flex-col">
-      {#each data.notes as note, i (i)}
+    <div class="mt-16 flex w-full flex-col">
+      {#each filteredNotes as note, i (i)}
         <Note data={note} />
         <div
           class="from-border/0 via-border to-border/0 h-[1px] w-full bg-gradient-to-r"
