@@ -42,6 +42,7 @@
   },
   "dependencies": {
     "@fontsource-variable/funnel-display": "^5.2.6",
+    "@fontsource-variable/geist-mono": "^5.2.6",
     "@fontsource-variable/m-plus-1": "^5.2.6",
     "@lucide/svelte": "^0.525.0",
     "@threlte/core": "^8.1.3",
@@ -49,6 +50,9 @@
     "@types/three": "^0.178.1",
     "date-fns": "^4.1.0",
     "gray-matter": "^4.0.3",
+    "micromark": "^4.0.2",
+    "micromark-extension-frontmatter": "^2.0.0",
+    "micromark-extension-gfm": "^3.0.0",
     "three": "^0.178.0",
     "zod": "^4.0.5"
   }

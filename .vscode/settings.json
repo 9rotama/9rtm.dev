@@ -5,6 +5,9 @@
     "source.fixAll.eslint": "explicit",
     "source.addMissingImports": "explicit"
   },
+
   "editor.formatOnSave": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode"
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "eslint.probe": ["svelte"],
+  "eslint.validate": ["svelte"]
 }

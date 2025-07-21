@@ -19,7 +19,7 @@ export const load: PageServerLoad = async () => {
         ({
           title: note.title,
           publishedAt: new Date(note.published_at),
-          href: note.slug,
+          href: `/notes/${note.slug}`,
           thumbnail: { type: "emoji", emoji: note.emoji },
           platform: "self",
         }) satisfies Note,

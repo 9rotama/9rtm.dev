@@ -1,8 +1,9 @@
+import { selfNotesMds } from "$lib/content";
 import type { Result } from "$lib/result";
 import matter from "gray-matter";
 import z from "zod";
 
-const selfNoteMetadataSchema = z.object({
+export const selfNoteMetadataSchema = z.object({
   title: z.string(),
   emoji: z.string(),
   published_at: z.date(),
@@ -17,11 +18,7 @@ type SelfNoteData = SelfNoteMetadata & {
 export async function getSelfNotes(): Promise<
   Result<{ notes: SelfNoteData[] }, "metadata-error" | "error">
 > {
-  const mds = import.meta.glob("/content/notes/*.md", {
-    query: "?raw",
-    import: "default",
-    eager: true,
-  });
+  const mds = selfNotesMds;
 
   const notes: SelfNoteData[] = [];
 

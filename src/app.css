@@ -3,7 +3,7 @@
 @theme {
   --color-background: oklch(0.1656 0.058 291.05);
   --color-foreground: oklch(
-    from var(--color-background) calc(l + 0.75) calc(c + 0.05) h
+    from var(--color-background) calc(l + 0.7) calc(c + 0.05) h
   );
   --color-muted: oklch(
     from var(--color-foreground) calc(l - 0.15) calc(c + 0.04) h
@@ -11,11 +11,114 @@
   --color-accent: oklch(
     from var(--color-background) calc(l + 0.7) calc(c + 0.3) h
   );
-  --color-border: oklch(
-    from var(--color-foreground) calc(l - 0.5) calc(c + 0.05) h
+  --color-border: oklch(from var(--color-foreground) calc(l - 0.5) c h);
+  --color-pre-background: oklch(
+    from var(--color-background) calc(l + 0.07) c h
+  );
+  --color-accent-link: oklch(
+    from var(--color-accent) calc(l - 0.2) calc(c - 0.1) h
   );
 
   --font-body: "Funnel Display Variable", "M PLUS 1 Variable", sans-serif;
+  --font-code: "Geist Mono Variable", "M PLUS 1 Variable", sans-serif;
+}
+
+@layer components {
+  .markdown {
+    @apply text-foreground leading-relaxed break-words;
+  }
+
+  .markdown > * + * {
+    @apply mt-0 mb-4;
+  }
+
+  .markdown li + li {
+    @apply mt-1;
+  }
+
+  .markdown li > p + p {
+    @apply mt-6;
+  }
+
+  .markdown strong {
+    @apply font-semibold;
+  }
+
+  .markdown a {
+    @apply text-muted border-muted/50 hover:text-foreground border-b font-semibold;
+  }
+
+  .markdown strong a {
+    @apply font-bold;
+  }
+
+  .markdown h1 {
+    @apply mt-8 mb-4 text-4xl leading-tight font-semibold;
+  }
+
+  .markdown h2 {
+    @apply mt-10 mb-4 text-2xl leading-tight font-semibold;
+  }
+
+  .markdown h3 {
+    @apply mt-8 mb-4 text-xl leading-snug font-semibold;
+  }
+
+  .markdown h4 {
+    @apply mt-6 mb-4 text-base leading-none font-semibold;
+  }
+
+  .markdown h5 {
+    @apply mt-6 mb-4 text-sm leading-tight font-semibold;
+  }
+
+  .markdown h6 {
+    @apply mt-6 mb-4 text-sm leading-tight font-semibold;
+  }
+
+  .markdown blockquote {
+    @apply border-border text-muted border-l-4 pr-4 pl-4 text-base italic;
+  }
+
+  .markdown code {
+    @apply bg-pre-background border-border font-code inline rounded-lg border px-1 py-0.5 text-sm;
+  }
+
+  .markdown pre {
+    @apply bg-pre-background rounded-lg;
+  }
+
+  .markdown pre code {
+    @apply border-border block overflow-visible rounded-lg p-2;
+  }
+
+  .markdown ul {
+    @apply list-disc pl-8 text-base;
+  }
+
+  .markdown ol {
+    @apply list-decimal pl-8 text-base;
+  }
+
+  .markdown kbd {
+    @apply font-code inline-block rounded border px-1 py-5 align-middle text-xs font-normal shadow;
+  }
+
+  .markdown table {
+    @apply text-base;
+  }
+
+  .markdown th {
+    @apply border-border border px-3 py-1;
+  }
+
+  .markdown td {
+    @apply border-border border px-3 py-1;
+  }
+
+  .markdown hr {
+    @apply border-border my-6 border-1 border-dashed;
+  }
 }
 
 html {
