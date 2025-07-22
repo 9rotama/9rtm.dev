@@ -12,6 +12,12 @@
     from var(--color-background) calc(l + 0.7) calc(c + 0.3) h
   );
   --color-border: oklch(from var(--color-foreground) calc(l - 0.5) c h);
+  --color-card-background: oklch(
+    from var(--color-background) calc(l + 0.03) c h
+  );
+  --color-card-background-lower: oklch(
+    from var(--color-background) calc(l + 0.01) calc(c + 0.02) h
+  );
   --color-pre-background: oklch(
     from var(--color-background) calc(l + 0.07) c h
   );

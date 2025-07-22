@@ -3,6 +3,8 @@
   import Heading from "./_components/heading.svelte";
   import GitHub from "./_components/icons/github.svelte";
   import Zenn from "./_components/icons/zenn.svelte";
+  import RepoCard from "./_components/repo-card.svelte";
+  import { repos } from "./_lib/repos";
 </script>
 
 <main>
@@ -27,5 +29,12 @@
   </div>
   <div class="mt-10">
     <Heading text="repos" subText="" />
+    <div class="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-2">
+      {#each repos as repo (repo.id)}
+        {#if repo.display}
+          <RepoCard data={repo} />
+        {/if}
+      {/each}
+    </div>
   </div>
 </main>
