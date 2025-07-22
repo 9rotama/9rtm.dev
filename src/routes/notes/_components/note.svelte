@@ -26,7 +26,7 @@
       {data.title}
     </a>
     <div class="text-muted flex flex-row items-center gap-2 text-sm">
-      {formatDate(data.publishedAt, "yyyy / MM / dd")}
+      {formatDate(data.publishedAt, "MMM dd, yyyy")}
       <span class="size-4">
         {#if data.platform === "zenn"}
           <Zenn />
