@@ -1,13 +1,15 @@
 import { selfNotesMds } from "$lib/content";
+import { error } from "@sveltejs/kit";
 import matter from "gray-matter";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import rehypeSlug from "rehype-slug";
+import rehypeStringify from "rehype-stringify";
 import { remark } from "remark";
 import remarkFrontmatter from "remark-frontmatter";
 import remarkGfm from "remark-gfm";
 import remarkRehype from "remark-rehype";
-import rehypeStringify from "rehype-stringify";
 import { selfNoteMetadataSchema } from "../_lib/self";
 import type { PageServerLoad } from "./$types";
-import { error } from "@sveltejs/kit";
 
 export const load: PageServerLoad = async ({ params }) => {
   const mds = selfNotesMds;
@@ -16,6 +18,19 @@ export const load: PageServerLoad = async ({ params }) => {
     .use(remarkFrontmatter)
     .use(remarkGfm)
     .use(remarkRehype)
+    .use(rehypeSlug)
+    .use(rehypeAutolinkHeadings, {
+      behavior: "prepend",
+      properties: {
+        className: ["heading-link"],
+        ariaLabel: "link to section",
+        title: "link to section",
+      },
+      content: {
+        type: "text",
+        value: "#",
+      },
+    })
     .use(rehypeStringify)
     .process(md as string);
 

@@ -82,6 +82,10 @@
     @apply mt-6 mb-4 text-sm leading-tight font-semibold;
   }
 
+  .markdown .heading-link {
+    @apply text-muted/60 hover:text-accent mr-2 border-none font-normal no-underline;
+  }
+
   .markdown blockquote {
     @apply border-border text-muted border-l-4 pr-4 pl-4 text-base italic;
   }
