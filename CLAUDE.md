@@ -1,64 +1,64 @@
-# CLAUDE.md
+# claude.md
 
-このファイルは、このリポジトリでコードを扱う際のClaude Code (claude.ai/code) へのガイダンスを提供します。
+this file provides guidance to claude code (claude.ai/code) when working with code in this repository.
 
-## 開発コマンド
+## development commands
 
-これは静的アダプター設定を持つSvelteKitプロジェクトです。以下のコマンドを使用してください：
+this is a sveltekit project with static adapter configuration. use these commands:
 
-- `pnpm run dev` - 開発サーバーを開始
-- `pnpm run build` - 本番用ビルド（`build/`ディレクトリに出力）
-- `pnpm run preview` - 本番ビルドをプレビュー
-- `pnpm run check` - Svelteの型チェックを実行
-- `pnpm run lint` - ESLintとPrettierのチェックを実行
-- `pnpm run format` - Prettierでコードをフォーマット
+- `pnpm run dev` - start development server
+- `pnpm run build` - build for production (outputs to `build/` directory)
+- `pnpm run preview` - preview production build
+- `pnpm run check` - run svelte type checking
+- `pnpm run lint` - run eslint and prettier checks
+- `pnpm run format` - format code with prettier
 
-## アーキテクチャ概要
+## architecture overview
 
-### コア構造
+### core structure
 
-- **SvelteKit 2** - `@sveltejs/adapter-static`を使用した静的サイト生成
-- **TailwindCSS 4** - ViteプラグインでスタイリングとViteプラグイン統合
-- **TypeScript** - 型安全性
-- **Three.js + Threlte** - 3Dグラフィックス（emoti-kunキャラクター）
+- **sveltekit 2** - static site generation using `@sveltejs/adapter-static`
+- **tailwindcss 4** - styling with vite plugin integration
+- **typescript** - type safety
+- **three.js + threlte** - 3d graphics (emoti-kun character)
 
-### コンテンツ管理
+### content management
 
-- **ブログ/ノートシステム**: `/content/notes/`のMarkdownファイルを以下で処理：
-  - `gray-matter` - frontmatterのパース
-  - `micromark` - GFM拡張でレンダリング
-  - Date-fns - 日付フォーマット
-- **セルフホストノート**と**Zenn連携** - 統一されたNote型
-- コンテンツはViteの`import.meta.glob`でrawクエリを使ってインポート
+- **blog/notes system**: markdown files in `/content/notes/` processed with:
+  - `gray-matter` - frontmatter parsing
+  - `micromark` - gfm extension for rendering
+  - date-fns - date formatting
+- **self-hosted notes** and **zenn integration** - unified note type
+- content imported via vite's `import.meta.glob` with raw query
 
-### 主要ディレクトリ
+### key directories
 
-- `src/routes/` - ファイルベースルーティングによるSvelteKitルート
-- `src/routes/_components/` - 3D emoti-kunを含む共有コンポーネント
-- `src/lib/` - ユーティリティ関数とコンテンツ管理
-- `content/notes/` - Markdownブログ投稿
-- `static/` - フォントや画像などの静的アセット
+- `src/routes/` - sveltekit routes with file-based routing
+- `src/routes/_components/` - shared components including 3d emoti-kun
+- `src/lib/` - utility functions and content management
+- `content/notes/` - markdown blog posts
+- `static/` - static assets including fonts and images
 
-### プリコミットフック
+### pre-commit hooks
 
-Lefthookがコミット前にlintとformatコマンドを実行し、修正されたファイルを自動でステージングするよう設定されています。
+lefthook is configured to run lint and format commands before commits, with automatic staging of fixed files.
 
-### コンポーネントアーキテクチャ
+### component architecture
 
-- レイアウトコンポーネントはSvelte 5シンタックスを使用
-- 3DコンポーネントはThrelte（SvelteのThree.jsラッパー）で構築
-- アイコンコンポーネントは自己完結型のSVG Svelteコンポーネント
-- ノート/ブログコンポーネントはセルフホストと外部コンテンツの両方を処理
+- layout components use svelte 5 syntax
+- 3d components built with threlte (three.js wrapper for svelte)
+- icon components are self-contained svg svelte components
+- note/blog components handle both self-hosted and external content
 
-## ルール
+## rules
 
-### コーディングスタイル
+### coding style
 
-- es modules(import / export)を必ず使い、commonjsは使わないでください。
-- destructure importを基本にしてください。(import {foo} from 'bar')
-- svelte 5のrunes記法で実装してください。
+- always use es modules (import / export), never use commonjs.
+- use destructure imports as default. (`import {foo} from 'bar'`)
+- implement using svelte 5 runes syntax.
 
-### ワークフロー
+### workflow
 
-- 書いたコードはeslintおよびtsの型チェックによって、エラーを除去してください。
-- 開発サーバを使った確認はユーザで行うので、claudeは実施しないでください。
+- run `pnpm run lint` on written code and fix any errors.
+- claude should not run development server checks, users will handle that.
