@@ -132,8 +132,4 @@ html {
   & hr {
     @apply border-border my-6 border-1 border-dashed;
   }
-
-  & .hljs {
-    @apply bg-pre-background;
-  }
 }
