@@ -29,109 +29,111 @@
   --font-code: "Geist Mono Variable", "M PLUS 1 Variable", sans-serif;
 }
 
-@layer components {
-  .markdown {
-    @apply text-foreground leading-relaxed break-words;
-  }
-
-  .markdown > * + * {
-    @apply mt-0 mb-4;
-  }
-
-  .markdown li + li {
-    @apply mt-1;
-  }
-
-  .markdown li > p + p {
-    @apply mt-6;
-  }
-
-  .markdown strong {
-    @apply font-semibold;
-  }
-
-  .markdown a {
-    @apply text-muted border-muted/50 hover:text-foreground border-b font-semibold;
-  }
-
-  .markdown strong a {
-    @apply font-bold;
-  }
-
-  .markdown h1 {
-    @apply mt-8 mb-4 text-4xl leading-tight font-semibold;
-  }
-
-  .markdown h2 {
-    @apply mt-10 mb-4 text-2xl leading-tight font-semibold;
-  }
-
-  .markdown h3 {
-    @apply mt-8 mb-4 text-xl leading-snug font-semibold;
-  }
-
-  .markdown h4 {
-    @apply mt-6 mb-4 text-base leading-none font-semibold;
-  }
-
-  .markdown h5 {
-    @apply mt-6 mb-4 text-sm leading-tight font-semibold;
-  }
-
-  .markdown h6 {
-    @apply mt-6 mb-4 text-sm leading-tight font-semibold;
-  }
-
-  .markdown .heading-link {
-    @apply text-muted/60 hover:text-muted mr-2 border-none font-normal no-underline;
-  }
-
-  .markdown blockquote {
-    @apply border-border text-muted border-l-4 pr-4 pl-4 text-base italic;
-  }
-
-  .markdown code {
-    @apply bg-pre-background border-border font-code inline rounded-lg border px-1 py-0.5 text-sm;
-  }
-
-  .markdown pre {
-    @apply bg-pre-background rounded-lg;
-  }
-
-  .markdown pre code {
-    @apply border-border block overflow-visible rounded-lg p-2;
-  }
-
-  .markdown ul {
-    @apply list-disc pl-8 text-base;
-  }
-
-  .markdown ol {
-    @apply list-decimal pl-8 text-base;
-  }
-
-  .markdown kbd {
-    @apply font-code inline-block rounded border px-1 py-5 align-middle text-xs font-normal shadow;
-  }
-
-  .markdown table {
-    @apply text-base;
-  }
-
-  .markdown th {
-    @apply border-border border px-3 py-1;
-  }
-
-  .markdown td {
-    @apply border-border border px-3 py-1;
-  }
-
-  .markdown hr {
-    @apply border-border my-6 border-1 border-dashed;
-  }
-}
-
 html {
   @apply text-foreground;
   @apply font-body subpixel-antialiased;
+}
+
+.markdown {
+  @apply text-foreground leading-relaxed break-words;
+
+  & > * + * {
+    @apply mt-0 mb-4;
+  }
+
+  & li + li {
+    @apply mt-1;
+  }
+
+  & li > p + p {
+    @apply mt-6;
+  }
+
+  & strong {
+    @apply font-semibold;
+  }
+
+  & a {
+    @apply text-muted border-muted/50 hover:text-foreground border-b font-semibold;
+  }
+
+  & strong a {
+    @apply font-bold;
+  }
+
+  & h1 {
+    @apply mt-8 mb-4 text-4xl leading-tight font-semibold;
+  }
+
+  & h2 {
+    @apply mt-10 mb-4 text-2xl leading-tight font-semibold;
+  }
+
+  & h3 {
+    @apply mt-8 mb-4 text-xl leading-snug font-semibold;
+  }
+
+  & h4 {
+    @apply mt-6 mb-4 text-base leading-none font-semibold;
+  }
+
+  & h5 {
+    @apply mt-6 mb-4 text-sm leading-tight font-semibold;
+  }
+
+  & h6 {
+    @apply mt-6 mb-4 text-sm leading-tight font-semibold;
+  }
+
+  & .heading-link {
+    @apply text-muted/60 hover:text-muted mr-2 border-none font-normal no-underline;
+  }
+
+  & blockquote {
+    @apply border-border text-muted border-l-4 pr-4 pl-4 text-base italic;
+  }
+
+  & code {
+    @apply bg-pre-background border-border font-code inline rounded-lg border px-1 py-0.5 text-sm;
+  }
+
+  & pre {
+    @apply bg-pre-background rounded-lg;
+  }
+
+  & pre code {
+    @apply bg-pre-background border-border block overflow-visible rounded-lg p-2;
+  }
+
+  & ul {
+    @apply list-disc pl-8 text-base;
+  }
+
+  & ol {
+    @apply list-decimal pl-8 text-base;
+  }
+
+  & kbd {
+    @apply font-code inline-block rounded border px-1 py-5 align-middle text-xs font-normal shadow;
+  }
+
+  & table {
+    @apply text-base;
+  }
+
+  & th {
+    @apply border-border border px-3 py-1;
+  }
+
+  & td {
+    @apply border-border border px-3 py-1;
+  }
+
+  & hr {
+    @apply border-border my-6 border-1 border-dashed;
+  }
+
+  & .hljs {
+    @apply bg-pre-background;
+  }
 }

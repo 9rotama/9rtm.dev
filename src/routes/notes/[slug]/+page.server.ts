@@ -2,6 +2,7 @@ import { selfNotesMds } from "$lib/content";
 import { error } from "@sveltejs/kit";
 import matter from "gray-matter";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import rehypeHighlight from "rehype-highlight";
 import rehypeSlug from "rehype-slug";
 import rehypeStringify from "rehype-stringify";
 import { remark } from "remark";
@@ -19,6 +20,7 @@ export const load: PageServerLoad = async ({ params }) => {
     .use(remarkGfm)
     .use(remarkRehype)
     .use(rehypeSlug)
+    .use(rehypeHighlight)
     .use(rehypeAutolinkHeadings, {
       behavior: "prepend",
       properties: {

@@ -2,6 +2,7 @@
   import "@fontsource-variable/funnel-display";
   import "@fontsource-variable/geist-mono";
   import "@fontsource-variable/m-plus-1";
+  import "highlight.js/styles/base16/ros-pine.min.css";
   import "../app.css";
   import Footer from "./_components/footer.svelte";
 
