@@ -23,7 +23,7 @@
   <div class="flex flex-row items-center justify-center gap-2">
     <img
       alt="title frame"
-      src="title-frame.svg"
+      src="/title-frame.svg"
       class="size-5 -scale-x-100 animate-pulse"
     />
     <h1
@@ -31,7 +31,11 @@
     >
       notes
     </h1>
-    <img alt="title frame" src="title-frame.svg" class="size-5 animate-pulse" />
+    <img
+      alt="title frame"
+      src="/title-frame.svg"
+      class="size-5 animate-pulse"
+    />
   </div>
   <p class="text-muted mt-4 text-center text-sm tracking-widest">
     雑記 & zennなど
