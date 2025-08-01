@@ -102,7 +102,7 @@ html {
   }
 
   & pre code {
-    @apply bg-pre-background border-border block overflow-visible rounded-lg p-2;
+    @apply bg-pre-background border-border block overflow-x-scroll rounded-lg p-2;
   }
 
   & ul {
