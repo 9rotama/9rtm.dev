@@ -111,6 +111,10 @@ html {
     @apply bg-pre-background border-border block overflow-x-scroll rounded-lg p-2;
   }
 
+  & pre code {
+    scrollbar-color: var(--color-muted) transparent;
+  }
+
   & ul {
     @apply list-disc pl-8 text-base;
   }
