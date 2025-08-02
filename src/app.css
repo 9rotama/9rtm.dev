@@ -1,9 +1,9 @@
 @import "tailwindcss";
 
 @theme {
-  --color-background: oklch(0.1656 0.058 291.05);
+  --color-background: oklch(0.1656 0.04 291.05);
   --color-foreground: oklch(
-    from var(--color-background) calc(l + 0.7) calc(c + 0.05) h
+    from var(--color-background) calc(l + 0.7) calc(c + 0.03) h
   );
   --color-muted: oklch(
     from var(--color-foreground) calc(l - 0.15) calc(c + 0.04) h
@@ -25,13 +25,23 @@
     from var(--color-accent) calc(l - 0.2) calc(c - 0.1) h
   );
 
-  --font-body: "Funnel Display Variable", "M PLUS 1 Variable", sans-serif;
-  --font-code: "Geist Mono Variable", "M PLUS 1 Variable", sans-serif;
+  --font-body:
+    "Funnel Display Variable", "M PLUS 1 Variable", "Helvetica Neue", Arial,
+    "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+  --font-code:
+    "Geist Mono Variable", "M PLUS 1 Variable", Consolas, "Courier New",
+    Courier, Monaco, monospace;
 }
 
 html {
   @apply text-foreground;
   @apply font-body subpixel-antialiased;
+}
+
+/* Global scrollbar styling */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-muted) var(--color-pre-background);
 }
 
 .markdown {
@@ -102,7 +112,11 @@ html {
   }
 
   & pre code {
-    @apply bg-pre-background border-border block overflow-visible rounded-lg p-2;
+    @apply bg-pre-background border-border block overflow-x-scroll rounded-lg p-2;
+  }
+
+  & pre code {
+    scrollbar-color: var(--color-muted) transparent;
   }
 
   & ul {
