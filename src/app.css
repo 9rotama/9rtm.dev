@@ -25,8 +25,12 @@
     from var(--color-accent) calc(l - 0.2) calc(c - 0.1) h
   );
 
-  --font-body: "Funnel Display Variable", "M PLUS 1 Variable", sans-serif;
-  --font-code: "Geist Mono Variable", "M PLUS 1 Variable", sans-serif;
+  --font-body:
+    "Funnel Display Variable", "M PLUS 1 Variable", "Helvetica Neue", Arial,
+    "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+  --font-code:
+    "Geist Mono Variable", "M PLUS 1 Variable", Consolas, "Courier New",
+    Courier, Monaco, monospace;
 }
 
 html {
