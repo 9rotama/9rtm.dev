@@ -1,9 +1,9 @@
 @import "tailwindcss";
 
 @theme {
-  --color-background: oklch(0.1656 0.058 291.05);
+  --color-background: oklch(0.1656 0.04 291.05);
   --color-foreground: oklch(
-    from var(--color-background) calc(l + 0.7) calc(c + 0.05) h
+    from var(--color-background) calc(l + 0.7) calc(c + 0.03) h
   );
   --color-muted: oklch(
     from var(--color-foreground) calc(l - 0.15) calc(c + 0.04) h
