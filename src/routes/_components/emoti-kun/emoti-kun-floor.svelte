@@ -13,7 +13,12 @@
   );
 </script>
 
-<T.Mesh rotation={[Math.PI * -0.5, 0, 0]} position={[0, -2.5, 0]}>
+<T.Mesh
+  rotation={[Math.PI * -0.5, 0, 0]}
+  position={[0, 0, 0]}
+  receiveShadow
+  castShadow={false}
+>
   <T.PlaneGeometry args={[10, 10]} />
   <T.ShaderMaterial
     fragmentShader={EmotiKunFloorFrag}
