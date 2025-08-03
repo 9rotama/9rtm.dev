@@ -26,7 +26,7 @@ void main() {
     float grid_pattern = grid(grid_uv);
     
     float fade = smoothstep(0.0, 1.0, 1.0 - length(uv));
-    vec3 base_color = vec3(124, 86, 160) / 255.0; // Base color
+    vec3 base_color = vec3(124, 86, 180) / 255.0; // Base color
     
     vec3 color = vec3(base_color * grid_pattern * fade);
     

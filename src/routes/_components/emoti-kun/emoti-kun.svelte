@@ -4,7 +4,7 @@
 </script>
 
 <div
-  class="mx-auto aspect-square w-full max-w-[600px] overflow-clip rounded-lg md:aspect-[4/3]"
+  class="mx-auto mt-8 aspect-[5/3] w-full max-w-[600px] overflow-clip rounded-lg"
 >
   <Canvas>
     <EmotiKunScene />

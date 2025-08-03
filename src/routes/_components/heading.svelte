@@ -14,7 +14,7 @@
     <div class="flex flex-row items-center justify-center gap-2">
       <img
         alt="title frame"
-        src="title-frame.svg"
+        src="/title-frame.svg"
         class="size-3 -scale-x-100 animate-pulse"
       />
       <h2
@@ -24,7 +24,7 @@
       </h2>
       <img
         alt="title frame"
-        src="title-frame.svg"
+        src="/title-frame.svg"
         class="size-3 animate-pulse"
       />
     </div>

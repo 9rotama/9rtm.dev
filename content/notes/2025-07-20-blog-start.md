@@ -7,51 +7,31 @@ published: true
 
 プロフィール兼ブログとして、9rtm.devをリニューアルしました。以前はNext.jsを使っていましたが、Reactは業務でも使うため勉強も兼ねてSvelteKitに移行しました。また、デザインも新しくしました。
 
-## notesページ
+## 相対色構文を使ってみた
 
-remark + rehypeを使ってMarkdownから記事を生成しています。アンカーリンク(見出しごとのリンク)を設定したかったので、プラグインとしてrehype-slugやrehype-autolink-headingsを追加しています。
+Tailwindのカラーは、`oklch()`関数と相対色構文を使って定義しています。([honey32様の資料](https://speakerdeck.com/honey32/xiang-dui-se-gou-wen-x-oklch-gajian-yi-de-nakaraparetutodukurinibian-li-najian?slide=13)を参考)
 
-```ts
-const html = await remark()
-  .use(remarkFrontmatter)
-  .use(remarkGfm)
-  .use(remarkRehype)
-  .use(rehypeSlug)
-  .use(rehypeAutolinkHeadings, {
-    behavior: "prepend",
-    properties: {
-      className: ["heading-link"],
-      ariaLabel: "link to section",
-      title: "link to section",
-    },
-    content: {
-      type: "text",
-      value: "#",
-    },
-  })
-  .use(rehypeStringify)
-  .process(md as string);
+ほとんどのカラーが背景色をもとに作成されている形になります。
 
-const metadata = selfNoteMetadataSchema.safeParse(matter(md).data);
+```css
+--color-background: oklch(0.1656 0.04 291.05);
+--color-foreground: oklch(
+  from var(--color-background) calc(l + 0.7) calc(c + 0.03) h
+);
+--color-muted: oklch(
+  from var(--color-foreground) calc(l - 0.15) calc(c + 0.04) h
+);
 ```
 
-`.md`ファイルは、`src/lib/content.ts`内で一括で読み込んでいます。最初はfsで愚直にやるつもりでしたが、Viteにglobを用いたimport機能([参考](https://vite.dev/guide/features.html#glob-import))があるためそっちを使いました。非同期や実行環境を考えなくていいので、便利です。
-
-```ts
-export const selfNotesMds = import.meta.glob("/content/notes/*.md", {
-  query: "?raw",
-  import: "default",
-  eager: true,
-});
-```
+サイトの設計にFigmaなどを使わず雰囲気で実装しているため、カラーパレットを行き来せずに直感的に色の調整を行えました。
 
 ## threlte
 
 移行前はReact Three Fiberを使っており、シーンを宣言的に記述できたりHooksを使えたりするのがとても良かったです。Svelte にも同等のライブラリである[threlte](https://threlte.xyz/)があり、同じくフレームワークらしい実装ができます。
 
-また、いくつかのヘルパーをthree.jsのexamplesや[drei](https://drei.docs.pmnd.rs/getting-started/introduction)からポートしており、リッチな効果を簡単に実装できそうです。
+また、いくつかのヘルパーをthree.jsのexamplesや[drei](https://drei.docs.pmnd.rs/getting-started/introduction)からポートしており、さくっとリッチな表現を作ることができます。
 
-homeページにてthrelteを使っていて、無限に移動するグリッド床はシェーダで実装しています。
+homeページトップにある無限に移動するグリッド床はシェーダで実装しています。
 
 ```svelte
 <script lang="ts">
@@ -91,10 +71,47 @@ homeページにてthrelteを使っていて、無限に移動するグリッド
 />
 ```
 
-## デプロイ
+## notesページ
 
-以前はCloudflare Pagesにデプロイしていました。勝手にCI/CDも設定してくれるし、ドメインの登録も同じコンソールで済ませられて楽でした。
-今回は勉強としてS3 + Cloudfrontの構成に移行し、GitHub Actionでデプロイの設定をしています。
+remark + rehypeを使ってMarkdownから記事を生成しています。アンカーリンク(見出しごとのリンク)を設定したかったので、プラグインとしてrehype-slugやrehype-autolink-headingsを追加しています。
+
+```ts
+const html = await remark()
+  .use(remarkFrontmatter)
+  .use(remarkGfm)
+  .use(remarkRehype)
+  .use(rehypeSlug)
+  .use(rehypeAutolinkHeadings, {
+    behavior: "prepend",
+    properties: {
+      className: ["heading-link"],
+      ariaLabel: "link to section",
+      title: "link to section",
+    },
+    content: {
+      type: "text",
+      value: "#",
+    },
+  })
+  .use(rehypeStringify)
+  .process(md as string);
+
+const metadata = selfNoteMetadataSchema.safeParse(matter(md).data);
+```
+
+`.md`ファイルは、`src/lib/content.ts`内で一括で読み込んでいます。最初はfsで愚直にやるつもりでしたが、Viteの機能に[glob import](https://vite.dev/guide/features.html#glob-import)があるためそっちを使いました。非同期や実行環境を考えなくていいので、便利です。
+
+```ts
+export const selfNotesMds = import.meta.glob("/content/notes/*.md", {
+  query: "?raw",
+  import: "default",
+  eager: true,
+});
+```
+
+### code block
+
+コードのハイライトには[Shiki](https://shiki.style/)を使ってみました。今どき?なカラーテーマが搭載されてたり、Svelteコードにもデフォルトで対応していて本当に楽に実装できました。
 
 ## おわりに
 
