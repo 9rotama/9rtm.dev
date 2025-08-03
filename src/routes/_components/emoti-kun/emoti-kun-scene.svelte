@@ -1,100 +1,61 @@
 <script lang="ts">
-  import { T } from "@threlte/core";
-  import { createTimeline, eases } from "animejs";
-  import { onMount } from "svelte";
+  import { T, useTask, useThrelte } from "@threlte/core";
+  import { Stars } from "@threlte/extras";
+  import { Color } from "three";
   import EmotiKunFloor from "./emoti-kun-floor.svelte";
-  const emotiLowerPos = { x: 0, y: 2.5, z: 0 };
+  import EmotiKunText from "./emoti-kun-text.svelte";
 
-  let meshPos: { x: number; y: number; z: number } = $state(emotiLowerPos);
-  let meshScale: { x: number; y: number; z: number } = $state({
-    x: 1,
-    y: 1,
-    z: 1,
+  const { scene } = useThrelte();
+  scene.background = new Color("#0f0b1e");
+
+  // Animation state for rotating spheres
+  let time = $state(0);
+
+  useTask((delta) => {
+    time += delta;
   });
 
-  onMount(() => {
-    const tlPos = createTimeline({ loop: true })
-      .add(meshPos, {
-        y: [emotiLowerPos.y + 1.0, emotiLowerPos.y + 0.2],
-        ease: eases.inCubic,
-        duration: 500,
-      })
-      .add(meshPos, {
-        y: [emotiLowerPos.y + 0.2, emotiLowerPos.y],
-        ease: eases.outCubic,
-        duration: 500,
-      })
-      .add(
-        meshScale,
-        {
-          x: [1, 1.1],
-          y: [1, 0.9],
-          ease: eases.outCubic,
-          duration: 500,
-        },
-        "-=500",
-      )
-      .add(meshPos, {
-        y: [emotiLowerPos.y, emotiLowerPos.y + 0.2],
-        ease: eases.inCubic,
-        duration: 500,
-      })
-      .add(
-        meshScale,
-        {
-          x: [1.1, 1],
-          y: [0.9, 1],
-          ease: eases.inCubic,
-          duration: 500,
-        },
-        "-=500",
-      )
-      .add(meshPos, {
-        y: [emotiLowerPos.y + 0.2, emotiLowerPos.y + 1.0],
-        ease: eases.outCubic,
-        duration: 500,
-      });
-
-    tlPos.play();
-  });
+  const sphereCount = 6;
+  const radius = 5;
+  const sphereColor = "#ffbbff";
 </script>
 
-<T.Mesh
-  position={[meshPos.x, meshPos.y, meshPos.z]}
-  scale={[meshScale.x, meshScale.y, meshScale.z]}
-  castShadow={false}
-  receiveShadow={false}
->
-  <T.SphereGeometry args={[2.5, 64, 64]} />
-  <T.MeshStandardMaterial
-    color="#301c3c"
-    roughness={0.6957}
-    metalness={0.3804}
-  />
-</T.Mesh>
+<EmotiKunText />
 <EmotiKunFloor />
 
+{#each Array(sphereCount).keys() as i (i)}
+  {@const angle = (i / sphereCount) * Math.PI * 2 + time * 0.1}
+  {@const x = Math.cos(angle) * radius}
+  {@const z = Math.sin(angle) * radius}
+  {@const y = 1.0 + Math.sin(time * 2 + i) * 0.1}
+
+  <T.Mesh position={[x, y, z]} rotation={[time * 0.1, time * 0.2, 0]}>
+    <T.SphereGeometry args={[0.8, 32, 32]} />
+    <T.MeshPhysicalMaterial
+      color={sphereColor}
+      metalness={0}
+      roughness={0}
+      transmission={1.0}
+      ior={1.5}
+      thickness={0.8}
+    />
+  </T.Mesh>
+{/each}
 <T.PerspectiveCamera
   makeDefault
   fov={50}
-  position={[0, 4, 10]}
-  rotation={[-Math.PI / 30, 0, 0]}
+  position={[0, 3, 8]}
+  rotation={[-Math.PI * 0.08, 0, 0]}
 />
-
-<T.PointLight
-  position={[2, 6, 4]}
-  intensity={50}
-  color="#bc84f1"
-  castShadow
-  distance={0}
-/>
-<T.AmbientLight intensity={5} color="#a658ae" />
+<T.PointLight position={[0, 3, 4]} intensity={20} color="#bc84f1" visible />
 <T.RectAreaLight
   position={[0, -0.1, 0]}
   rotation={[Math.PI / 2, 0, 0]}
-  intensity={1.5}
+  intensity={5}
   width={5}
   height={5}
   visible
   color="#c494e2"
 />
+
+<Stars count={600} lightness={0.5} opacity={0.5} radius={50} factor={8} />

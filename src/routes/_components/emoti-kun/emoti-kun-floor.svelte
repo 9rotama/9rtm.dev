@@ -27,5 +27,6 @@
       u_time: { value: 0 },
     }}
     uniforms.u_time.value={time}
+    alphaTest={0.5}
   />
 </T.Mesh>
