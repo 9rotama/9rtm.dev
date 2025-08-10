@@ -15,10 +15,6 @@
   </div>
   <p class="text-muted mt-2 text-center">© 2025 9rotama</p>
   <p class="text-muted text-center">
-    last updated: {new Date().toLocaleDateString("ja-JP", {
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-    })}
+    last updated: {__BUILD_TIME__}
   </p>
 </footer>
