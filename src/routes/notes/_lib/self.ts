@@ -32,7 +32,6 @@ export async function getSelfNotes(): Promise<
     }
 
     const slug = path.split("/").at(-1)?.replace(".md", "");
-    console.log("slug", slug);
     if (!slug) {
       return { success: false, error: "error" };
     }
