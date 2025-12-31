@@ -21,8 +21,16 @@
         <div class="mt-4 text-lg">9rotama / くろたま</div>
         <div class="text-muted mt-1 text-sm">web front & gl</div>
         <div class="mt-4 flex flex-row items-center gap-2 text-sm">
-          <a class="size-6" href="https://github.com/9rotama"><GitHub /></a>
-          <a class="size-5" href="https://zenn.dev/9rotama"><Zenn /></a>
+          <a
+            class="size-6"
+            href="https://github.com/9rotama"
+            aria-label="GitHubプロフィールを開く"><GitHub /></a
+          >
+          <a
+            class="size-5"
+            href="https://zenn.dev/9rotama"
+            aria-label="Zennプロフィールを開く"><Zenn /></a
+          >
         </div>
       </div>
     </div>

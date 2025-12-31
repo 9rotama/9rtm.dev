@@ -20,13 +20,22 @@
       </div>
       <div class="flex flex-row gap-2">
         {#if data.githubLink}
-          <a class="size-4" href={data.githubLink.href}>
+          <a
+            class="size-4"
+            href={data.githubLink.href}
+            aria-label="GitHubリポジトリを開く"
+          >
             <Github />
           </a>
         {/if}
         {#if data.links}
           {#each data.links as link (link.href)}
-            <a href={link.href} target="_blank" rel="noopener noreferrer">
+            <a
+              href={link.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="外部リンクを開く"
+            >
               <ExternalLinkIcon class="size-4" />
             </a>
           {/each}

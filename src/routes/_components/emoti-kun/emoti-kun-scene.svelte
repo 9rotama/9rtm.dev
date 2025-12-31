@@ -6,7 +6,7 @@
   import EmotiKunText from "./emoti-kun-text.svelte";
 
   const { scene } = useThrelte();
-  scene.background = new Color("#0f0b1e");
+  scene.background = new Color("#0e0d17");
 
   // Animation state for rotating spheres
   let time = $state(0);
