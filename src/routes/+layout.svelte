@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { onNavigate } from "$app/navigation";
   import "@fontsource-variable/funnel-display";
   import "@fontsource-variable/geist-mono";
   import "@fontsource-variable/m-plus-1";
@@ -6,6 +7,20 @@
   import Footer from "./_components/footer.svelte";
 
   let { children } = $props();
+
+  onNavigate((navigation) => {
+    if (!document.startViewTransition) return;
+
+    // Skip animation if navigating to the same page
+    if (navigation.from?.url.pathname === navigation.to?.url.pathname) return;
+
+    return new Promise((resolve) => {
+      document.startViewTransition(async () => {
+        resolve();
+        await navigation.complete;
+      });
+    });
+  });
 </script>
 
 <svelte:head>
