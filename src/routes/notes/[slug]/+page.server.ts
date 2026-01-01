@@ -37,7 +37,7 @@ export const load: PageServerLoad = async ({ params }) => {
       ],
     })
     .use(rehypeAutolinkHeadings, {
-      behavior: "prepend",
+      behavior: "append",
       properties: {
         className: ["heading-link"],
         ariaLabel: "link to section",
@@ -45,7 +45,7 @@ export const load: PageServerLoad = async ({ params }) => {
       },
       content: {
         type: "text",
-        value: "#",
+        value: "🔗",
       },
     })
     .use(rehypeStringify)

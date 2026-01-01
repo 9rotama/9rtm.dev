@@ -1,3 +1,4 @@
+import { env } from "$env/dynamic/private";
 import { selfNotesMds } from "$lib/content";
 import type { Result } from "$lib/result";
 import matter from "gray-matter";
@@ -37,7 +38,7 @@ export async function getSelfNotes(): Promise<
     }
 
     const note = { ...parsed.data, slug };
-    if (note.published) {
+    if (note.published || env.NODE_ENV === "development") {
       notes.push(note);
     }
   }
