@@ -66,4 +66,5 @@
 
 <svelte:head>
   <title>notes | 9rtm.dev</title>
+  <meta property="og:title" content="notes | 9rtm.dev" />
 </svelte:head>

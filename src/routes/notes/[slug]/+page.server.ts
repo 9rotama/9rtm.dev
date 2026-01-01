@@ -51,7 +51,7 @@ export const load: PageServerLoad = async ({ params }) => {
     .use(rehypeStringify)
     .process(md as string);
 
-  const metadata = selfNoteMetadataSchema.safeParse(matter(md).data);
+  const metadata = selfNoteMetadataSchema.safeParse(matter(md as string).data);
 
   if (!metadata.success) {
     error(404, {
@@ -59,5 +59,5 @@ export const load: PageServerLoad = async ({ params }) => {
     });
   }
 
-  return { metadata: metadata.data, html: String(html) };
+  return { slug: params.slug, metadata: metadata.data, html: String(html) };
 };

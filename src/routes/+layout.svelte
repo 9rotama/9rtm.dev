@@ -26,6 +26,12 @@
 <svelte:head>
   <title>9rtm.dev</title>
   <meta name="description" content="9rotamaの個人サイト" />
+  <meta property="og:title" content="9rtm.dev" />
+  <meta
+    property="og:image"
+    content={`${import.meta.env.VITE_BASE_URL}/ogp.webp`}
+  />
+  <meta name="twitter:card" content="summary" />
 </svelte:head>
 
 <div class="mx-auto max-w-2xl px-4 pb-12">

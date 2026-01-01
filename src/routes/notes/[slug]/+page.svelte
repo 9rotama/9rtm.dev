@@ -5,6 +5,15 @@
   const { data }: PageProps = $props();
 </script>
 
+<svelte:head>
+  <title>{data.metadata.title} | 9rtm.dev</title>
+  <meta property="og:title" content={data.metadata.title} />
+  <meta
+    property="og:image"
+    content={`${import.meta.env.VITE_BASE_URL}/notes/${encodeURIComponent(data.slug)}.webp`}
+  />
+</svelte:head>
+
 <a
   href="/notes"
   class="group text-muted hover:text-foreground absolute top-4 left-4 flex items-center gap-2 text-sm"
