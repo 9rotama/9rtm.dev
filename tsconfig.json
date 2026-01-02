@@ -14,8 +14,8 @@
     "types": ["@types/node"]
   },
   "include": [
-    "ambient.d.ts",
-    "non-ambient.d.ts",
+    ".svelte-kit/ambient.d.ts",
+    ".svelte-kit/non-ambient.d.ts",
     "./types/**/$types.d.ts",
     "./vite.config.js",
     "./vite.config.ts",

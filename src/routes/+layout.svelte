@@ -5,7 +5,7 @@
   import "@fontsource-variable/m-plus-1";
   import "../app.css";
   import Footer from "./_components/footer.svelte";
-
+  import { PUBLIC_BASE_URL } from "$env/static/public";
   let { children } = $props();
 
   onNavigate((navigation) => {
@@ -29,7 +29,7 @@
   <meta property="og:title" content="9rtm.dev" />
   <meta
     property="og:image"
-    content={`${import.meta.env.VITE_BASE_URL}/ogp.webp`}
+    content={new URL(`/ogp.webp`, PUBLIC_BASE_URL).toString()}
   />
   <meta name="twitter:card" content="summary" />
 </svelte:head>

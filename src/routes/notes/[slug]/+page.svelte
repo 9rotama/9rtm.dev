@@ -2,6 +2,7 @@
   import { ArrowLeft, Clock } from "@lucide/svelte";
   import { formatDate } from "date-fns";
   import type { PageProps } from "./$types";
+  import { PUBLIC_BASE_URL } from "$env/static/public";
   const { data }: PageProps = $props();
 </script>
 
@@ -10,7 +11,10 @@
   <meta property="og:title" content={data.metadata.title} />
   <meta
     property="og:image"
-    content={`${import.meta.env.VITE_BASE_URL}/notes/${encodeURIComponent(data.slug)}.webp`}
+    content={new URL(
+      `/notes/${encodeURIComponent(data.slug)}.webp`,
+      PUBLIC_BASE_URL,
+    ).toString()}
   />
 </svelte:head>
 
