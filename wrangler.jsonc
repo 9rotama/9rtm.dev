@@ -4,13 +4,6 @@
  */
 {
   "name": "9rtm-dev",
-  "main": "./.svelte-kit/cloudflare/worker.js",
-  "build": {
-    "command": "pnpm run build",
-  },
+  "pages_build_output_dir": ".svelte-kit/cloudflare",
   "compatibility_date": "2026-01-01",
-  "assets": {
-    "directory": "./.svelte-kit/cloudflare",
-    "binding": "ASSETS",
-  },
 }
