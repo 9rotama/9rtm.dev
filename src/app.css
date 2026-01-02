@@ -3,26 +3,24 @@
 @theme {
   --color-background: oklch(0.1656 0.02 291.05);
   --color-foreground: oklch(
-    from var(--color-background) calc(l + 0.7) calc(c + 0.03) h
+    from var(--color-background) calc(l + 0.65) calc(c + 0.02) h
   );
   --color-muted: oklch(
     from var(--color-foreground) calc(l - 0.15) calc(c + 0.04) h
   );
-  --color-accent: oklch(
-    from var(--color-background) calc(l + 0.7) calc(c + 0.3) h
+  --color-foreground-shade: oklch(
+    from var(--color-foreground) calc(l - 0.4) calc(c + 0.15) h
   );
+
   --color-border: oklch(from var(--color-foreground) calc(l - 0.5) c h);
-  --color-card-background: oklch(
-    from var(--color-background) calc(l + 0.03) c h
+  --color-card-background-dark: oklch(
+    from var(--color-background) calc(l -0.02) c h
   );
-  --color-card-background-lower: oklch(
-    from var(--color-background) calc(l + 0.01) calc(c + 0.02) h
+  --color-card-background-vivid: oklch(
+    from var(--color-background) calc(l + 0.05) calc(c + 0.02) h
   );
   --color-pre-background: oklch(
     from var(--color-background) calc(l + 0.07) c h
-  );
-  --color-accent-link: oklch(
-    from var(--color-accent) calc(l - 0.2) calc(c - 0.1) h
   );
 
   --font-body:
@@ -42,6 +40,7 @@ html {
 * {
   scrollbar-width: thin;
   scrollbar-color: var(--color-muted) var(--color-pre-background);
+  text-autospace: normal;
 }
 
 .markdown {
@@ -164,6 +163,10 @@ html {
 
   & hr {
     @apply border-border my-6 border-t-1;
+  }
+
+  & p {
+    @apply text-base/8;
   }
 }
 

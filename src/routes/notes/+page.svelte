@@ -27,7 +27,7 @@
       class="size-5 -scale-x-100 animate-pulse"
     />
     <h1
-      class="from-foreground via-foreground to-accent bg-gradient-to-b bg-clip-text text-2xl font-bold tracking-wider text-transparent"
+      class="from-foreground via-foreground to-foreground-shade bg-gradient-to-b bg-clip-text text-2xl font-bold tracking-wider text-transparent"
     >
       notes
     </h1>
@@ -42,7 +42,7 @@
   </p>
   <div class="mt-10 flex flex-col items-center">
     <label
-      class="bg-muted/10 ring-muted/30 flex w-full max-w-[400px] flex-row items-center gap-2 rounded-full px-4 py-2 ring-1 focus-within:ring-2"
+      class="to-card-background-vivid from-card-background-dark ring-muted/30 flex w-full max-w-[400px] flex-row items-center gap-2 rounded-full bg-gradient-to-b px-4 py-2 ring-1 focus-within:ring-2"
     >
       <Search class="text-muted size-5" />
       <input
