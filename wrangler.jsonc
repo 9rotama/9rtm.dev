@@ -5,6 +5,12 @@
 {
   "name": "9rtm-dev",
   "main": "./.svelte-kit/cloudflare/worker.js",
+  "routes": [
+    {
+      "pattern": "9rtm.dev",
+      "custom_domain": true,
+    },
+  ],
   "build": {
     "command": "pnpm run build",
   },
