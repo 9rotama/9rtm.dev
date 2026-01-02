@@ -11,4 +11,10 @@
   "observability": {
     "enabled": true,
   },
+  "routes": [
+    {
+      "pattern": "9rtm.dev",
+      "custom_domain": true,
+    },
+  ],
 }
