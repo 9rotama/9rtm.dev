@@ -1,5 +1,5 @@
 import { type RequestHandler } from "@sveltejs/kit";
-import { generateOgpImage } from "../../../ogp/generate-ogp";
+import { generateOgpImage } from "../../../../ogp/generate-ogp";
 
 export const prerender = true;
 

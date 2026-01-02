@@ -59,6 +59,12 @@
         <div
           class="from-border/0 via-border to-border/0 h-[1px] w-full bg-gradient-to-r"
         ></div>
+        <!--↓svelteが動的ルート用のOGPをクロールさせるための空リンク-->
+        <a
+          class="hidden"
+          href={`/notes/${encodeURIComponent(note.slug)}/ogp.webp`}
+          aria-label="ogp"
+        ></a>
       {/each}
     </div>
   </div>

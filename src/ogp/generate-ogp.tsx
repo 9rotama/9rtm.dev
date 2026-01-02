@@ -1,13 +1,14 @@
 import { readFileSync } from "node:fs";
+import path from "node:path";
 import satori from "satori";
 import sharp from "sharp";
 
 export async function generateOgpImage({ isRandom }: { isRandom: boolean }) {
   const funnelDisplayFont = readFileSync(
-    `${import.meta.dirname}/fonts/funnel_display_sb.ttf`,
+    path.resolve("src/ogp/fonts/funnel_display_sb.ttf"),
   );
   const mPlus1Font = readFileSync(
-    `${import.meta.dirname}/fonts/m_plus_1_sb.ttf`,
+    path.resolve("src/ogp/fonts/m_plus_1_sb.ttf"),
   );
   const rotation = isRandom ? Math.floor(Math.random() * 360) : 0;
 

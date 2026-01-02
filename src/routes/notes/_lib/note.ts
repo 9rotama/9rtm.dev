@@ -1,4 +1,5 @@
 export type Note = {
+  slug: string;
   href: string;
   title: string;
   thumbnail: { type: "image"; href: string } | { type: "emoji"; emoji: string };
