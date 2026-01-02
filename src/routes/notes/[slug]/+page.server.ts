@@ -21,7 +21,7 @@ export const load: PageServerLoad = async ({ params }) => {
     .use(remarkRehype)
     .use(rehypeSlug)
     .use(rehypeShiki, {
-      theme: "poimandres",
+      theme: "laserwave",
       langs: [
         "javascript",
         "typescript",

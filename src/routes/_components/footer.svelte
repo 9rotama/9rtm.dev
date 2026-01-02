@@ -13,7 +13,7 @@
       notes
     </a>
   </div>
-  <p class="text-muted mt-2 text-center">© 2025 9rotama</p>
+  <p class="text-muted mt-2 text-center">© 2026 9rotama</p>
   <p class="text-muted text-center">
     last updated: {__BUILD_TIME__}
   </p>

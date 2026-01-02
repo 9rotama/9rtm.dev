@@ -29,7 +29,7 @@
   <div class="flex flex-col items-center">
     <p class="text-6xl">{data.metadata.emoji}</p>
     <h1
-      class="from-foreground via-foreground to-accent mt-4 bg-gradient-to-b bg-clip-text text-[1.7rem] font-bold tracking-tight text-transparent"
+      class="from-foreground via-foreground to-foreground-shade mt-4 bg-gradient-to-b bg-clip-text text-[1.7rem] font-bold tracking-tight text-transparent"
     >
       {data.metadata.title}
     </h1>
