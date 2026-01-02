@@ -4,7 +4,7 @@
  */
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "9rtm.dev",
+  "name": "9rtm-dev",
   "compatibility_date": "2026-01-01",
   "compatibility_flags": ["nodejs_als"],
   "pages_build_output_dir": ".svelte-kit/cloudflare",
