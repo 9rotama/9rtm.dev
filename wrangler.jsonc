@@ -1,0 +1,16 @@
+/**
+ * For more details on how to configure Wrangler, refer to:
+ * https://developers.cloudflare.com/workers/wrangler/configuration/
+ */
+{
+  "name": "9rtm-dev",
+  "main": "./.svelte-kit/cloudflare/worker.js",
+  "build": {
+    "command": "pnpm run build",
+  },
+  "compatibility_date": "2026-01-01",
+  "assets": {
+    "directory": "./.svelte-kit/cloudflare",
+    "binding": "ASSETS",
+  },
+}

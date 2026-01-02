@@ -34,10 +34,10 @@ export async function generateOgpImage({ isRandom }: { isRandom: boolean }) {
         }}
       >
         <img
-          src="http://9rtm.dev/avatar.png"
+          src={new URL("avatar.png", "https://9rtm.dev").toString()}
+          width={480}
+          height={480}
           style={{
-            width: "480px",
-            height: "480px",
             borderRadius: "100%",
             marginBottom: "24px",
             transform: `rotate(${rotation}deg)`,
