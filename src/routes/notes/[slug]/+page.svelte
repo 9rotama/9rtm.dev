@@ -1,9 +1,21 @@
 <script lang="ts">
+  import { PUBLIC_BASE_URL } from "$env/static/public";
   import { ArrowLeft, Clock } from "@lucide/svelte";
   import { formatDate } from "date-fns";
   import type { PageProps } from "./$types";
   const { data }: PageProps = $props();
+
+  const ogpUrl = new URL(
+    `/notes/${encodeURIComponent(data.slug)}/ogp.webp`,
+    PUBLIC_BASE_URL,
+  ).toString();
 </script>
+
+<svelte:head>
+  <title>{data.metadata.title} | 9rtm.dev</title>
+  <meta property="og:title" content={data.metadata.title} />
+  <meta property="og:image" content={ogpUrl} />
+</svelte:head>
 
 <a
   href="/notes"

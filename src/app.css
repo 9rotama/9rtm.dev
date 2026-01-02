@@ -95,24 +95,35 @@ html {
     @apply mt-6 mb-4 text-sm leading-tight font-semibold;
   }
 
-  & .heading-link {
-    @apply text-muted/60 hover:text-muted mr-2 border-none font-normal no-underline;
+  & h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    & .heading-link {
+      @apply ml-2 border-none font-normal text-transparent no-underline transition-colors;
+    }
+
+    &:hover .heading-link {
+      @apply text-muted;
+    }
   }
 
   & blockquote {
-    @apply border-border text-muted border-l-4 pr-4 pl-4 text-base italic;
+    @apply border-border text-muted border-l-4 px-4 py-2 text-base italic;
   }
 
   & code {
-    @apply bg-pre-background border-border font-code inline rounded-lg border px-1 py-0.5 text-sm;
+    @apply bg-pre-background font-code mx-1 inline rounded-lg px-1 py-0.5;
   }
 
   & pre {
-    @apply bg-pre-background rounded-lg;
+    @apply bg-pre-background border-border rounded-lg border;
   }
 
   & pre code {
-    @apply bg-pre-background border-border block overflow-x-scroll rounded-lg p-2;
+    @apply bg-pre-background mx-0 block overflow-x-scroll rounded-lg p-3 text-sm;
   }
 
   & pre code {
@@ -120,11 +131,19 @@ html {
   }
 
   & ul {
-    @apply list-disc pl-8 text-base;
+    @apply mt-1 ml-8 list-disc text-base;
+
+    & li::marker {
+      @apply text-muted;
+    }
   }
 
   & ol {
-    @apply list-decimal pl-8 text-base;
+    @apply mt-1 ml-8 list-decimal text-base;
+
+    & li::marker {
+      @apply text-muted font-semibold;
+    }
   }
 
   & kbd {
@@ -136,7 +155,7 @@ html {
   }
 
   & th {
-    @apply border-border border px-3 py-1;
+    @apply border-border bg-border border px-3 py-1;
   }
 
   & td {
@@ -144,7 +163,7 @@ html {
   }
 
   & hr {
-    @apply border-border my-6 border-1 border-dashed;
+    @apply border-border my-6 border-t-1;
   }
 }
 

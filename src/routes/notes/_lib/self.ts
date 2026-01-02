@@ -24,7 +24,7 @@ export async function getSelfNotes(): Promise<
 
   for (const path in mds) {
     const md = mds[path];
-    const metadata = matter(md).data;
+    const metadata = matter(md as string).data;
     const parsed = selfNoteMetadataSchema.safeParse(metadata);
 
     if (!parsed.success) {
@@ -37,7 +37,7 @@ export async function getSelfNotes(): Promise<
     }
 
     const note = { ...parsed.data, slug };
-    if (note.published) {
+    if (note.published || import.meta.env.NODE_ENV === "development") {
       notes.push(note);
     }
   }

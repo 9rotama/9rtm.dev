@@ -1,7 +1,8 @@
 import { getSelfNotes } from "../notes/_lib/self";
 import type { RequestHandler } from "./$types";
+import { PUBLIC_BASE_URL } from "$env/static/public";
 
-const SITE_URL = "https://9rtm.dev";
+const SITE_URL = PUBLIC_BASE_URL;
 
 export const prerender = true;
 
