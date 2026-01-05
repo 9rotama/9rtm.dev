@@ -21,7 +21,7 @@ export const load: PageServerLoad = async ({ params }) => {
     .use(remarkRehype)
     .use(rehypeSlug)
     .use(rehypeShiki, {
-      theme: "laserwave",
+      theme: "github-dark-default",
       langs: [
         "javascript",
         "typescript",
