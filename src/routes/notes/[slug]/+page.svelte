@@ -2,6 +2,8 @@
   import { PUBLIC_BASE_URL } from "$env/static/public";
   import { ArrowLeft, Clock } from "@lucide/svelte";
   import { formatDate } from "date-fns";
+  import { mount, unmount } from "svelte";
+  import CopyButton from "../../_components/copy-button.svelte";
   import type { PageProps } from "./$types";
   const { data }: PageProps = $props();
 
@@ -9,6 +11,45 @@
     `/notes/${encodeURIComponent(data.slug)}/ogp.webp`,
     PUBLIC_BASE_URL,
   ).toString();
+
+  let articleElement: HTMLElement | undefined = $state();
+  let copyButtons: ReturnType<typeof mount>[] = [];
+
+  $effect(() => {
+    if (!articleElement) return;
+
+    // Clean up previous buttons
+    copyButtons.forEach((button) => unmount(button));
+    copyButtons = [];
+
+    // Add copy buttons to all pre code blocks
+    const preElements = articleElement.querySelectorAll("pre");
+    preElements.forEach((pre) => {
+      const code = pre.querySelector("code");
+      if (!code) return;
+
+      const codeText = code.textContent || "";
+
+      // Make pre relative for absolute positioning
+      pre.style.position = "relative";
+
+      // Create container for button
+      const buttonContainer = document.createElement("div");
+      pre.appendChild(buttonContainer);
+
+      // Mount CopyButton component
+      const button = mount(CopyButton, {
+        target: buttonContainer,
+        props: { code: codeText },
+      });
+      copyButtons.push(button);
+    });
+
+    return () => {
+      copyButtons.forEach((button) => unmount(button));
+      copyButtons = [];
+    };
+  });
 </script>
 
 <svelte:head>
@@ -44,6 +85,8 @@
   <div
     class="from-border/0 via-border to-border/0 mt-8 h-[1px] w-full bg-gradient-to-r"
   ></div>
-  <!-- eslint-disable-next-line svelte/no-at-html-tags -->
-  <article class="markdown mt-8">{@html data.html}</article>
+  <article bind:this={articleElement} class="markdown mt-8">
+    <!-- eslint-disable-next-line svelte/no-at-html-tags -->
+    {@html data.html}
+  </article>
 </main>
