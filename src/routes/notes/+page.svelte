@@ -38,7 +38,7 @@
     />
   </div>
   <p class="text-muted mt-4 text-center text-sm tracking-widest">
-    雑記 & zennなど
+    雑記・備忘録
   </p>
   <div class="mt-10 flex flex-col items-center">
     <label

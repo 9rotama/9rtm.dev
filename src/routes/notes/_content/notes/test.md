@@ -2,7 +2,7 @@
 title: test
 emoji: "📒"
 published_at: 2000-01-01
-published: false
+published: true
 ---
 
 # Heading 1
