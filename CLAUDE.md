@@ -1,64 +1,68 @@
-# claude.md
+# CLAUDE.md
 
-this file provides guidance to claude code (claude.ai/code) when working with code in this repository.
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## development commands
-
-this is a sveltekit project with static adapter configuration. use these commands:
+## Development Commands
 
 - `pnpm run dev` - start development server
-- `pnpm run build` - build for production (outputs to `build/` directory)
+- `pnpm run build` - build for production
 - `pnpm run preview` - preview production build
 - `pnpm run check` - run svelte type checking
 - `pnpm run lint` - run eslint and prettier checks
 - `pnpm run format` - format code with prettier
+- `pnpm run deploy` - build and deploy to Cloudflare Workers
 
-## architecture overview
+## Architecture Overview
 
-### core structure
+### Core Structure
 
-- **sveltekit 2** - static site generation using `@sveltejs/adapter-static`
-- **tailwindcss 4** - styling with vite plugin integration
-- **typescript** - type safety
-- **three.js + threlte** - 3d graphics (emoti-kun character)
+- **SvelteKit 2** with `@sveltejs/adapter-cloudflare` for Cloudflare Workers deployment
+- **TailwindCSS 4** - styling with vite plugin integration
+- **TypeScript** - type safety throughout
+- **Three.js + Threlte** - 3D graphics (emoti-kun character on homepage)
 
-### content management
+### Content Management (Notes/Blog)
 
-- **blog/notes system**: markdown files in `/content/notes/` processed with:
-  - `gray-matter` - frontmatter parsing
-  - `micromark` - gfm extension for rendering
-  - date-fns - date formatting
-- **self-hosted notes** and **zenn integration** - unified note type
-- content imported via vite's `import.meta.glob` with raw query
+Markdown files are processed using **mdsvex** with the following pipeline:
 
-### key directories
+- `src/routes/notes/_content/notes/*.md` - markdown posts with frontmatter
+- **shiki** - syntax highlighting (catppuccin-mocha theme)
+- **remark-gfm** - GitHub Flavored Markdown support
+- **rehype-slug + rehype-autolink-headings** - automatic heading links
+- **zod** - frontmatter validation via `selfNoteMetadataSchema`
 
-- `src/routes/` - sveltekit routes with file-based routing
-- `src/routes/_components/` - shared components including 3d emoti-kun
-- `src/lib/` - utility functions and content management
-- `content/notes/` - markdown blog posts
-- `static/` - static assets including fonts and images
+Frontmatter schema (required fields):
 
-### pre-commit hooks
+```yaml
+title: string
+emoji: string
+published_at: string (date)
+published: boolean
+```
 
-lefthook is configured to run lint and format commands before commits, with automatic staging of fixed files.
+Content is loaded via `import.meta.glob` and rendered as Svelte components.
 
-### component architecture
+### Key Directories
 
-- layout components use svelte 5 syntax
-- 3d components built with threlte (three.js wrapper for svelte)
-- icon components are self-contained svg svelte components
-- note/blog components handle both self-hosted and external content
+- `src/routes/` - SvelteKit file-based routing
+- `src/routes/_components/` - shared components (emoti-kun 3D scene, footer, etc.)
+- `src/routes/notes/_lib/` - note-related utilities and types
+- `src/routes/notes/_content/notes/` - markdown blog posts
+- `src/ogp/` - OGP image generation with satori + sharp
 
-## rules
+### Pre-commit Hooks
 
-### coding style
+Lefthook runs lint and format commands before commits with automatic staging of fixed files.
 
-- always use es modules (import / export), never use commonjs.
-- use destructure imports as default. (`import {foo} from 'bar'`)
-- implement using svelte 5 runes syntax.
+## Rules
 
-### workflow
+### Coding Style
 
-- run `pnpm run lint` on written code and fix any errors.
-- claude should not run development server checks, users will handle that.
+- Always use ES modules (import/export), never CommonJS
+- Use destructured imports: `import { foo } from 'bar'`
+- Implement using Svelte 5 runes syntax
+
+### Workflow
+
+- Run `pnpm run lint` on written code and fix any errors
+- Do not run the development server; users will handle that

@@ -18,7 +18,7 @@
         class="size-3 -scale-x-100 animate-pulse"
       />
       <h2
-        class="from-foreground via-foreground to-foreground-shade bg-gradient-to-b bg-clip-text text-xl font-bold tracking-wider text-transparent"
+        class="from-heading-foreground via-heading-foreground to-heading-foreground-shade bg-gradient-to-b bg-clip-text text-xl font-bold tracking-wider text-transparent"
       >
         {text}
       </h2>

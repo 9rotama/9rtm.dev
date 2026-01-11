@@ -9,6 +9,8 @@
     `/notes/${encodeURIComponent(data.slug)}/ogp.webp`,
     PUBLIC_BASE_URL,
   ).toString();
+
+  const Component = $derived(data.component);
 </script>
 
 <svelte:head>
@@ -29,7 +31,7 @@
   <div class="flex flex-col items-center">
     <p class="text-6xl">{data.metadata.emoji}</p>
     <h1
-      class="from-foreground via-foreground to-foreground-shade mt-4 bg-gradient-to-b bg-clip-text text-[1.7rem] font-bold tracking-tight text-transparent"
+      class=" to-heading-foreground-shade text-heading-foreground mt-4 bg-clip-text text-2xl font-bold tracking-tight"
     >
       {data.metadata.title}
     </h1>
@@ -44,6 +46,9 @@
   <div
     class="from-border/0 via-border to-border/0 mt-8 h-[1px] w-full bg-gradient-to-r"
   ></div>
-  <!-- eslint-disable-next-line svelte/no-at-html-tags -->
-  <article class="markdown mt-8">{@html data.html}</article>
+  <div class="mt-8">
+    <article class="markdown">
+      <Component />
+    </article>
+  </div>
 </main>

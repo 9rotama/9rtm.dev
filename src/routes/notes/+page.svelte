@@ -27,7 +27,7 @@
       class="size-5 -scale-x-100 animate-pulse"
     />
     <h1
-      class="from-foreground via-foreground to-foreground-shade bg-gradient-to-b bg-clip-text text-2xl font-bold tracking-wider text-transparent"
+      class="from-heading-foreground via-heading-foreground to-heading-foreground-shade bg-gradient-to-b bg-clip-text text-2xl font-bold tracking-wider text-transparent"
     >
       notes
     </h1>
@@ -38,7 +38,7 @@
     />
   </div>
   <p class="text-muted mt-4 text-center text-sm tracking-widest">
-    雑記 & zennなど
+    雑記・備忘録
   </p>
   <div class="mt-10 flex flex-col items-center">
     <label

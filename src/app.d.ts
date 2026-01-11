@@ -11,6 +11,13 @@ declare global {
       cf: CfProperties;
       ctx: ExecutionContext;
     }
+
+    interface MdsvexFile {
+      default: import("svelte").Component;
+      metadata: Record<string, unknown>;
+    }
+
+    type MdsvexResolver = () => Promise<MdsvexFile>;
   }
 
   const __BUILD_TIME__: string;

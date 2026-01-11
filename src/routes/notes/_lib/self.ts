@@ -1,12 +1,10 @@
-import { selfNotesMds } from "$lib/content";
 import type { Result } from "$lib/result";
-import matter from "gray-matter";
 import z from "zod";
 
 export const selfNoteMetadataSchema = z.object({
   title: z.string(),
   emoji: z.string(),
-  published_at: z.date(),
+  published_at: z.string().transform((str) => new Date(str)),
   published: z.boolean(),
 });
 
@@ -18,14 +16,17 @@ type SelfNoteData = SelfNoteMetadata & {
 export async function getSelfNotes(): Promise<
   Result<{ notes: SelfNoteData[] }, "metadata-error" | "error">
 > {
-  const mds = selfNotesMds;
+  const selfNotesMds = import.meta.glob("../_content/notes/*.md", {
+    eager: true,
+  });
 
+  const mds = selfNotesMds as Record<string, App.MdsvexFile>;
   const notes: SelfNoteData[] = [];
 
   for (const path in mds) {
     const md = mds[path];
-    const metadata = matter(md as string).data;
-    const parsed = selfNoteMetadataSchema.safeParse(metadata);
+
+    const parsed = selfNoteMetadataSchema.safeParse(md.metadata);
 
     if (!parsed.success) {
       return { success: false, error: "metadata-error" };
