@@ -41,7 +41,12 @@ const mdsvexOptions = {
       const html = escapeSvelte(
         highlighter.codeToHtml(code, { lang, theme: highlightTheme }),
       );
-      return `{@html \`${html}\` }`;
+      const escapedCode = code
+        .replace(/\\/g, "\\\\")
+        .replace(/`/g, "\\`")
+        .replace(/\$/g, "\\$")
+        .replace(/{/g, "\\{");
+      return `<Components.CodeBlock lang="${lang}" code={\`${escapedCode}\`}>{@html \`${html}\` }</Components.CodeBlock>`;
     },
   },
 };

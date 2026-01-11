@@ -5,6 +5,7 @@
   export { default as h4 } from "../_components/h4.svelte";
   export { default as h5 } from "../_components/h5.svelte";
   export { default as h6 } from "../_components/h6.svelte";
+  export { default as CodeBlock } from "../_components/code-block.svelte";
 </script>
 
 <slot />

@@ -15,7 +15,7 @@
 
 <button
   onclick={copyCode}
-  class="hover:bg-card-background-vivid absolute top-2 right-2 rounded-lg p-2 transition-colors"
+  class="hover:bg-card-background-vivid rounded-lg p-2 transition-colors"
   aria-label="Copy code"
 >
   {#if copied}
