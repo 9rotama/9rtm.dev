@@ -1,10 +1,13 @@
+import { fileURLToPath } from "node:url";
+import path from "node:path";
 import adapter from "@sveltejs/adapter-cloudflare";
 import { vitePreprocess } from "@sveltejs/vite-plugin-svelte";
 import { escapeSvelte, mdsvex } from "mdsvex";
-import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeSlug from "rehype-slug";
 import remarkGfm from "remark-gfm";
 import { createHighlighter } from "shiki";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const highlightTheme = "catppuccin-mocha";
 
@@ -28,25 +31,11 @@ const highlighter = await createHighlighter({
 /** @type {import('mdsvex').MdsvexOptions} */
 const mdsvexOptions = {
   extensions: [".md"],
+  layout: {
+    _: path.join(__dirname, "src/routes/notes/_content/mdsvex-layout.svelte"),
+  },
   remarkPlugins: [remarkGfm],
-  rehypePlugins: [
-    rehypeSlug,
-    [
-      rehypeAutolinkHeadings,
-      {
-        behavior: "append",
-        properties: {
-          className: ["heading-link"],
-          ariaLabel: "link to section",
-          title: "link to section",
-        },
-        content: {
-          type: "text",
-          value: "🔗",
-        },
-      },
-    ],
-  ],
+  rehypePlugins: [rehypeSlug],
   highlight: {
     highlighter: async (code, lang = "text") => {
       const html = escapeSvelte(
