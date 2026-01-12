@@ -15,7 +15,7 @@
 
 <button
   onclick={copyCode}
-  class="group bg-card-background-dark hover:bg-card-background-vivid border-border rounded-lg border p-2 transition-colors"
+  class="group to-card-background-dark from-card-background-vivid-light hover:to-card-background-vivid-light hover:from-card-background-dark border-border rounded-lg border bg-gradient-to-b p-1.5 transition-colors"
   aria-label="Copy code"
 >
   {#if copied}

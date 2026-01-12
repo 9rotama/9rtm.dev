@@ -25,8 +25,14 @@
   --color-card-background-vivid: oklch(
     from var(--color-background) calc(l + 0.05) calc(c + 0.02) h
   );
+  --color-card-background-vivid-light: oklch(
+    from var(--color-background) calc(l + 0.1) calc(c + 0.04) h
+  );
   --color-pre-background: oklch(
     from var(--color-background) calc(l + 0.04) calc(c + 0.02) h
+  );
+  --color-pre-background-dark: oklch(
+    from var(--color-pre-background) calc(l - 0.03) calc(c) h
   );
 
   --font-body:
