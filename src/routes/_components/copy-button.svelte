@@ -15,12 +15,12 @@
 
 <button
   onclick={copyCode}
-  class="hover:bg-card-background-vivid rounded-lg p-2 transition-colors"
+  class="group bg-card-background-dark hover:bg-card-background-vivid border-border rounded-lg border p-2 transition-colors"
   aria-label="Copy code"
 >
   {#if copied}
-    <Check class="text-foreground size-4" />
+    <Check class="text-muted size-4" />
   {:else}
-    <Copy class="text-muted hover:text-foreground size-4" />
+    <Copy class="text-muted size-4" />
   {/if}
 </button>

@@ -20,7 +20,7 @@
 
   --color-border: oklch(from var(--color-foreground) calc(l - 0.5) c h);
   --color-card-background-dark: oklch(
-    from var(--color-background) calc(l -0.02) c h
+    from var(--color-background) calc(l - 0.02) c h
   );
   --color-card-background-vivid: oklch(
     from var(--color-background) calc(l + 0.05) calc(c + 0.02) h
