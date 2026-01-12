@@ -35,12 +35,10 @@
   {#if lang}
     <span class="text-muted block px-4 pt-2 text-xs">{lang}</span>
   {/if}
-  <pre class="m-0 border-none bg-transparent">
-    <code
-      class="font-code m-0 block overflow-x-auto bg-transparent p-4 pb-2 text-sm"
+  <pre class="m-0 border-none bg-transparent"><code
+      class="font-code m-0 block overflow-x-auto bg-transparent p-4 text-sm"
       >{@render children()}</code
-    >
-  </pre>
+    ></pre>
   <div
     class="copy-button-wrapper absolute top-2 right-2 transition-opacity"
     class:active={isActive}
