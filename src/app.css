@@ -20,13 +20,19 @@
 
   --color-border: oklch(from var(--color-foreground) calc(l - 0.5) c h);
   --color-card-background-dark: oklch(
-    from var(--color-background) calc(l -0.02) c h
+    from var(--color-background) calc(l - 0.02) c h
   );
   --color-card-background-vivid: oklch(
     from var(--color-background) calc(l + 0.05) calc(c + 0.02) h
   );
+  --color-card-background-vivid-light: oklch(
+    from var(--color-background) calc(l + 0.1) calc(c + 0.04) h
+  );
   --color-pre-background: oklch(
     from var(--color-background) calc(l + 0.04) calc(c + 0.02) h
+  );
+  --color-pre-background-dark: oklch(
+    from var(--color-pre-background) calc(l - 0.03) calc(c) h
   );
 
   --font-body:
@@ -130,22 +136,6 @@ html {
 
   & blockquote {
     @apply border-border text-muted border-l-4 px-4 py-2 text-base italic;
-  }
-
-  & code {
-    @apply bg-pre-background font-code mx-1 inline rounded-lg px-1 py-0.5;
-  }
-
-  & pre {
-    @apply bg-pre-background border-border mt-8 mb-8 rounded-lg border;
-  }
-
-  & pre code {
-    @apply bg-pre-background mx-0 block overflow-x-scroll rounded-lg p-4 pb-2 text-sm;
-  }
-
-  & pre code {
-    scrollbar-color: var(--color-muted) transparent;
   }
 
   & ul {
