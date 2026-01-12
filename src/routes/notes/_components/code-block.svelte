@@ -28,11 +28,19 @@
 <svelte:window onpointerdown={handlePointerDownOutside} />
 
 <div
-  class="code-block group relative"
+  class="code-block bg-pre-background border-border group relative mt-8 mb-8 rounded-lg border"
   data-lang={lang}
   onpointerdown={handlePointerDown}
 >
-  {@render children()}
+  {#if lang}
+    <span class="text-muted block px-4 pt-2 text-xs">{lang}</span>
+  {/if}
+  <pre class="m-0 border-none bg-transparent">
+    <code
+      class="font-code m-0 block overflow-x-auto bg-transparent p-4 pb-2 text-sm"
+      >{@render children()}</code
+    >
+  </pre>
   <div
     class="copy-button-wrapper absolute top-2 right-2 transition-opacity"
     class:active={isActive}

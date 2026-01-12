@@ -1,8 +1,8 @@
-import { fileURLToPath } from "node:url";
-import path from "node:path";
 import adapter from "@sveltejs/adapter-cloudflare";
 import { vitePreprocess } from "@sveltejs/vite-plugin-svelte";
 import { escapeSvelte, mdsvex } from "mdsvex";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import rehypeSlug from "rehype-slug";
 import remarkGfm from "remark-gfm";
 import { createHighlighter } from "shiki";
@@ -39,7 +39,11 @@ const mdsvexOptions = {
   highlight: {
     highlighter: async (code, lang = "text") => {
       const html = escapeSvelte(
-        highlighter.codeToHtml(code, { lang, theme: highlightTheme }),
+        highlighter.codeToHtml(code, {
+          lang,
+          theme: highlightTheme,
+          structure: "inline",
+        }),
       );
       const escapedCode = code
         .replace(/\\/g, "\\\\")

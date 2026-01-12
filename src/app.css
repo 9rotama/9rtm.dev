@@ -132,22 +132,6 @@ html {
     @apply border-border text-muted border-l-4 px-4 py-2 text-base italic;
   }
 
-  & code {
-    @apply bg-pre-background font-code mx-1 inline rounded-lg px-1 py-0.5;
-  }
-
-  & pre {
-    @apply bg-pre-background border-border mt-8 mb-8 rounded-lg border;
-  }
-
-  & pre code {
-    @apply bg-pre-background mx-0 block overflow-x-scroll rounded-lg p-4 pb-2 text-sm;
-  }
-
-  & pre code {
-    scrollbar-color: var(--color-muted) transparent;
-  }
-
   & ul {
     @apply mt-1 ml-8 list-disc text-base;
 
