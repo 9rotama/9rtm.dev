@@ -4,9 +4,13 @@
 
   const {
     lang,
+    filename,
     code,
     children,
-  }: { lang?: string; code: string; children: Snippet } = $props();
+  }: { lang?: string; filename?: string; code: string; children: Snippet } =
+    $props();
+
+  const displayLabel = filename ?? lang;
 
   let isActive = $state(false);
 
@@ -32,9 +36,9 @@
   data-lang={lang}
   onpointerdown={handlePointerDown}
 >
-  {#if lang}<span
-      class="text-muted bg-background border-border font-code ml-2 inline-block rounded-b-md border border-t-0 px-2 py-1 align-top text-xs drop-shadow-[0_8px_8px_rgba(2,0,5,0.4)]"
-      >{lang}</span
+  {#if displayLabel}<span
+      class="text-muted bg-background border-border font-code ml-2 inline-block rounded-b-md border border-t-0 px-2 py-1 align-top text-xs tracking-tighter drop-shadow-[0_8px_8px_rgba(2,0,5,0.4)]"
+      >{displayLabel}</span
     >{/if}
   <pre class="m-0 border-none bg-transparent"><code
       class="font-code m-0 block overflow-x-auto bg-transparent p-4 pt-2 text-sm"
