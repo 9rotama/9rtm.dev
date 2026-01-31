@@ -17,4 +17,11 @@
       "custom_domain": true,
     },
   ],
+  "d1_databases": [
+    {
+      "binding": "_9rtm_dev_db",
+      "database_name": "9rtm-dev-db",
+      "database_id": "8b5304c0-cf2f-4aa5-8b07-5d89995ddc56",
+    },
+  ],
 }
