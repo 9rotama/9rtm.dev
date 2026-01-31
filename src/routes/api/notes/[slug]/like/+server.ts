@@ -1,6 +1,10 @@
 import type { RequestHandler } from "./$types";
 import { json } from "@sveltejs/kit";
 import { logger } from "$lib/logger";
+import { getSelfNoteSlugs } from "../../../../notes/_lib/self";
+import checkLikeExistsQuery from "./_queries/check-like-exists.sql?raw";
+import upsertLikeQuery from "./_queries/upsert-like.sql?raw";
+import insertLikeLogQuery from "./_queries/insert-like-log.sql?raw";
 
 async function hashIP(ip: string): Promise<string> {
   const encoder = new TextEncoder();
@@ -12,10 +16,17 @@ async function hashIP(ip: string): Promise<string> {
 
 export const POST: RequestHandler = async ({ params, platform, request }) => {
   const { slug } = params;
-  const db = platform?.env?.DB;
+  const db = platform?.env?._9rtm_dev_db;
   const webhookUrl = platform?.env?.DISCORD_WEBHOOK_URL;
 
   logger.debug({ slug }, "like request received");
+
+  // slug検証
+  const validSlugs = getSelfNoteSlugs();
+  if (!validSlugs.has(slug)) {
+    logger.warn({ slug }, "invalid slug");
+    return json({ error: "Note not found" }, { status: 404 });
+  }
 
   if (!db) {
     logger.error("DB not available");
@@ -28,7 +39,7 @@ export const POST: RequestHandler = async ({ params, platform, request }) => {
 
   // 連投チェック（同じIP+slugがあるか）
   const existing = await db
-    .prepare("SELECT * FROM likes_log WHERE slug = ? AND ip_hash = ?")
+    .prepare(checkLikeExistsQuery)
     .bind(slug, ipHash)
     .first();
 
@@ -39,14 +50,8 @@ export const POST: RequestHandler = async ({ params, platform, request }) => {
 
   // いいね記録
   await db.batch([
-    db
-      .prepare(
-        "INSERT INTO likes (slug, count) VALUES (?, 1) ON CONFLICT(slug) DO UPDATE SET count = count + 1",
-      )
-      .bind(slug),
-    db
-      .prepare("INSERT INTO likes_log (slug, ip_hash) VALUES (?, ?)")
-      .bind(slug, ipHash),
+    db.prepare(upsertLikeQuery).bind(slug),
+    db.prepare(insertLikeLogQuery).bind(slug, ipHash),
   ]);
 
   logger.info({ slug }, "like recorded");
