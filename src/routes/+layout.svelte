@@ -6,7 +6,7 @@
   import "../app.css";
   import Footer from "./_components/footer.svelte";
   import { PUBLIC_BASE_URL } from "$env/static/public";
-  let { children } = $props();
+  let { children, data } = $props();
 
   onNavigate((navigation) => {
     if (!document.startViewTransition) return;
@@ -24,6 +24,7 @@
 </script>
 
 <svelte:head>
+  <link rel="canonical" href={data.canonicalUrl} />
   <title>9rtm.dev</title>
   <meta name="description" content="9rotamaの個人サイト" />
   <meta property="og:title" content="9rtm.dev" />

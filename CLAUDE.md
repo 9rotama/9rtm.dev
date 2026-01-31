@@ -17,6 +17,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ### Core Structure
 
 - **SvelteKit 2** with `@sveltejs/adapter-cloudflare` for Cloudflare Workers deployment
+- **Static Site Generation** - `prerender = true` in `+layout.ts`, all pages are pre-rendered at build time
 - **TailwindCSS 4** - styling with vite plugin integration
 - **TypeScript** - type safety throughout
 - **Three.js + Threlte** - 3D graphics (emoti-kun character on homepage)
