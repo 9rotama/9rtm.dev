@@ -3,6 +3,7 @@
   import { ArrowLeft, Clock } from "@lucide/svelte";
   import { formatDate } from "date-fns";
   import type { PageProps } from "./$types";
+  import LikeButton from "./_components/like-button.svelte";
   const { data }: PageProps = $props();
 
   const ogpUrl = new URL(
@@ -50,5 +51,8 @@
     <article class="markdown">
       <Component />
     </article>
+  </div>
+  <div class="mt-12 flex justify-center">
+    <LikeButton slug={data.slug} />
   </div>
 </main>

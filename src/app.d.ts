@@ -1,5 +1,12 @@
 // See https://svelte.dev/docs/kit/types#app.d.ts
 // for information about these interfaces
+
+// Cloudflare D1 & Secrets (extends Env from worker-configuration.d.ts)
+interface Env {
+  DB: D1Database;
+  DISCORD_WEBHOOK_URL: string;
+}
+
 declare global {
   namespace App {
     // interface Error {}
