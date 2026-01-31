@@ -1,5 +1,6 @@
 import type { RequestHandler } from "./$types";
 import { json } from "@sveltejs/kit";
+import { logger } from "$lib/logger";
 
 async function hashIP(ip: string): Promise<string> {
   const encoder = new TextEncoder();
@@ -14,7 +15,10 @@ export const POST: RequestHandler = async ({ params, platform, request }) => {
   const db = platform?.env?.DB;
   const webhookUrl = platform?.env?.DISCORD_WEBHOOK_URL;
 
+  logger.debug({ slug }, "like request received");
+
   if (!db) {
+    logger.error("DB not available");
     return json({ error: "Database not available" }, { status: 500 });
   }
 
@@ -29,6 +33,7 @@ export const POST: RequestHandler = async ({ params, platform, request }) => {
     .first();
 
   if (existing) {
+    logger.info({ slug }, "already liked");
     return json({ error: "Already liked" }, { status: 429 });
   }
 
@@ -44,6 +49,8 @@ export const POST: RequestHandler = async ({ params, platform, request }) => {
       .bind(slug, ipHash),
   ]);
 
+  logger.info({ slug }, "like recorded");
+
   // Discord通知
   if (webhookUrl) {
     await fetch(webhookUrl, {
@@ -53,6 +60,7 @@ export const POST: RequestHandler = async ({ params, platform, request }) => {
         content: `"${slug}" にいいねがつきました`,
       }),
     });
+    logger.debug({ slug }, "discord notification sent");
   }
 
   return json({ success: true });
