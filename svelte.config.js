@@ -38,9 +38,15 @@ const mdsvexOptions = {
   rehypePlugins: [rehypeSlug],
   highlight: {
     highlighter: async (code, lang = "text") => {
+      // "javascript:example.js" → ["javascript", "example.js"]
+      const colonIndex = lang.indexOf(":");
+      const hasFilename = colonIndex !== -1;
+      const actualLang = hasFilename ? lang.slice(0, colonIndex) : lang;
+      const filename = hasFilename ? lang.slice(colonIndex + 1) : undefined;
+
       const html = escapeSvelte(
         highlighter.codeToHtml(code, {
-          lang,
+          lang: actualLang,
           theme: highlightTheme,
           structure: "inline",
         }),
@@ -50,7 +56,8 @@ const mdsvexOptions = {
         .replace(/`/g, "\\`")
         .replace(/\$/g, "\\$")
         .replace(/{/g, "\\{");
-      return `<Components.CodeBlock lang="${lang}" code={\`${escapedCode}\`}>{@html \`${html}\` }</Components.CodeBlock>`;
+      const filenameAttr = filename ? ` filename="${filename}"` : "";
+      return `<Components.CodeBlock lang="${actualLang}"${filenameAttr} code={\`${escapedCode}\`}>{@html \`${html}\` }</Components.CodeBlock>`;
     },
   },
 };
