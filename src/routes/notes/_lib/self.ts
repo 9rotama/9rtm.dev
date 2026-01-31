@@ -30,6 +30,17 @@ export function getSelfNoteSlugs(): Set<string> {
   return slugs;
 }
 
+export function getSelfNoteTitle(slug: string): string | undefined {
+  for (const path in selfNotesMds) {
+    if (extractSlug(path) === slug) {
+      const md = selfNotesMds[path];
+      const parsed = selfNoteMetadataSchema.safeParse(md.metadata);
+      return parsed.success ? parsed.data.title : undefined;
+    }
+  }
+  return undefined;
+}
+
 export async function getSelfNotes(): Promise<
   Result<{ notes: SelfNoteData[] }, "metadata-error" | "error">
 > {
