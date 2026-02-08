@@ -1,6 +1,9 @@
 @import "tailwindcss";
 
 @theme {
+  --animate-blurred-fade-in: blurred-fade-in 0.3s ease-out forwards;
+  --animate-blurred-fade-out: blurred-fade-out 0.3s ease-out forwards;
+
   --color-background: oklch(0.1656 0.02 291.05);
   --color-foreground: oklch(
     from var(--color-background) calc(l + 0.7) calc(c + 0.02) h
@@ -202,5 +205,27 @@ html {
 @keyframes fade-in {
   from {
     opacity: 0;
+  }
+}
+
+@keyframes blurred-fade-in {
+  from {
+    opacity: 0;
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+@keyframes blurred-fade-out {
+  from {
+    opacity: 1;
+    filter: blur(0);
+  }
+  to {
+    opacity: 0;
+    filter: blur(4px);
   }
 }
