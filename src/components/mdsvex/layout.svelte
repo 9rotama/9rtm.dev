@@ -1,4 +1,5 @@
 <script module lang="ts">
+  export { default as a } from "./a.svelte";
   export { default as CodeBlock } from "./code-block.svelte";
   export { default as code } from "./code.svelte";
   export { default as h1 } from "./h1.svelte";

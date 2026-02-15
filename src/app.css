@@ -20,6 +20,9 @@
   --color-muted: oklch(
     from var(--color-foreground) calc(l - 0.15) calc(c + 0.04) h
   );
+  --color-accent: oklch(
+    from var(--color-foreground) calc(l - 0.2) calc(c + 0.25) h
+  );
   --color-heading-foreground-shade: oklch(
     from var(--color-foreground) calc(l - 0.3) calc(c + 0.2) h
   );
@@ -72,66 +75,6 @@ html {
 
 .markdown {
   @apply text-foreground leading-relaxed break-words;
-
-  & li + li {
-    @apply mt-1;
-  }
-
-  & li > p + p {
-    @apply mt-6;
-  }
-
-  & strong {
-    @apply font-semibold;
-  }
-
-  & a {
-    @apply text-muted border-muted/50 hover:text-foreground border-b font-semibold;
-  }
-
-  & strong a {
-    @apply font-bold;
-  }
-
-  & blockquote {
-    @apply border-border text-muted border-l-4 px-4 py-2 text-base italic;
-  }
-
-  & ul {
-    @apply mt-1 ml-8 list-disc text-base;
-
-    & li::marker {
-      @apply text-muted;
-    }
-  }
-
-  & ol {
-    @apply mt-1 ml-8 list-decimal text-base;
-
-    & li::marker {
-      @apply text-muted font-semibold;
-    }
-  }
-
-  & kbd {
-    @apply font-code inline-block rounded border px-1 py-5 align-middle text-xs font-normal shadow;
-  }
-
-  & table {
-    @apply text-base;
-  }
-
-  & th {
-    @apply border-border bg-border border px-3 py-1;
-  }
-
-  & td {
-    @apply border-border border px-3 py-1;
-  }
-
-  & hr {
-    @apply border-border my-6 border-t-1;
-  }
 
   & p {
     @apply text-base/8;
