@@ -73,10 +73,6 @@ html {
 .markdown {
   @apply text-foreground leading-relaxed break-words;
 
-  & > * + * {
-    @apply mt-0 mb-4;
-  }
-
   & li + li {
     @apply mt-1;
   }
@@ -95,54 +91,6 @@ html {
 
   & strong a {
     @apply font-bold;
-  }
-
-  & h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    @apply text-heading-foreground;
-  }
-
-  & h1 {
-    @apply mt-16 mb-4 text-4xl leading-tight font-semibold;
-  }
-
-  & h2 {
-    @apply mt-16 mb-4 text-2xl leading-tight font-semibold;
-  }
-
-  & h3 {
-    @apply mt-8 mb-4 text-xl leading-snug font-semibold;
-  }
-
-  & h4 {
-    @apply mt-6 mb-4 text-base leading-none font-semibold;
-  }
-
-  & h5 {
-    @apply mt-6 mb-4 text-sm leading-tight font-semibold;
-  }
-
-  & h6 {
-    @apply mt-6 mb-4 text-sm leading-tight font-semibold;
-  }
-
-  & h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    & .heading-link {
-      @apply ml-2 border-none font-normal text-transparent no-underline transition-colors;
-    }
-
-    &:hover .heading-link {
-      @apply text-muted;
-    }
   }
 
   & blockquote {

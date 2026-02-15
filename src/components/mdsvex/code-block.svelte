@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Snippet } from "svelte";
-  import CopyButton from "../../_components/copy-button.svelte";
+  import CopyButton from "../../routes/_components/copy-button.svelte";
 
   const {
     lang,

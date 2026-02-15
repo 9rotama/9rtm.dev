@@ -19,6 +19,15 @@
     6: "size-3.5",
   };
 
+  const headingStyles: Record<HeadingLevel, string> = {
+    1: "mt-16 mb-4 text-4xl leading-tight font-semibold",
+    2: "mt-16 mb-4 text-2xl leading-tight font-semibold",
+    3: "mt-8 mb-4 text-xl leading-snug font-semibold",
+    4: "mt-6 mb-4 text-base leading-none font-semibold",
+    5: "mt-6 mb-4 text-sm leading-tight font-semibold",
+    6: "mt-6 mb-4 text-sm leading-tight font-semibold",
+  };
+
   let copied = $state(false);
 
   async function copyLink() {
@@ -32,7 +41,11 @@
   }
 </script>
 
-<svelte:element this={`h${level}`} {id} class="group flex items-center">
+<svelte:element
+  this={`h${level}`}
+  {id}
+  class="text-heading-foreground group flex items-center {headingStyles[level]}"
+>
   <span>{@render children()}</span>
   {#if id}
     <button

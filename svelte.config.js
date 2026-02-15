@@ -32,7 +32,7 @@ const highlighter = await createHighlighter({
 const mdsvexOptions = {
   extensions: [".md"],
   layout: {
-    _: path.join(__dirname, "src/routes/notes/_content/mdsvex-layout.svelte"),
+    _: path.join(__dirname, "src/components/mdsvex/layout.svelte"),
   },
   remarkPlugins: [remarkGfm],
   rehypePlugins: [rehypeSlug],
