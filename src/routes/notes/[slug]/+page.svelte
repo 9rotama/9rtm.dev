@@ -21,11 +21,11 @@
 
 <a
   href="/notes"
-  class="group text-muted hover:text-foreground absolute top-4 left-4 flex items-center gap-2 text-sm"
+  class="group text-muted hover:text-foreground font-display absolute top-4 left-4 flex items-center gap-2 text-sm"
 >
   <ArrowLeft
     class="size-5 transition-transform ease-out group-hover:-translate-x-1 group-hover:transform"
-  /> back to index
+  /> <span>back to index</span>
 </a>
 <main class="mx-auto mt-16">
   <div class="flex flex-col items-center">
