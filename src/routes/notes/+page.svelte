@@ -27,7 +27,7 @@
       class="size-5 -scale-x-100 animate-pulse"
     />
     <h1
-      class="from-heading-foreground via-heading-foreground to-heading-foreground-shade bg-gradient-to-b bg-clip-text text-2xl font-bold tracking-wider text-transparent"
+      class="font-display from-heading-foreground via-heading-foreground to-heading-foreground-shade bg-gradient-to-b bg-clip-text text-xl text-transparent"
     >
       notes
     </h1>

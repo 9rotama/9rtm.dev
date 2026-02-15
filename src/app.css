@@ -1,9 +1,18 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: "Michroma";
+  src: url("/fonts/michroma.ttf") format("truetype");
+  font-display: swap;
+}
+
 @theme {
-  --color-background: oklch(0.1656 0.02 291.05);
+  --color-background: oklch(0.1656 0.03 291.05);
   --color-foreground: oklch(
-    from var(--color-background) calc(l + 0.7) calc(c + 0.02) h
+    from var(--color-background) calc(l + 0.75) calc(c + 0.01) h
+  );
+  --color-code-foreground: oklch(
+    from var(--color-foreground) calc(l - 0.08) calc(c + 0.03) h
   );
   --color-heading-foreground: oklch(
     from var(--color-foreground) calc(l + 0.1) c h
@@ -36,11 +45,13 @@
   );
 
   --font-body:
-    "Funnel Display Variable", "M PLUS 1 Variable", "Helvetica Neue", Arial,
-    "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+    "IBM Plex Sans JP", "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN",
+    "Hiragino Sans", Meiryo, sans-serif;
   --font-code:
-    "Geist Mono Variable", "M PLUS 1 Variable", Consolas, "Courier New",
-    Courier, Monaco, monospace;
+    "IBM Plex Mono", "IBM Plex Sans JP", Consolas, "Courier New", Courier,
+    Monaco, monospace;
+  --font-display:
+    "Michroma", "IBM Plex Sans JP", "Helvetica Neue", Arial, sans-serif;
 }
 
 html {
@@ -176,6 +187,10 @@ html {
 
   & p {
     @apply text-base/8;
+  }
+
+  & img {
+    @apply mt-8 mb-8 rounded-lg;
   }
 }
 

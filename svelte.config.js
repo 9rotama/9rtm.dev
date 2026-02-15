@@ -9,7 +9,7 @@ import { createHighlighter } from "shiki";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const highlightTheme = "catppuccin-mocha";
+const highlightTheme = "poimandres";
 
 const highlighter = await createHighlighter({
   themes: [highlightTheme],

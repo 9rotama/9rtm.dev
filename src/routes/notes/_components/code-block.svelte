@@ -32,12 +32,12 @@
 <svelte:window onpointerdown={handlePointerDownOutside} />
 
 <div
-  class="code-block border-border group bg-pre-background relative mt-8 mb-8 rounded-lg border p-0 inset-shadow-[0_8px_16px_rgba(2,0,5,0.4)]"
+  class="code-block border-border group bg-pre-background inset-shadow-background relative mt-8 mb-8 rounded-lg border p-0 inset-shadow-sm"
   data-lang={lang}
   onpointerdown={handlePointerDown}
 >
   {#if displayLabel}<span
-      class="text-muted bg-background border-border font-code ml-2 inline-block rounded-b-md border border-t-0 px-2 py-1 align-top text-xs tracking-tighter drop-shadow-[0_8px_8px_rgba(2,0,5,0.4)]"
+      class="text-muted bg-background border-border font-code drop-shadow-background ml-2 inline-block rounded-b-md border border-t-0 px-2 py-1 align-top text-xs tracking-tighter drop-shadow-sm"
       >{displayLabel}</span
     >{/if}
   <pre class="m-0 border-none bg-transparent"><code
@@ -45,7 +45,7 @@
       >{@render children()}</code
     ></pre>
   <div
-    class="copy-button-wrapper absolute top-2 right-2 drop-shadow-[0_8px_8px_rgba(2,0,5,0.4)] transition-opacity"
+    class="copy-button-wrapper drop-shadow-background absolute top-2 right-2 drop-shadow transition-opacity"
     class:active={isActive}
   >
     <CopyButton {code} />
