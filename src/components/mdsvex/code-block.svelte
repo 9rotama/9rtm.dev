@@ -32,7 +32,7 @@
 <svelte:window onpointerdown={handlePointerDownOutside} />
 
 <div
-  class="code-block border-border group bg-pre-background inset-shadow-background relative mt-8 mb-8 rounded-lg border p-0 inset-shadow-sm"
+  class="code-block border-border-solid group bg-pre-background inset-shadow-background relative mt-8 mb-8 rounded-lg border p-0 inset-shadow-sm"
   data-lang={lang}
   onpointerdown={handlePointerDown}
 >

@@ -20,12 +20,12 @@
   };
 
   const headingStyles: Record<HeadingLevel, string> = {
-    1: "mt-16 mb-4 text-4xl leading-tight font-semibold",
-    2: "mt-16 mb-4 text-2xl leading-tight font-semibold",
-    3: "mt-8 mb-4 text-xl leading-snug font-semibold",
-    4: "mt-6 mb-4 text-base leading-none font-semibold",
-    5: "mt-6 mb-4 text-sm leading-tight font-semibold",
-    6: "mt-6 mb-4 text-sm leading-tight font-semibold",
+    1: "mt-20 mb-8 text-3xl tracking-tight font-semibold",
+    2: "mt-18 mb-6 text-2xl tracking-tight font-semibold",
+    3: "mt-12 mb-4 text-xl tracking-tight font-semibold",
+    4: "mt-6 mb-4 text-lg tracking-tight font-semibold",
+    5: "mt-6 mb-4 text-base tracking-tight font-semibold",
+    6: "mt-6 mb-4 text-base tracking-tight font-semibold",
   };
 
   let copied = $state(false);
@@ -50,7 +50,7 @@
   {#if id}
     <button
       onclick={copyLink}
-      class="text-muted hover:text-foreground ml-2 opacity-0 transition-opacity group-hover:opacity-100"
+      class="text-muted hover:text-foreground ml-2 opacity-0 transition-opacity duration-100 group-hover:opacity-100"
       aria-label="Copy link to section"
     >
       {#if copied}

@@ -7,15 +7,12 @@
 }
 
 @theme {
-  --color-background: oklch(0.1656 0.03 291.05);
+  --color-background: oklch(0.15 0.02 291.05);
   --color-foreground: oklch(
     from var(--color-background) calc(l + 0.75) calc(c + 0.01) h
   );
-  --color-code-foreground: oklch(
-    from var(--color-foreground) calc(l - 0.08) calc(c + 0.03) h
-  );
   --color-heading-foreground: oklch(
-    from var(--color-foreground) calc(l + 0.1) c h
+    from var(--color-foreground) calc(l + 0.05) c h
   );
   --color-muted: oklch(
     from var(--color-foreground) calc(l - 0.15) calc(c + 0.04) h
@@ -29,8 +26,10 @@
   --color-selection-background: oklch(
     from var(--color-foreground) calc(l - 0.3) calc(c + 0.1) h
   );
-
   --color-border: oklch(from var(--color-foreground) calc(l - 0.5) c h);
+  --color-border-solid: oklch(
+    from var(--color-border) calc(l - 0.05) calc(c + 0.01) h
+  );
   --color-card-background-dark: oklch(
     from var(--color-background) calc(l - 0.02) c h
   );
@@ -40,8 +39,11 @@
   --color-card-background-vivid-light: oklch(
     from var(--color-background) calc(l + 0.1) calc(c + 0.04) h
   );
+  --color-code-foreground: oklch(
+    from var(--color-foreground) calc(l + 0.05) calc(c + 0.02) h
+  );
   --color-pre-background: oklch(
-    from var(--color-background) calc(l + 0.04) calc(c + 0.02) h
+    from var(--color-background) calc(l + 0.06) calc(c + 0.005) h
   );
   --color-pre-background-dark: oklch(
     from var(--color-pre-background) calc(l - 0.03) calc(c) h
