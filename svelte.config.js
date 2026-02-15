@@ -9,7 +9,7 @@ import { createHighlighter } from "shiki";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const highlightTheme = "catppuccin-mocha";
+const highlightTheme = "poimandres";
 
 const highlighter = await createHighlighter({
   themes: [highlightTheme],
@@ -32,7 +32,7 @@ const highlighter = await createHighlighter({
 const mdsvexOptions = {
   extensions: [".md"],
   layout: {
-    _: path.join(__dirname, "src/routes/notes/_content/mdsvex-layout.svelte"),
+    _: path.join(__dirname, "src/components/mdsvex/layout.svelte"),
   },
   remarkPlugins: [remarkGfm],
   rehypePlugins: [rehypeSlug],

@@ -18,7 +18,7 @@
         class="mt-4 h-32 w-32 rounded-full"
       />
       <div class="flex flex-col items-start">
-        <div class="mt-4 text-lg">9rotama / くろたま</div>
+        <div class="mt-4 font-bold">9rotama / くろたま</div>
         <div class="text-muted mt-1 text-sm">web front & gl</div>
         <div class="mt-4 flex flex-row items-center gap-2 text-sm">
           <a

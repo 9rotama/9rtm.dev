@@ -19,6 +19,15 @@
     6: "size-3.5",
   };
 
+  const headingStyles: Record<HeadingLevel, string> = {
+    1: "mt-20 mb-8 text-3xl tracking-tight font-semibold",
+    2: "mt-18 mb-6 text-2xl tracking-tight font-semibold",
+    3: "mt-12 mb-4 text-xl tracking-tight font-semibold",
+    4: "mt-6 mb-4 text-lg tracking-tight font-semibold",
+    5: "mt-6 mb-4 text-base tracking-tight font-semibold",
+    6: "mt-6 mb-4 text-base tracking-tight font-semibold",
+  };
+
   let copied = $state(false);
 
   async function copyLink() {
@@ -32,12 +41,16 @@
   }
 </script>
 
-<svelte:element this={`h${level}`} {id} class="group flex items-center">
+<svelte:element
+  this={`h${level}`}
+  {id}
+  class="text-heading-foreground group flex items-center {headingStyles[level]}"
+>
   <span>{@render children()}</span>
   {#if id}
     <button
       onclick={copyLink}
-      class="text-muted hover:text-foreground ml-2 opacity-0 transition-opacity group-hover:opacity-100"
+      class="text-muted hover:text-foreground ml-2 opacity-0 transition-opacity duration-100 group-hover:opacity-100"
       aria-label="Copy link to section"
     >
       {#if copied}

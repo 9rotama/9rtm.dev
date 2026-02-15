@@ -17,6 +17,18 @@ importers:
       '@fontsource-variable/m-plus-1':
         specifier: ^5.2.6
         version: 5.2.6
+      '@fontsource-variable/museomoderno':
+        specifier: ^5.2.9
+        version: 5.2.9
+      '@fontsource/ibm-plex-mono':
+        specifier: ^5.2.7
+        version: 5.2.7
+      '@fontsource/ibm-plex-sans-jp':
+        specifier: ^5.2.8
+        version: 5.2.8
+      '@fontsource/line-seed-jp':
+        specifier: ^5.2.1
+        version: 5.2.1
       '@lucide/svelte':
         specifier: ^0.525.0
         version: 0.525.0(svelte@5.35.5)
@@ -575,6 +587,18 @@ packages:
 
   '@fontsource-variable/m-plus-1@5.2.6':
     resolution: {integrity: sha512-cpQXepUoJaDiing6nsiJbILALJy4rymB0QJFLFFSz9DZGyv700dmTmOv4BmTJOfF/W0FKZCaNy7e0yrAUierbw==}
+
+  '@fontsource-variable/museomoderno@5.2.9':
+    resolution: {integrity: sha512-BwIvw+4dqead/ZD+pt0u9aHgRupt27dFBwfasiKvkr1IJfR2h0waVh4sfUKSHnqvAzIIJR1WK23ho4Vqkk6eeQ==}
+
+  '@fontsource/ibm-plex-mono@5.2.7':
+    resolution: {integrity: sha512-MKAb8qV+CaiMQn2B0dIi1OV3565NYzp3WN5b4oT6LTkk+F0jR6j0ZN+5BKJiIhffDC3rtBULsYZE65+0018z9w==}
+
+  '@fontsource/ibm-plex-sans-jp@5.2.8':
+    resolution: {integrity: sha512-ULgJLBVJEBIKBddVFla4PiOCHM4a7wjThS9FtMbmc9YehcYmnuMtF8/mi9ItZobHpQGwChzF/7ujoUTs+cYbZw==}
+
+  '@fontsource/line-seed-jp@5.2.1':
+    resolution: {integrity: sha512-br1DgoVDZj5ZTzZc/vMtCnQuGFGrQqcAPeRBxY+XS7+ORoh6oR8vWP1fEXQyjTuCOt84I1dPspipsSsDcao8kQ==}
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -3144,6 +3168,14 @@ snapshots:
   '@fontsource-variable/geist-mono@5.2.6': {}
 
   '@fontsource-variable/m-plus-1@5.2.6': {}
+
+  '@fontsource-variable/museomoderno@5.2.9': {}
+
+  '@fontsource/ibm-plex-mono@5.2.7': {}
+
+  '@fontsource/ibm-plex-sans-jp@5.2.8': {}
+
+  '@fontsource/line-seed-jp@5.2.1': {}
 
   '@humanfs/core@0.19.1': {}
 

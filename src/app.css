@@ -1,15 +1,24 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: "Michroma";
+  src: url("/fonts/michroma.ttf") format("truetype");
+  font-display: swap;
+}
+
 @theme {
-  --color-background: oklch(0.1656 0.02 291.05);
+  --color-background: oklch(0.15 0.02 291.05);
   --color-foreground: oklch(
-    from var(--color-background) calc(l + 0.7) calc(c + 0.02) h
+    from var(--color-background) calc(l + 0.75) calc(c + 0.01) h
   );
   --color-heading-foreground: oklch(
-    from var(--color-foreground) calc(l + 0.1) c h
+    from var(--color-foreground) calc(l + 0.05) c h
   );
   --color-muted: oklch(
     from var(--color-foreground) calc(l - 0.15) calc(c + 0.04) h
+  );
+  --color-accent: oklch(
+    from var(--color-foreground) calc(l - 0.2) calc(c + 0.25) h
   );
   --color-heading-foreground-shade: oklch(
     from var(--color-foreground) calc(l - 0.3) calc(c + 0.2) h
@@ -17,8 +26,10 @@
   --color-selection-background: oklch(
     from var(--color-foreground) calc(l - 0.3) calc(c + 0.1) h
   );
-
   --color-border: oklch(from var(--color-foreground) calc(l - 0.5) c h);
+  --color-border-solid: oklch(
+    from var(--color-border) calc(l - 0.05) calc(c + 0.01) h
+  );
   --color-card-background-dark: oklch(
     from var(--color-background) calc(l - 0.02) c h
   );
@@ -28,19 +39,24 @@
   --color-card-background-vivid-light: oklch(
     from var(--color-background) calc(l + 0.1) calc(c + 0.04) h
   );
+  --color-code-foreground: oklch(
+    from var(--color-foreground) calc(l + 0.05) calc(c + 0.02) h
+  );
   --color-pre-background: oklch(
-    from var(--color-background) calc(l + 0.04) calc(c + 0.02) h
+    from var(--color-background) calc(l + 0.06) calc(c + 0.005) h
   );
   --color-pre-background-dark: oklch(
     from var(--color-pre-background) calc(l - 0.03) calc(c) h
   );
 
   --font-body:
-    "Funnel Display Variable", "M PLUS 1 Variable", "Helvetica Neue", Arial,
-    "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+    "IBM Plex Sans JP", "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN",
+    "Hiragino Sans", Meiryo, sans-serif;
   --font-code:
-    "Geist Mono Variable", "M PLUS 1 Variable", Consolas, "Courier New",
-    Courier, Monaco, monospace;
+    "IBM Plex Mono", "IBM Plex Sans JP", Consolas, "Courier New", Courier,
+    Monaco, monospace;
+  --font-display:
+    "Michroma", "IBM Plex Sans JP", "Helvetica Neue", Arial, sans-serif;
 }
 
 html {
@@ -62,120 +78,12 @@ html {
 .markdown {
   @apply text-foreground leading-relaxed break-words;
 
-  & > * + * {
-    @apply mt-0 mb-4;
-  }
-
-  & li + li {
-    @apply mt-1;
-  }
-
-  & li > p + p {
-    @apply mt-6;
-  }
-
-  & strong {
-    @apply font-semibold;
-  }
-
-  & a {
-    @apply text-muted border-muted/50 hover:text-foreground border-b font-semibold;
-  }
-
-  & strong a {
-    @apply font-bold;
-  }
-
-  & h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    @apply text-heading-foreground;
-  }
-
-  & h1 {
-    @apply mt-16 mb-4 text-4xl leading-tight font-semibold;
-  }
-
-  & h2 {
-    @apply mt-16 mb-4 text-2xl leading-tight font-semibold;
-  }
-
-  & h3 {
-    @apply mt-8 mb-4 text-xl leading-snug font-semibold;
-  }
-
-  & h4 {
-    @apply mt-6 mb-4 text-base leading-none font-semibold;
-  }
-
-  & h5 {
-    @apply mt-6 mb-4 text-sm leading-tight font-semibold;
-  }
-
-  & h6 {
-    @apply mt-6 mb-4 text-sm leading-tight font-semibold;
-  }
-
-  & h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    & .heading-link {
-      @apply ml-2 border-none font-normal text-transparent no-underline transition-colors;
-    }
-
-    &:hover .heading-link {
-      @apply text-muted;
-    }
-  }
-
-  & blockquote {
-    @apply border-border text-muted border-l-4 px-4 py-2 text-base italic;
-  }
-
-  & ul {
-    @apply mt-1 ml-8 list-disc text-base;
-
-    & li::marker {
-      @apply text-muted;
-    }
-  }
-
-  & ol {
-    @apply mt-1 ml-8 list-decimal text-base;
-
-    & li::marker {
-      @apply text-muted font-semibold;
-    }
-  }
-
-  & kbd {
-    @apply font-code inline-block rounded border px-1 py-5 align-middle text-xs font-normal shadow;
-  }
-
-  & table {
-    @apply text-base;
-  }
-
-  & th {
-    @apply border-border bg-border border px-3 py-1;
-  }
-
-  & td {
-    @apply border-border border px-3 py-1;
-  }
-
-  & hr {
-    @apply border-border my-6 border-t-1;
-  }
-
   & p {
     @apply text-base/8;
+  }
+
+  & img {
+    @apply mt-8 mb-8 rounded-lg;
   }
 }
 
