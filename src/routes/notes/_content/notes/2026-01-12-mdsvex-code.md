@@ -1,5 +1,5 @@
 ---
-title: mdsvexでコードブロックにコピーボタンを入れ込みたい
+title: mdsvexでコードブロックにコピーボタンを追加する
 emoji: "🧱"
 published_at: 2026-01-12
 published: true
@@ -9,13 +9,15 @@ published: true
 
 ## mdsvex
 
-mdsvexは[MDX](https://mdxjs.com/)のSvelte版のようなライブラリで、Markdown内でSvelteコンポーネントを呼び出すことができます。
+mdsvexは[MDX](https://mdxjs.com/)のSvelte版のようなライブラリで、Markdown内でSvelteコンポーネントを呼び出すことができます。拡張子は`.svx`で記述します。
 
-Svelteコンポーネントを使う場合は`.svx`拡張子で記述しますが、素の`.md`ファイルの変換にも使うことができます。
+明示的にSvelteコンポーネントを呼び出す方法もありますが、Markdownタグに対してコンポーネントをマッピングすることもできます。そのため、素の`.md`だけを管理したい場合でもmdsvexは重宝します💪
 
 ## Custom Components
 
-mdsvexには[**Custom Components**](https://mdsvex.pngwn.io/docs#custom-components)というオプションがあり、markdownの構文に対して自作のSvelteコンポーネントを出力させることができます。
+mdsvexには[**Custom Components**](https://mdsvex.pngwn.io/docs#custom-components)というオプションがあり、通常のmarkdownタグに対して自作のSvelteコンポーネントを描画させることができます。
+
+例えば、見出しのアンカーリンクのような、タグ以外の要素をappendしたい場合に有効活用できます。
 
 Custom Componentsとコンポーネントの対応付けは、mdsvex用のLayoutファイルで行います。
 
@@ -31,11 +33,11 @@ Custom Componentsとコンポーネントの対応付けは、mdsvex用のLayout
 <slot />
 ```
 
-プラグインを噛ませない要素であれば単にexportするだけですが、コードハイライトの場合はShikiが要素を生成しているため、一工夫必要です。
+プラグインを噛ませない要素であれば単にexportするだけでマッピングできます。ただ、コードハイライトの場合はShikiのようなhighlighterが要素を生成しているため、一工夫必要です。
 
 ## やったこと
 
-CodeBlockというコンポーネントを実装し、その中でコピーボタンとShikiのハイライトを表示できるようにします。
+CodeBlockというコンポーネントを実装し、**コピーボタン**と**ファイル名**をコード本文と一緒に表示できるようにします。
 
 ### Highlighterにコンポーネントを渡す
 
@@ -67,7 +69,7 @@ const mdsvexOptions = {
 };
 ```
 
-ここで、CodeBlockコンポーネントをhighlighterの返り値で呼び出す設定が必要です。
+ここで、CodeBlockコンポーネントをhighlighterが呼び出す設定が必要です。
 
 ```javascript:svelte.config.js
 const mdsvexOptions = {
@@ -88,18 +90,15 @@ const mdsvexOptions = {
 };
 ```
 
-奇妙ですが、returnした文字列はそのままLayoutのSvelteコードとして読み込まれるみたいです。
+少し奇妙ですが、returnした文字列はそのままLayoutのSvelteコードとして読み込まれるみたいです。
 
 ### Shikiに`<pre>`と`<code>`を生成させない
 
-Shikiはデフォルトで`<pre>`と`<code>`要素を生成するため、コンポーネント内からスタイルを適用するのが難しくなります。(`:globals`記法を使えますが、あまりやりたくない)
+Shikiはデフォルトで`<pre>`と`<code>`要素を直接生成するため、Custom Componentsからスタイルを適用するのが難しくなります。(`:globals`記法を使えますが、スコープの点で好ましくない)
 
-また、Shikiが`pre code`に対して直接スタイルを当てるため、`div`で囲んで〜という方法も取れません。
+![コードブロックの背景色が微妙に明るかったり、フォントがOSデフォルトのものに変化している](/post-media/pre-background.png "pre codeに直接スタイリングしないと、フォントや背景色が異なってしまう")
 
-![コードブロックの背景色が微妙に明るかったり、フォントがOSデフォルトのものに変化している](/post-media/pre-background.png)
-↑pre codeに直接スタイリングしないと、フォントや背景色が違ってしまう...
-
-ただ、これはShikiのオプションが用意されており、それを変えるだけで解消できます🥳
+解決法として、Shiki highlighterのオプションに`structure: inline`を指定します。これによってCustom Components内で`<pre>`と`<code>`要素を自分で実装し、Svelteコード内でスタイリングをコントロールできます。
 
 ```javascript:svelte.config.js
 const html = escapeSvelte(
@@ -140,4 +139,4 @@ const html = escapeSvelte(
 
 ## まとめ
 
-Svelteコードを文字列リテラルで書くというハック的な方法でしたが、DOMを直接変更するよりも簡潔な実装ができたかなと思います。
+Svelteコードを文字列リテラルで書くというハック的な方法でしたが、DOMを直接操作するよりも簡潔な実装ができたと思います。
