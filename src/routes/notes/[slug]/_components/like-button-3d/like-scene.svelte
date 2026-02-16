@@ -1,6 +1,10 @@
 <script lang="ts">
-  import { T } from "@threlte/core";
+  import { T, useThrelte } from "@threlte/core";
+  import { Color } from "three";
   import StarModel from "./star-model.svelte";
+
+  const { scene } = useThrelte();
+  scene.background = new Color("#0e0d17");
 
   interface Props {
     isLiked: boolean;
@@ -11,6 +15,7 @@
   const { isLiked, isHovered, mousePosition }: Props = $props();
 
   // カーソル位置に基づいてライトの位置を計算
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const lightPosition = $derived({
     x: mousePosition.x * 2,
     y: mousePosition.y * 2,
@@ -20,13 +25,6 @@
   console.log(isHovered);
 </script>
 
-<T.PerspectiveCamera makeDefault fov={50} position={[0, 0, 5]} />
-<T.AmbientLight intensity={0.3} />
-<T.PointLight
-  position={[lightPosition.x, lightPosition.y, lightPosition.z]}
-  intensity={15}
-  color="#bc84f1"
-  visible
-/>
+<T.PerspectiveCamera makeDefault fov={70} position={[0, 0, 5]} />
 
 <StarModel {isLiked} />

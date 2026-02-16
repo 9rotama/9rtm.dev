@@ -10,18 +10,14 @@
 
   const gltf = useGltf("/models/star.glb");
 
-  const color = $derived(isLiked ? "#F9F0FF" : "#808080");
+  const color = $derived(isLiked ? "#FDF" : "#FDF");
 
   // いいね時の回転アニメーション
   let rotation = $state(0);
 </script>
 
 {#if $gltf}
-  <T.Mesh
-    geometry={$gltf.nodes.Star001?.geometry}
-    rotation.y={rotation}
-    position.y={0}
-  >
-    <T.MeshStandardMaterial {color} />
+  <T.Mesh geometry={$gltf.nodes.Star001?.geometry} rotation.y={rotation}>
+    <T.MeshBasicMaterial {color} wireframe />
   </T.Mesh>
 {/if}

@@ -52,7 +52,7 @@
       <Component />
     </article>
   </div>
-  <div class="mt-12 flex justify-center">
+  <div class="mt-20 flex justify-center">
     <LikeButton slug={data.slug} />
   </div>
 </main>
