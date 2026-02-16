@@ -77,14 +77,6 @@ html {
 
 .markdown {
   @apply text-foreground leading-relaxed break-words;
-
-  & p {
-    @apply text-base/8;
-  }
-
-  & img {
-    @apply mt-8 mb-8 rounded-lg;
-  }
 }
 
 /* View Transitions */
