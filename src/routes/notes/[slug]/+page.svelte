@@ -1,6 +1,6 @@
 <script lang="ts">
   import { PUBLIC_BASE_URL } from "$env/static/public";
-  import { ArrowLeft, Clock } from "@lucide/svelte";
+  import { ArrowLeft, Upload } from "@lucide/svelte";
   import { formatDate } from "date-fns";
   import type { PageProps } from "./$types";
   import LikeButton from "./_components/like-button-3d/index.svelte";
@@ -22,23 +22,23 @@
 
 <a
   href="/notes"
-  class="group text-muted hover:text-foreground absolute top-4 left-4 flex items-center gap-2 text-sm"
+  class="group text-muted hover:text-foreground font-display absolute top-4 left-4 flex items-center gap-2 text-sm"
 >
   <ArrowLeft
     class="size-5 transition-transform ease-out group-hover:-translate-x-1 group-hover:transform"
-  /> back to index
+  /> <span>back to index</span>
 </a>
 <main class="mx-auto mt-16">
   <div class="flex flex-col items-center">
     <p class="text-6xl">{data.metadata.emoji}</p>
     <h1
-      class=" to-heading-foreground-shade text-heading-foreground mt-4 bg-clip-text text-2xl font-bold tracking-tight"
+      class=" to-heading-foreground-shade text-heading-foreground font-body mt-4 bg-clip-text text-2xl font-bold tracking-tight"
     >
       {data.metadata.title}
     </h1>
 
     <div class="text-muted mt-2 flex flex-row items-center gap-2 text-sm">
-      <Clock class="size-4" />{formatDate(
+      <Upload class="size-4" />{formatDate(
         data.metadata.published_at,
         "MMM dd, yyyy",
       )}

@@ -4,12 +4,13 @@ import { escapeSvelte, mdsvex } from "mdsvex";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import rehypeSlug from "rehype-slug";
+import rehypeUnwrapImages from "rehype-unwrap-images";
 import remarkGfm from "remark-gfm";
 import { createHighlighter } from "shiki";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const highlightTheme = "catppuccin-mocha";
+const highlightTheme = "poimandres";
 
 const highlighter = await createHighlighter({
   themes: [highlightTheme],
@@ -32,10 +33,10 @@ const highlighter = await createHighlighter({
 const mdsvexOptions = {
   extensions: [".md"],
   layout: {
-    _: path.join(__dirname, "src/routes/notes/_content/mdsvex-layout.svelte"),
+    _: path.join(__dirname, "src/components/mdsvex/layout.svelte"),
   },
   remarkPlugins: [remarkGfm],
-  rehypePlugins: [rehypeSlug],
+  rehypePlugins: [rehypeSlug, rehypeUnwrapImages],
   highlight: {
     highlighter: async (code, lang = "text") => {
       // "javascript:example.js" → ["javascript", "example.js"]

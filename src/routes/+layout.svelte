@@ -1,11 +1,14 @@
 <script lang="ts">
   import { onNavigate } from "$app/navigation";
-  import "@fontsource-variable/funnel-display";
-  import "@fontsource-variable/geist-mono";
-  import "@fontsource-variable/m-plus-1";
+  import { PUBLIC_BASE_URL } from "$env/static/public";
+  import "@fontsource/ibm-plex-mono/400.css";
+  import "@fontsource/ibm-plex-mono/700.css";
+  import "@fontsource/ibm-plex-sans-jp/400.css";
+  import "@fontsource/ibm-plex-sans-jp/700.css";
+  import "@fontsource-variable/museomoderno";
+
   import "../app.css";
   import Footer from "./_components/footer.svelte";
-  import { PUBLIC_BASE_URL } from "$env/static/public";
   let { children, data } = $props();
 
   onNavigate((navigation) => {
