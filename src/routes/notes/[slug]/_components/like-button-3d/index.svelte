@@ -46,7 +46,7 @@
     class="flex cursor-pointer flex-row items-center gap-2 overflow-clip rounded-full transition-colors disabled:cursor-default"
   >
     <div class="size-20">
-      <Canvas>
+      <Canvas autoRender={false}>
         <LikeScene {isLiked} {isHovered} {mousePosition} />
       </Canvas>
     </div>

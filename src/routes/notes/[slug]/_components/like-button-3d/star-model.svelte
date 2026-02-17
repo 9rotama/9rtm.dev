@@ -10,7 +10,7 @@
 
   const gltf = useGltf("/models/star.glb");
 
-  const color = $derived(isLiked ? "#FDF" : "#FDF");
+  const color = $derived(isLiked ? "#EDF" : "#EDF");
 
   // いいね時の回転アニメーション
   let rotation = $state(0);
