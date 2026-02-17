@@ -11,7 +11,7 @@
 
   let isLiked = $state(false);
   let isHovered = $state(false);
-  let mousePosition = $state({ x: -1, y: 1 });
+  // let mousePosition = $state({ x: -1, y: 1 });
   let hasTransitioned = $state(false);
 
   async function handleClick() {
@@ -27,13 +27,13 @@
     }
   }
 
-  function handleMouseMove(event: MouseEvent) {
-    const rect = (event.currentTarget as HTMLElement).getBoundingClientRect();
-    mousePosition = {
-      x: ((event.clientX - rect.left) / rect.width) * 2 - 1,
-      y: -((event.clientY - rect.top) / rect.height) * 2 + 1,
-    };
-  }
+  // function handleMouseMove(event: MouseEvent) {
+  //   const rect = (event.currentTarget as HTMLElement).getBoundingClientRect();
+  //   mousePosition = {
+  //     x: ((event.clientX - rect.left) / rect.width) * 2 - 1,
+  //     y: -((event.clientY - rect.top) / rect.height) * 2 + 1,
+  //   };
+  // }
 </script>
 
 <div class="flex flex-col items-center gap-3">
@@ -41,13 +41,12 @@
     onclick={handleClick}
     onmouseenter={() => (isHovered = true)}
     onmouseleave={() => (isHovered = false)}
-    onmousemove={handleMouseMove}
     disabled={isLiked}
     class="flex cursor-pointer flex-row items-center gap-2 overflow-clip rounded-full transition-colors disabled:cursor-default"
   >
     <div class="size-20">
       <Canvas autoRender={false}>
-        <LikeScene {isLiked} {isHovered} {mousePosition} />
+        <LikeScene {isLiked} {isHovered} />
       </Canvas>
     </div>
   </button>

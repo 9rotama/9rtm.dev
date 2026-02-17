@@ -2,91 +2,62 @@
   import { T, useTask, useThrelte } from "@threlte/core";
   import { animate } from "animejs";
   import {
-    ChromaticAberrationEffect,
+    BloomEffect,
     EffectComposer,
     EffectPass,
-    LensDistortionEffect,
     RenderPass,
-    VignetteEffect,
   } from "postprocessing";
-  import { Color, Vector2 } from "three";
+  import { Color } from "three";
   import StarModel from "./star-model.svelte";
 
-  const { scene, camera, renderer, renderStage } = useThrelte();
+  const { scene, renderer, camera, renderStage } = useThrelte();
   scene.background = new Color("#0e0d17");
+
+  // transmission解像度を上げる
+  renderer.transmissionResolutionScale = 2.0;
 
   interface Props {
     isLiked: boolean;
     isHovered: boolean;
-    mousePosition: { x: number; y: number };
   }
 
-  const { isLiked, isHovered, mousePosition }: Props = $props();
-
-  // カーソル位置に基づいてライトの位置を計算
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const lightPosition = $derived({
-    x: mousePosition.x * 2,
-    y: mousePosition.y * 2,
-    z: 3,
-  });
+  const { isLiked, isHovered }: Props = $props();
 
   // postprocessing setup
   const composer = new EffectComposer(renderer);
   composer.addPass(new RenderPass(scene, camera.current));
 
-  const chromaticAberration = new ChromaticAberrationEffect({
-    radialModulation: true,
-    modulationOffset: 0.2,
+  const bloomEffect = new BloomEffect({
+    intensity: 0,
+    luminanceThreshold: 0.3,
+    luminanceSmoothing: 0.9,
+    radius: 0.4,
+    mipmapBlur: true,
+  });
+  composer.addPass(new EffectPass(camera.current, bloomEffect));
+
+  // isLikedのときだけbloomを有効化
+  $effect(() => {
+    bloomEffect.intensity = isLiked ? 8 : 0;
   });
 
-  const lensDistortion = new LensDistortionEffect({
-    distortion: new Vector2(0, 0),
-    principalPoint: new Vector2(0, 0),
-    focalLength: new Vector2(1, 1),
-  });
-
-  const vignette = new VignetteEffect({
-    darkness: 0.75,
-    offset: 0,
-  });
-
-  // LensDistortionはUV変換するので別のEffectPassに分ける
-  const lensPass = new EffectPass(camera.current, lensDistortion);
-  const chromaticPass = new EffectPass(camera.current, chromaticAberration);
-  const vignettePass = new EffectPass(camera.current, vignette);
-  composer.addPass(vignettePass);
-  composer.addPass(lensPass);
-  composer.addPass(chromaticPass);
-
-  // エフェクト強度のターゲット値
-  const TARGET_CHROMATIC_OFFSET = 0.04;
-  const TARGET_DISTORTION = -0.65;
-
-  // アニメーション用のオブジェクト
-  const effectValues = { chromatic: 0, distortion: 0 };
+  // アニメーション用
+  const TARGET_IOR = 1.16;
+  const effectValues = { ior: 1.0 };
+  let lensIor = $state(1.0);
   let currentAnimation: ReturnType<typeof animate> | null = null;
 
-  // ホバー状態に応じてアニメーション
   $effect(() => {
     if (currentAnimation) {
       currentAnimation.pause();
     }
 
     currentAnimation = animate(effectValues, {
-      chromatic: isHovered ? TARGET_CHROMATIC_OFFSET : 0.03,
-      distortion: isHovered ? TARGET_DISTORTION : 0,
+      ior: isHovered ? TARGET_IOR : 1.0,
       duration: 200,
       ease: "inOutCirc",
       onUpdate: () => {
-        chromaticAberration.offset.set(
-          effectValues.chromatic,
-          effectValues.chromatic,
-        );
-        lensDistortion.distortion.set(
-          effectValues.distortion,
-          effectValues.distortion,
-        );
+        lensIor = effectValues.ior;
       },
     });
   });
@@ -100,5 +71,23 @@
 </script>
 
 <T.PerspectiveCamera makeDefault fov={70} position={[0, 0, 5]} />
+<T.AmbientLight intensity={0.3} color="#ddf" />
+
+<T.PointLight position={[0, 6, 2]} intensity={150} color="#caf" castShadow />
+<T.PointLight position={[0, -10, -1]} intensity={70} color="#caf" castShadow />
 
 <StarModel {isLiked} />
+
+<!-- Transmission球体でレンズ効果 -->
+<T.Mesh position={[0, 0, 3]}>
+  <T.SphereGeometry args={[1.19, 64, 64]} />
+  <T.MeshPhysicalMaterial
+    transmission={1}
+    roughness={0.7}
+    thickness={50}
+    ior={lensIor}
+    transparent
+    iridescence={0.06}
+    dispersion={4.0}
+  />
+</T.Mesh>
