@@ -5,9 +5,21 @@
 
   interface Props {
     isLiked: boolean;
+    x?: number;
+    y?: number;
+    z?: number;
+    rotY?: number;
+    scale?: number;
   }
 
-  const { isLiked }: Props = $props();
+  const {
+    isLiked,
+    x = 0,
+    y = 0,
+    z = 0,
+    rotY = 0,
+    scale = 0.9,
+  }: Props = $props();
 
   const gltf = useGltf("/models/star3.glb");
 
@@ -15,19 +27,22 @@
 
   // ふよふよアニメーション
   let time = 0;
-  let posY = $state(0);
+  let floatY = $state(0);
 
   useTask((delta) => {
     time += delta;
-    posY = Math.sin(time * 2) * 0.2;
+    floatY = Math.sin(time * 2) * 0.1;
   });
 </script>
 
 {#if $gltf}
   <T.Mesh
     geometry={$gltf.nodes.Star001?.geometry}
-    position.y={posY}
-    scale={0.8}
+    position.x={x}
+    position.y={y + floatY}
+    position.z={z}
+    rotation.y={rotY}
+    {scale}
   >
     <T.MeshPhysicalMaterial
       metalness={0}
