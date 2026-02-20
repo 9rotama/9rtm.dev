@@ -52,21 +52,25 @@ export const POST: RequestHandler = async ({ params, platform, request }) => {
   }
 
   // いいね記録
-  await db.batch([
+  const results = await db.batch([
     db.prepare(upsertLikeQuery).bind(slug),
     db.prepare(insertLikeLogQuery).bind(slug, ipHash),
   ]);
 
-  logger.info({ slug }, "like recorded");
+  const likeCount = (results[0].results[0] as { count: number } | undefined)
+    ?.count;
+
+  logger.info({ slug, likeCount }, "like recorded");
 
   // Discord通知
   if (webhookUrl) {
     const title = getSelfNoteTitle(slug) ?? slug;
+    const countText = likeCount != null ? ` (${likeCount}件目)` : "";
     await fetch(webhookUrl, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        content: `「${title}」にいいねがつきました`,
+        content: `「${title}」にいいねがつきました!${countText}`,
       }),
     });
     logger.debug({ slug }, "discord notification sent");
