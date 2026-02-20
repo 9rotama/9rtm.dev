@@ -61,9 +61,7 @@ export async function getSelfNotes(): Promise<
     }
 
     const note = { ...parsed.data, slug };
-    if (note.published || import.meta.env.NODE_ENV === "development") {
-      notes.push(note);
-    }
+    notes.push(note);
   }
 
   return { success: true, data: { notes } };
