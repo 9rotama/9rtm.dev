@@ -48,7 +48,7 @@ export const POST: RequestHandler = async ({ params, platform, request }) => {
 
   if (existing) {
     logger.info({ slug }, "already liked");
-    return json({ error: "Already liked" }, { status: 429 });
+    return json({ success: true, alreadyLiked: true });
   }
 
   // いいね記録
