@@ -19,21 +19,24 @@ async function hashIP(ip: string): Promise<string> {
 
 export const POST: RequestHandler = async ({ params, platform, request }) => {
   const { slug } = params;
-  const db = platform?.env?._9rtm_dev_db;
-  const webhookUrl = platform?.env?.DISCORD_WEBHOOK_URL;
 
   logger.debug({ slug }, "like request received");
+
+  // platform.env検証（vite devでは存在しない）
+  const env = platform?.env;
+  if (!env) {
+    logger.debug("platform.env not available (dev mode)");
+    return json({ success: true, dev: true });
+  }
+
+  const db = env._9rtm_dev_db;
+  const webhookUrl = env.DISCORD_WEBHOOK_URL;
 
   // slug検証
   const validSlugs = getSelfNoteSlugs();
   if (!validSlugs.has(slug)) {
     logger.warn({ slug }, "invalid slug");
     return json({ error: "Note not found" }, { status: 404 });
-  }
-
-  if (!db) {
-    logger.error("DB not available");
-    return json({ error: "Database not available" }, { status: 500 });
   }
 
   // IPハッシュ生成（プライバシー配慮）
