@@ -13,18 +13,41 @@ type SelfNoteData = SelfNoteMetadata & {
   slug: string;
 };
 
+const selfNotesMds = import.meta.glob("../_content/notes/*.md", {
+  eager: true,
+}) as Record<string, App.MdsvexFile>;
+
+function extractSlug(path: string): string | undefined {
+  return path.split("/").at(-1)?.replace(".md", "");
+}
+
+export function getSelfNoteSlugs(): Set<string> {
+  const slugs = new Set<string>();
+  for (const path in selfNotesMds) {
+    const slug = extractSlug(path);
+    if (slug) slugs.add(slug);
+  }
+  return slugs;
+}
+
+export function getSelfNoteTitle(slug: string): string | undefined {
+  for (const path in selfNotesMds) {
+    if (extractSlug(path) === slug) {
+      const md = selfNotesMds[path];
+      const parsed = selfNoteMetadataSchema.safeParse(md.metadata);
+      return parsed.success ? parsed.data.title : undefined;
+    }
+  }
+  return undefined;
+}
+
 export async function getSelfNotes(): Promise<
   Result<{ notes: SelfNoteData[] }, "metadata-error" | "error">
 > {
-  const selfNotesMds = import.meta.glob("../_content/notes/*.md", {
-    eager: true,
-  });
-
-  const mds = selfNotesMds as Record<string, App.MdsvexFile>;
   const notes: SelfNoteData[] = [];
 
-  for (const path in mds) {
-    const md = mds[path];
+  for (const path in selfNotesMds) {
+    const md = selfNotesMds[path];
 
     const parsed = selfNoteMetadataSchema.safeParse(md.metadata);
 
@@ -32,7 +55,7 @@ export async function getSelfNotes(): Promise<
       return { success: false, error: "metadata-error" };
     }
 
-    const slug = path.split("/").at(-1)?.replace(".md", "");
+    const slug = extractSlug(path);
     if (!slug) {
       return { success: false, error: "error" };
     }
