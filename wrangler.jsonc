@@ -24,7 +24,4 @@
       "database_id": "8b5304c0-cf2f-4aa5-8b07-5d89995ddc56",
     },
   ],
-  "vars": {
-    "PUBLIC_BASE_URL": "https://9rtm.dev",
-  },
 }
