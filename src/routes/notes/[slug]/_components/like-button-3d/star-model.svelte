@@ -26,12 +26,10 @@
   const color = $derived(isLiked ? "#eee" : "#bbb");
 
   // ふよふよアニメーション
-  let time = 0;
-  let floatY = $state(0);
+  let time = $state(0);
 
   useTask((delta) => {
     time += delta;
-    floatY = Math.sin(time * 2) * 0.1;
   });
 </script>
 
@@ -39,7 +37,7 @@
   <T.Mesh
     geometry={$gltf.nodes.Star001?.geometry}
     position.x={x}
-    position.y={y + floatY}
+    position.y={y + Math.sin(time * 2) * 0.1}
     position.z={z}
     rotation.y={rotY}
     {scale}
