@@ -4,6 +4,7 @@
   import { createTimeline, eases } from "animejs";
   import { onMount } from "svelte";
   import { FontLoader } from "three/examples/jsm/Addons.js";
+  import { EMOTI_KUN_COLORS } from "./colors";
   const emotiLowerPos = { x: 0, y: 1.5, z: 0 };
 
   let meshPos: { x: number; y: number; z: number } = $state(emotiLowerPos);
@@ -103,7 +104,7 @@
         <T.Mesh oncreate={align} position={[0, 0, 0]}>
           <Text3DGeometry text="(｡･_･｡)" font={$font} size={1.8} depth={0.3} />
           <T.MeshPhysicalMaterial
-            color="#a23bcb"
+            color={EMOTI_KUN_COLORS.text}
             metalness={0.5}
             roughness={0.1}
           />

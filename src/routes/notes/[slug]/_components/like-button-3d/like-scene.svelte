@@ -9,13 +9,14 @@
     RenderPass,
   } from "postprocessing";
   import { Color } from "three";
+  import { LIKE_BUTTON_COLORS } from "./colors";
   import StarModel from "./star-model.svelte";
 
   // ===================
   // Constants
   // ===================
 
-  const BACKGROUND_COLOR = "#0e0d17";
+  const BACKGROUND_COLOR = LIKE_BUTTON_COLORS.background;
   const TRANSMISSION_RESOLUTION_SCALE = 2.0;
 
   // Bloom settings
@@ -198,10 +199,20 @@
 </script>
 
 <T.PerspectiveCamera makeDefault fov={70} position={[0, 0, 5]} />
-<T.AmbientLight intensity={0.3} color="#ddf" />
+<T.AmbientLight intensity={0.3} color={LIKE_BUTTON_COLORS.ambientLight} />
 
-<T.PointLight position={[0, 6, 2]} intensity={150} color="#caf" castShadow />
-<T.PointLight position={[0, -10, -1]} intensity={70} color="#caf" castShadow />
+<T.PointLight
+  position={[0, 6, 2]}
+  intensity={150}
+  color={LIKE_BUTTON_COLORS.pointLight}
+  castShadow
+/>
+<T.PointLight
+  position={[0, -10, -1]}
+  intensity={70}
+  color={LIKE_BUTTON_COLORS.pointLight}
+  castShadow
+/>
 
 <StarModel
   {isLiked}

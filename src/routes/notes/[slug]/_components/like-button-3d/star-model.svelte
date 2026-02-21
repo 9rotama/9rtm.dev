@@ -2,6 +2,7 @@
   import { T, useTask } from "@threlte/core";
   import { useGltf } from "@threlte/extras";
   import { Color } from "three";
+  import { LIKE_BUTTON_COLORS } from "./colors";
 
   interface Props {
     isLiked: boolean;
@@ -23,7 +24,9 @@
 
   const gltf = useGltf("/models/star3.glb");
 
-  const color = $derived(isLiked ? "#eee" : "#bbb");
+  const color = $derived(
+    isLiked ? LIKE_BUTTON_COLORS.starLiked : LIKE_BUTTON_COLORS.starUnliked,
+  );
 
   // ふよふよアニメーション
   let time = $state(0);
@@ -46,7 +49,7 @@
       metalness={0}
       roughness={0}
       {color}
-      emissive={new Color("#769")}
+      emissive={new Color(LIKE_BUTTON_COLORS.starEmissive)}
       emissiveIntensity={isLiked ? 2.0 : 0}
     />
   </T.Mesh>
