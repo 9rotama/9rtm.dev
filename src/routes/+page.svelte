@@ -12,8 +12,8 @@
   <div class="mt-10">
     <Heading text="me" />
     <div class="mt-4 flex flex-row items-center justify-center gap-8">
-      <img
-        src="./avatar.png"
+      <enhanced:img
+        src="./_img/avatar.png"
         alt="avatar"
         class="mt-4 h-32 w-32 rounded-full"
       />
