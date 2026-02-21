@@ -1,6 +1,7 @@
 <script lang="ts">
   import { T, useTask, useThrelte } from "@threlte/core";
   import { animate } from "animejs";
+  import { onMount } from "svelte";
   import {
     BloomEffect,
     EffectComposer,
@@ -81,6 +82,9 @@
   let lensIor = $state(LENS_IOR_DEFAULT);
   let currentAnimation: ReturnType<typeof animate> | null = null;
 
+  // 可視状態
+  let isVisible = $state(true);
+
   // ===================
   // Initialization
   // ===================
@@ -98,8 +102,22 @@
   const bloomEffect = new BloomEffect(BLOOM_CONFIG);
   composer.addPass(new EffectPass(camera.current, bloomEffect));
 
+  // 可視時のみレンダリング
+  onMount(() => {
+    const canvas = renderer.domElement;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isVisible = entry.isIntersecting;
+      },
+      { threshold: 0 },
+    );
+    observer.observe(canvas);
+    return () => observer.disconnect();
+  });
+
   useTask(
     (delta) => {
+      if (!isVisible) return;
       composer.render(delta);
     },
     { stage: renderStage, autoInvalidate: true },
