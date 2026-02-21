@@ -11,20 +11,32 @@
 
   let isLiked = $state(false);
   let isHovered = $state(false);
-  // let mousePosition = $state({ x: -1, y: 1 });
   let hasTransitioned = $state(false);
+
+  const canHover =
+    typeof window !== "undefined" &&
+    window.matchMedia("(hover: hover)").matches;
+
+  function handlePointerEnter() {
+    if (canHover) isHovered = true;
+  }
+  function handlePointerLeave() {
+    isHovered = false;
+  }
+  function handlePointerDown() {
+    if (!canHover) isHovered = true;
+  }
+  function handlePointerUp() {
+    if (!canHover) isHovered = false;
+  }
 
   async function handleClick() {
     if (isLiked) return;
 
-    // 楽観的更新
     hasTransitioned = true;
     isLiked = true;
 
-    const success = await postLike(slug);
-    if (!success) {
-      isLiked = false;
-    }
+    await postLike(slug);
   }
 
   // function handleMouseMove(event: MouseEvent) {
@@ -39,10 +51,11 @@
 <div class="flex flex-col items-center gap-3">
   <button
     onclick={handleClick}
-    onmouseenter={() => (isHovered = true)}
-    onmouseleave={() => (isHovered = false)}
-    disabled={isLiked}
-    class="flex cursor-pointer flex-row items-center gap-2 overflow-clip rounded-full transition-colors disabled:cursor-default"
+    onpointerenter={handlePointerEnter}
+    onpointerleave={handlePointerLeave}
+    onpointerdown={handlePointerDown}
+    onpointerup={handlePointerUp}
+    class="flex cursor-pointer flex-row items-center gap-2 overflow-clip rounded-full transition-colors"
   >
     <div class="size-20">
       <Canvas autoRender={false}>
