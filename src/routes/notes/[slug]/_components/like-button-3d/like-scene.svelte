@@ -52,14 +52,8 @@
   const STAR3_LIKED_DELAY = 3;
 
   // ===================
-  // Setup
+  // Props
   // ===================
-
-  const { scene, renderer, camera, renderStage } = useThrelte();
-  scene.background = new Color(BACKGROUND_COLOR);
-
-  // transmission解像度を上げる
-  renderer.transmissionResolutionScale = TRANSMISSION_RESOLUTION_SCALE;
 
   interface Props {
     isLiked: boolean;
@@ -68,19 +62,9 @@
 
   const { isLiked, isHovered }: Props = $props();
 
-  // postprocessing setup
-  const composer = new EffectComposer(renderer);
-  composer.addPass(new RenderPass(scene, camera.current));
-
-  const bloomEffect = new BloomEffect(BLOOM_CONFIG);
-  composer.addPass(new EffectPass(camera.current, bloomEffect));
-
-  // isLikedのときだけbloomを有効化
-  $effect(() => {
-    bloomEffect.intensity = isLiked
-      ? BLOOM_INTENSITY_LIKED
-      : BLOOM_INTENSITY_DEFAULT;
-  });
+  // ===================
+  // State
+  // ===================
 
   // 3つの星の位置・スケール・回転
   let star1 = $state({ ...STAR1_UNLIKED });
@@ -91,6 +75,46 @@
   let star1Anim: ReturnType<typeof animate> | null = null;
   let star2Anim: ReturnType<typeof animate> | null = null;
   let star3Anim: ReturnType<typeof animate> | null = null;
+
+  // レンズアニメーション用
+  const effectValues = { ior: LENS_IOR_DEFAULT };
+  let lensIor = $state(LENS_IOR_DEFAULT);
+  let currentAnimation: ReturnType<typeof animate> | null = null;
+
+  // ===================
+  // Initialization
+  // ===================
+
+  const { scene, renderer, camera, renderStage } = useThrelte();
+  scene.background = new Color(BACKGROUND_COLOR);
+
+  // transmission解像度を上げる
+  renderer.transmissionResolutionScale = TRANSMISSION_RESOLUTION_SCALE;
+
+  // postprocessing setup
+  const composer = new EffectComposer(renderer);
+  composer.addPass(new RenderPass(scene, camera.current));
+
+  const bloomEffect = new BloomEffect(BLOOM_CONFIG);
+  composer.addPass(new EffectPass(camera.current, bloomEffect));
+
+  useTask(
+    (delta) => {
+      composer.render(delta);
+    },
+    { stage: renderStage, autoInvalidate: true },
+  );
+
+  // ===================
+  // Effects
+  // ===================
+
+  // isLikedのときだけbloomを有効化
+  $effect(() => {
+    bloomEffect.intensity = isLiked
+      ? BLOOM_INTENSITY_LIKED
+      : BLOOM_INTENSITY_DEFAULT;
+  });
 
   // isLikedで三角形配置アニメーション
   $effect(() => {
@@ -138,11 +162,7 @@
     }
   });
 
-  // レンズアニメーション用
-  const effectValues = { ior: LENS_IOR_DEFAULT };
-  let lensIor = $state(LENS_IOR_DEFAULT);
-  let currentAnimation: ReturnType<typeof animate> | null = null;
-
+  // レンズアニメーション
   $effect(() => {
     if (currentAnimation) {
       currentAnimation.pause();
@@ -157,13 +177,6 @@
       },
     });
   });
-
-  useTask(
-    (delta) => {
-      composer.render(delta);
-    },
-    { stage: renderStage, autoInvalidate: true },
-  );
 </script>
 
 <T.PerspectiveCamera makeDefault fov={70} position={[0, 0, 5]} />
