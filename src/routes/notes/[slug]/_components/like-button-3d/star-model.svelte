@@ -21,7 +21,7 @@
     scale = 0.9,
   }: Props = $props();
 
-  const gltf = useGltf("/models/star3.glb");
+  const gltf = useGltf("/models/star.glb");
 
   const color = $derived(isLiked ? "#eee" : "#bbb");
 
