@@ -26,7 +26,7 @@
 >
   <ArrowLeft
     class="size-5 transition-transform ease-out group-hover:-translate-x-1 group-hover:transform"
-  /> <span>back to index</span>
+  /> <span>back to list</span>
 </a>
 <main class="mx-auto mt-16">
   <div class="flex flex-col items-center">

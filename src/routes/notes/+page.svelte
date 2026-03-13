@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Search } from "@lucide/svelte";
+  import { ArrowLeft, Search } from "@lucide/svelte";
   import type { PageProps } from "./$types";
   import Note from "./_components/note.svelte";
 
@@ -19,6 +19,14 @@
   });
 </script>
 
+<a
+  href="/"
+  class="group text-muted hover:text-foreground font-display absolute top-4 left-4 flex items-center gap-2 text-sm"
+>
+  <ArrowLeft
+    class="size-5 transition-transform ease-out group-hover:-translate-x-1 group-hover:transform"
+  /> <span>back to index</span>
+</a>
 <main class="mx-auto mt-16 max-w-lg">
   <div class="flex flex-row items-center justify-center gap-2">
     <img
