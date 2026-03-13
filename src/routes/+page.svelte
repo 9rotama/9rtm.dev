@@ -19,7 +19,7 @@
       />
       <div class="flex flex-col items-start">
         <div class="mt-4 font-bold">9rotama / くろたま</div>
-        <div class="text-muted mt-1 text-sm">web front & gl</div>
+        <div class="text-muted mt-1 text-sm">frontend @fuller-inc</div>
         <div class="mt-4 flex flex-row items-center gap-2 text-sm">
           <a
             class="size-6"
@@ -36,7 +36,7 @@
     </div>
   </div>
   <div class="mt-10">
-    <Heading text="repos" subText="" />
+    <Heading text="crafts" subText="" />
     <div class="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-2">
       {#each repos as repo (repo.id)}
         {#if repo.display}

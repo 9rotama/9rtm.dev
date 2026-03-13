@@ -37,7 +37,7 @@
     from var(--color-background) calc(l - 0.02) c h
   );
   --color-card-background-vivid: oklch(
-    from var(--color-background) calc(l + 0.05) calc(c + 0.02) h
+    from var(--color-background) calc(l + 0.03) calc(c + 0.01) h
   );
   --color-card-background-vivid-light: oklch(
     from var(--color-background) calc(l + 0.1) calc(c + 0.04) h
@@ -71,6 +71,7 @@ html {
 * {
   scrollbar-width: thin;
   scrollbar-color: var(--color-muted) var(--color-pre-background);
+  scrollbar-gutter: stable;
   text-autospace: normal;
 }
 
@@ -127,5 +128,11 @@ html {
   to {
     opacity: 0;
     filter: blur(4px);
+  }
+}
+
+@layer components {
+  .gradient-text {
+    @apply from-heading-foreground via-heading-foreground to-heading-foreground-shade font-display bg-gradient-to-b bg-clip-text text-transparent;
   }
 }
