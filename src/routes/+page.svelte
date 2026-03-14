@@ -2,7 +2,6 @@
   import { MoveRight } from "@lucide/svelte";
   import type { PageProps } from "./$types";
   import EmotiKun from "./_components/emoti-kun/emoti-kun.svelte";
-  import GradientBorder from "./_components/gradient-border.svelte";
   import Heading from "./_components/heading.svelte";
   import GitHub from "./_components/icons/github.svelte";
   import Zenn from "./_components/icons/zenn.svelte";
@@ -59,11 +58,10 @@
     <div class="mt-20">
       <Heading text="latest note" />
       <div class="alitn mx-auto mt-4 max-w-lg">
-        <Note data={data.latestNote} showExcerpt />
-        <GradientBorder />
+        <Note data={data.latestNote} />
         <a
           href="/notes"
-          class="group text-muted hover:text-foreground font-display relative mt-2 flex items-center justify-end gap-2 rounded-lg p-4 text-sm transition-colors duration-200"
+          class="group text-muted hover:text-foreground font-display relative flex items-center justify-end gap-2 rounded-lg p-4 text-sm transition-colors duration-200"
         >
           <div
             class="from-card-background-vivid-light/70 absolute inset-0 -z-10 rounded-lg bg-gradient-to-l to-transparent mask-y-from-70% mask-y-to-100% opacity-0 transition-opacity duration-200 group-hover:opacity-100"
