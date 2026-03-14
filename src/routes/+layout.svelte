@@ -3,15 +3,28 @@
   import { PUBLIC_BASE_URL } from "$env/static/public";
   import "@fontsource/geist-sans/400.css";
   import "@fontsource/geist-sans/700.css";
-  import "@fontsource/m-plus-1/400.css";
-  import "@fontsource/m-plus-1/700.css";
   import "@fontsource/iosevka/400.css";
   import "@fontsource/iosevka/700.css";
+  import "@fontsource/m-plus-1/400.css";
+  import "@fontsource/m-plus-1/700.css";
 
   import "../app.css";
   import Footer from "./_components/footer.svelte";
   import NavBar from "./_components/nav-bar.svelte";
   let { children, data } = $props();
+
+  const jsonLd = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "9rtm.dev",
+    url: PUBLIC_BASE_URL,
+    author: {
+      "@type": "Person",
+      name: "9rotama",
+      url: "https://github.com/9rotama",
+      jobTitle: "web developer",
+    },
+  });
 
   onNavigate((navigation) => {
     if (!document.startViewTransition) return;
@@ -31,13 +44,18 @@
 <svelte:head>
   <link rel="canonical" href={data.canonicalUrl} />
   <title>9rtm.dev</title>
-  <meta name="description" content="9rotamaの個人サイト" />
+  <meta
+    name="description"
+    content="9rotama / くろたまのプロフィール・技術ブログ。フロントエンド開発やThree.jsについて書いています。"
+  />
   <meta property="og:title" content="9rtm.dev" />
   <meta
     property="og:image"
     content={new URL(`/ogp.webp`, PUBLIC_BASE_URL).toString()}
   />
   <meta name="twitter:card" content="summary" />
+  <!-- eslint-disable-next-line svelte/no-at-html-tags -->
+  {@html '<script type="application/ld+json">' + jsonLd + "<" + "/script>"}
 </svelte:head>
 
 <div class="mx-auto max-w-2xl px-4 pb-28">
