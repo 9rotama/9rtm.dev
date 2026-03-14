@@ -1,6 +1,6 @@
 <script lang="ts">
   import { PUBLIC_BASE_URL } from "$env/static/public";
-  import { ArrowLeft, Upload } from "@lucide/svelte";
+  import { ArrowLeft, Clock, Upload } from "@lucide/svelte";
   import { formatDate } from "date-fns";
   import Tag from "../_components/tag.svelte";
   import type { PageProps } from "./$types";
@@ -38,11 +38,16 @@
       {data.metadata.title}
     </h1>
 
-    <div class="text-muted mt-2 flex flex-row items-center gap-2 text-sm">
-      <Upload class="size-4" />{formatDate(
-        data.metadata.published_at,
-        "MMM dd, yyyy",
-      )}
+    <div class="text-muted mt-2 flex flex-row items-center gap-4 text-sm">
+      <span class="flex items-center gap-1">
+        <Upload class="size-4" />{formatDate(
+          data.metadata.published_at,
+          "MMM dd, yyyy",
+        )}
+      </span>
+      <span class="flex items-center gap-1">
+        <Clock class="size-4" />{data.readingMinutes} min read
+      </span>
     </div>
     {#if data.metadata.tags.length > 0}
       <div class="mt-3 flex flex-wrap justify-center gap-2">
