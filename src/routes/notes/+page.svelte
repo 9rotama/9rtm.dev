@@ -1,22 +1,38 @@
 <script lang="ts">
-  import { ArrowLeft, Search } from "@lucide/svelte";
+  import { goto } from "$app/navigation";
+  import { page } from "$app/state";
+  import { ArrowLeft } from "@lucide/svelte";
   import type { PageProps } from "./$types";
   import Note from "./_components/note.svelte";
 
   let { data }: PageProps = $props();
 
-  let searchQuery = $state("");
+  const selectedTag = $derived(page.url.searchParams.get("tag"));
+
+  const allTags = $derived.by(() => {
+    const tagSet = new Set<string>();
+    for (const note of data.notes) {
+      for (const tag of note.tags) {
+        tagSet.add(tag);
+      }
+    }
+    return [...tagSet].sort();
+  });
 
   const filteredNotes = $derived.by(() => {
-    if (!searchQuery.trim()) return data.notes;
-
-    const query = searchQuery.toLowerCase();
-    const filtered = data.notes.filter((note) =>
-      note.title.toLowerCase().includes(query),
-    );
-
-    return filtered;
+    if (!selectedTag) return data.notes;
+    return data.notes.filter((note) => note.tags.includes(selectedTag));
   });
+
+  function selectTag(tag: string | null) {
+    const url = new URL(page.url);
+    if (tag) {
+      url.searchParams.set("tag", tag);
+    } else {
+      url.searchParams.delete("tag");
+    }
+    goto(url, { replaceState: true, noScroll: true });
+  }
 </script>
 
 <a
@@ -49,17 +65,28 @@
     雑記・備忘録
   </p>
   <div class="mt-10 flex flex-col items-center">
-    <label
-      class="to-card-background-vivid from-card-background-dark ring-muted/30 flex w-full max-w-[400px] flex-row items-center gap-2 rounded-full bg-gradient-to-b px-4 py-2 ring-1 focus-within:ring-2"
-    >
-      <Search class="text-muted size-5" />
-      <input
-        type="search"
-        placeholder="search notes..."
-        class="placeholder-muted w-full max-w-[400px] text-sm shadow-sm focus:outline-none"
-        bind:value={searchQuery}
-      />
-    </label>
+    <div class="flex flex-wrap justify-center gap-2">
+      <button
+        class="border-border/50 from-background to-accent/20 font-display rounded-full border bg-gradient-to-b px-3 py-1 text-xs transition-colors duration-150
+          {selectedTag === null
+          ? 'to-accent/50 text-foreground'
+          : 'text-muted hover:text-foreground'}"
+        onclick={() => selectTag(null)}
+      >
+        all
+      </button>
+      {#each allTags as tag (tag)}
+        <button
+          class="border-border/50 from-background to-accent/20 font-display rounded-full border bg-gradient-to-b px-3 py-1 text-xs transition-colors duration-150
+            {selectedTag === tag
+            ? 'to-accent/50 text-foreground'
+            : 'text-muted hover:text-foreground'}"
+          onclick={() => selectTag(tag)}
+        >
+          <span class="mr-0.5">#</span>{tag}
+        </button>
+      {/each}
+    </div>
 
     <div class="mt-16 flex w-full flex-col">
       {#each filteredNotes as note, i (i)}

@@ -6,6 +6,7 @@ export const selfNoteMetadataSchema = z.object({
   emoji: z.string(),
   published_at: z.string().transform((str) => new Date(str)),
   published: z.boolean(),
+  tags: z.array(z.string()).default([]),
 });
 
 type SelfNoteMetadata = z.infer<typeof selfNoteMetadataSchema>;

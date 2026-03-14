@@ -18,6 +18,7 @@ export const load: PageLoad = async () => {
           href: `/notes/${note.slug}`,
           thumbnail: { type: "emoji", emoji: note.emoji },
           platform: "self",
+          tags: note.tags,
         }) satisfies Note,
     ),
   ];
