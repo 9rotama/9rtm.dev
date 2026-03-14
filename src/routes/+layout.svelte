@@ -1,11 +1,12 @@
 <script lang="ts">
   import { onNavigate } from "$app/navigation";
   import { PUBLIC_BASE_URL } from "$env/static/public";
-  import "@fontsource/ibm-plex-mono/400.css";
-  import "@fontsource/ibm-plex-mono/700.css";
-  import "@fontsource/ibm-plex-sans-jp/400.css";
-  import "@fontsource/ibm-plex-sans-jp/700.css";
-  import "@fontsource-variable/museomoderno";
+  import "@fontsource/geist-sans/400.css";
+  import "@fontsource/geist-sans/700.css";
+  import "@fontsource/m-plus-1/400.css";
+  import "@fontsource/m-plus-1/700.css";
+  import "@fontsource/iosevka/400.css";
+  import "@fontsource/iosevka/700.css";
 
   import "../app.css";
   import Footer from "./_components/footer.svelte";

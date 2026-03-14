@@ -53,13 +53,12 @@
   );
 
   --font-body:
-    "IBM Plex Sans JP", "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN",
-    "Hiragino Sans", Meiryo, sans-serif;
+    "Geist Sans", "M PLUS 1", "Helvetica Neue", Arial,
+    "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
   --font-code:
-    "IBM Plex Mono", "IBM Plex Sans JP", Consolas, "Courier New", Courier,
-    Monaco, monospace;
+    "Iosevka", "M PLUS 1", Consolas, "Courier New", Courier, Monaco, monospace;
   --font-display:
-    "Michroma", "IBM Plex Sans JP", "Helvetica Neue", Arial, sans-serif;
+    "Michroma", "Geist Sans", "M PLUS 1", "Helvetica Neue", Arial, sans-serif;
 }
 
 html {
