@@ -2,8 +2,8 @@
   import { PUBLIC_BASE_URL } from "$env/static/public";
   import { ArrowLeft, Upload } from "@lucide/svelte";
   import { formatDate } from "date-fns";
-  import type { PageProps } from "./$types";
   import Tag from "../_components/tag.svelte";
+  import type { PageProps } from "./$types";
   import LikeButton from "./_components/like-button-3d/index.svelte";
   const { data }: PageProps = $props();
 
@@ -23,13 +23,13 @@
 
 <a
   href="/notes"
-  class="group text-muted hover:text-foreground font-display absolute top-4 left-4 flex items-center gap-2 text-sm"
+  class="group text-muted hover:text-foreground font-display mt-4 flex items-center gap-2 text-sm"
 >
   <ArrowLeft
     class="size-5 transition-transform ease-out group-hover:-translate-x-1 group-hover:transform"
   /> <span>back to list</span>
 </a>
-<main class="mx-auto mt-16">
+<main class="mx-auto mt-10">
   <div class="flex flex-col items-center">
     <p class="text-6xl">{data.metadata.emoji}</p>
     <h1
