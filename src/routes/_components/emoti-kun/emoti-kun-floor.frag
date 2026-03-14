@@ -35,9 +35,9 @@ void main() {
 
     vec3 grid_color = vec3(u_grid_r, u_grid_g, u_grid_b);
     vec3 bg_color = vec3(u_bg_r, u_bg_g, u_bg_b);
-    vec3 color = mix(bg_color, grid_color, grid_pattern) * fade;
+    vec3 color = mix(bg_color, grid_color, grid_pattern);
 
-    float alpha = max(grid_pattern * fade * 0.8, (1.0 - grid_pattern) * fade * 0.3);
+    float alpha = max(grid_pattern * 0.8, (1.0 - grid_pattern) * 0.3) * fade;
 
     gl_FragColor = vec4(color, alpha);
 }

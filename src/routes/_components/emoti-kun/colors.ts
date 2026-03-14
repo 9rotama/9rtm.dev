@@ -4,7 +4,7 @@ const EMOTI_KUN_COLORS_DARK = {
   pointLight: "#bc84f1",
   rectAreaLight: "#c494e2",
   text: "#a23bcb",
-  floorGrid: "#75b",
+  floorGrid: "#b89ad8",
   floorBg: "#000000",
 } as const;
 
@@ -14,7 +14,7 @@ const EMOTI_KUN_COLORS_LIGHT = {
   pointLight: "#bc84f1",
   rectAreaLight: "#c494e2",
   text: "#a23bcb",
-  floorGrid: "#b89ad8",
+  floorGrid: "#c8aae8",
   floorBg: "#ffffff",
 } as const;
 
