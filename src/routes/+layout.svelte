@@ -9,6 +9,7 @@
 
   import "../app.css";
   import Footer from "./_components/footer.svelte";
+  import NavBar from "./_components/nav-bar.svelte";
   let { children, data } = $props();
 
   onNavigate((navigation) => {
@@ -38,7 +39,7 @@
   <meta name="twitter:card" content="summary" />
 </svelte:head>
 
-<div class="mx-auto max-w-2xl px-4 pb-12">
+<div class="mx-auto max-w-2xl px-4 pb-28">
   <div class="mx-2">
     {@render children()}
   </div>
@@ -46,3 +47,4 @@
     <Footer />
   </div>
 </div>
+<NavBar />
