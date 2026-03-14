@@ -3,6 +3,7 @@
   import { ArrowLeft, Upload } from "@lucide/svelte";
   import { formatDate } from "date-fns";
   import type { PageProps } from "./$types";
+  import Tag from "../_components/tag.svelte";
   import LikeButton from "./_components/like-button-3d/index.svelte";
   const { data }: PageProps = $props();
 
@@ -43,6 +44,15 @@
         "MMM dd, yyyy",
       )}
     </div>
+    {#if data.metadata.tags.length > 0}
+      <div class="mt-3 flex flex-wrap justify-center gap-2">
+        {#each data.metadata.tags as tag (tag)}
+          <a href="/notes?tag={encodeURIComponent(tag)}">
+            <Tag {tag} />
+          </a>
+        {/each}
+      </div>
+    {/if}
   </div>
   <div
     class="from-border/0 via-border to-border/0 mt-8 h-[1px] w-full bg-gradient-to-r"

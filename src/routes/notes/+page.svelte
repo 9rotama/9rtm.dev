@@ -4,6 +4,7 @@
   import { ArrowLeft } from "@lucide/svelte";
   import type { PageProps } from "./$types";
   import Note from "./_components/note.svelte";
+  import Tag from "./_components/tag.svelte";
 
   let { data }: PageProps = $props();
 
@@ -66,24 +67,12 @@
   </p>
   <div class="mt-10 flex flex-col items-center">
     <div class="flex flex-wrap justify-center gap-2">
-      <button
-        class="border-border/50 from-background to-accent/20 font-display rounded-full border bg-gradient-to-b px-3 py-1 text-xs transition-colors duration-150
-          {selectedTag === null
-          ? 'to-accent/50 text-foreground'
-          : 'text-muted hover:text-foreground'}"
-        onclick={() => selectTag(null)}
-      >
-        all
+      <button onclick={() => selectTag(null)}>
+        <Tag active={selectedTag === null} />
       </button>
       {#each allTags as tag (tag)}
-        <button
-          class="border-border/50 from-background to-accent/20 font-display rounded-full border bg-gradient-to-b px-3 py-1 text-xs transition-colors duration-150
-            {selectedTag === tag
-            ? 'to-accent/50 text-foreground'
-            : 'text-muted hover:text-foreground'}"
-          onclick={() => selectTag(tag)}
-        >
-          <span class="mr-0.5">#</span>{tag}
+        <button onclick={() => selectTag(tag)}>
+          <Tag {tag} active={selectedTag === tag} />
         </button>
       {/each}
     </div>
