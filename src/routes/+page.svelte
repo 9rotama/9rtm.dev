@@ -48,10 +48,22 @@
         </div>
       </div>
     </div>
-    <p class="text-muted mt-6 text-center text-sm leading-relaxed">
-      人に優しいインタラクションやcreative codingに興味があります。<br />
-      リズムゲームが好きです。
-    </p>
+    <div
+      class="text-muted mx-auto mt-6 grid w-fit grid-cols-[auto_1fr] items-center gap-x-3 gap-y-2 text-sm"
+    >
+      <span class="font-display text-foreground flex items-center gap-1 text-xs"
+        >can<img alt="" src="/title-frame.svg" class="size-2" /></span
+      >
+      <span>react (w/next.js) / svelte / three.js</span>
+      <span class="font-display text-foreground flex items-center gap-1 text-xs"
+        >interest<img alt="" src="/title-frame.svg" class="size-2" /></span
+      >
+      <span>user-friendly / creative coding</span>
+      <span class="font-display text-foreground flex items-center gap-1 text-xs"
+        >hobby<img alt="" src="/title-frame.svg" class="size-2" /></span
+      >
+      <span>rhythm games (jubeat, ez2on, etc...) </span>
+    </div>
   </div>
 
   {#if data.latestNote}
