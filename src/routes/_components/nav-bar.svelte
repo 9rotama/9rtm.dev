@@ -19,7 +19,7 @@
   class="fixed bottom-0 left-0 z-50 flex w-full items-center justify-center pb-[env(safe-area-inset-bottom)]"
 >
   <NavigationMenu.List
-    class="border-border/50 from-card-background-dark/50 to-card-background-vivid-light/50 shadow-background/50 mb-4 flex items-center gap-1 rounded-full border bg-gradient-to-b px-2 py-1.5 shadow-lg backdrop-blur-xl"
+    class="border-border/50 from-card-background-dark/50 to-card-background-vivid-light/50 shadow-shadow/50 mb-4 flex items-center gap-1 rounded-full border bg-gradient-to-b px-2 py-1.5 shadow-lg backdrop-blur-xl"
   >
     {#each navItems as item (item.href)}
       {@const active = isActive(item.href, page.url.pathname)}

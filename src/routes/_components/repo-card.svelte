@@ -11,7 +11,7 @@
 </script>
 
 <div
-  class="to-card-background-vivid from-card-background-dark border-border/50 flex size-full flex-col rounded-xl border bg-gradient-to-t px-4 pt-3 pb-4 shadow-sm"
+  class="to-card-background-vivid from-card-background-dark border-border/50 shadow-shadow flex size-full flex-col rounded-xl border bg-gradient-to-t px-4 pt-3 pb-4 shadow-sm"
 >
   <div class="flex grow flex-col items-start gap-1">
     <div class="flex w-full flex-row content-between">

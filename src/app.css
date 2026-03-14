@@ -25,6 +25,7 @@
   --color-code-foreground: var(--theme-code-foreground);
   --color-pre-background: var(--theme-pre-background);
   --color-pre-background-dark: var(--theme-pre-background-dark);
+  --color-shadow: var(--theme-shadow);
 
   --font-body:
     "Geist Sans", "M PLUS 1", "Helvetica Neue", Arial,
@@ -37,46 +38,49 @@
 
 /* Light mode (default) */
 :root {
-  --theme-background: oklch(0.97 0.005 291.05);
+  --theme-background: oklch(0.97 0.04 291.05);
   --theme-foreground: oklch(
-    from var(--theme-background) calc(l - 0.72) calc(c + 0.015) h
+    from var(--theme-background) calc(l - 0.62) calc(c + 0.03) h
   );
   --theme-heading-foreground: oklch(
-    from var(--theme-foreground) calc(l - 0.05) c h
+    from var(--theme-foreground) calc(l + 0.1) c h
   );
   --theme-muted: oklch(
-    from var(--theme-foreground) calc(l + 0.25) calc(c + 0.02) h
+    from var(--theme-foreground) calc(l + 0.15) calc(c + 0.01) h
   );
   --theme-accent: oklch(
-    from var(--theme-foreground) calc(l + 0.2) calc(c + 0.25) h
+    from var(--theme-foreground) calc(l + 0.55) calc(c + 0.3) h
   );
   --theme-heading-foreground-shade: oklch(
-    from var(--theme-foreground) calc(l + 0.2) calc(c + 0.15) h
+    from var(--theme-foreground) calc(l) calc(c + 0.15) h
   );
   --theme-selection-background: oklch(
     from var(--theme-foreground) calc(l + 0.4) calc(c + 0.1) h
   );
-  --theme-border: oklch(from var(--theme-foreground) calc(l + 0.55) c h);
+  --theme-border: oklch(from var(--theme-foreground) calc(l + 0.4) c h);
   --theme-border-solid: oklch(
     from var(--theme-border) calc(l - 0.05) calc(c + 0.01) h
   );
   --theme-card-background-dark: oklch(
-    from var(--theme-background) calc(l - 0.02) c h
+    from var(--theme-background) calc(l - 0.05) c h
   );
   --theme-card-background-vivid: oklch(
-    from var(--theme-background) calc(l - 0.03) calc(c + 0.01) h
+    from var(--theme-background) calc(l + 0.01) calc(c + 0.03) h
   );
   --theme-card-background-vivid-light: oklch(
-    from var(--theme-background) calc(l - 0.07) calc(c + 0.03) h
+    from var(--theme-background) calc(l + 0.1) calc(c + 0.03) h
   );
   --theme-code-foreground: oklch(
     from var(--theme-foreground) calc(l - 0.05) calc(c + 0.02) h
   );
   --theme-pre-background: oklch(
-    from var(--theme-background) calc(l - 0.04) calc(c + 0.005) h
+    from var(--theme-background) calc(l - 0.02) calc(c + 0.005) h
   );
   --theme-pre-background-dark: oklch(
     from var(--theme-pre-background) calc(l - 0.03) c h
+  );
+  --theme-shadow: oklch(
+    from var(--theme-background) calc(l - 0.15) calc(c + 0.03) h
   );
 }
 
@@ -123,6 +127,7 @@
   --theme-pre-background-dark: oklch(
     from var(--theme-pre-background) calc(l - 0.03) c h
   );
+  --theme-shadow: oklch(from var(--theme-background) l calc(c + 0.02) h);
 }
 
 html {
