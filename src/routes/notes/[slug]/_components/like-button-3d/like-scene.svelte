@@ -8,15 +8,15 @@
     EffectPass,
     RenderPass,
   } from "postprocessing";
+  import { mode } from "mode-watcher";
   import { Color } from "three";
-  import { LIKE_BUTTON_COLORS } from "./colors";
+  import { getLikeButtonColors } from "./colors";
   import StarModel from "./star-model.svelte";
 
   // ===================
   // Constants
   // ===================
 
-  const BACKGROUND_COLOR = LIKE_BUTTON_COLORS.background;
   const TRANSMISSION_RESOLUTION_SCALE = 2.0;
 
   // Bloom settings
@@ -68,6 +68,10 @@
   // State
   // ===================
 
+  const colors = $derived(
+    getLikeButtonColors(mode.current === "dark" ? "dark" : "light"),
+  );
+
   // 3つの星の位置・スケール・回転
   let star1 = $state({ ...STAR1_UNLIKED });
   let star2 = $state({ ...STAR2_UNLIKED });
@@ -91,7 +95,10 @@
   // ===================
 
   const { scene, renderer, camera, renderStage } = useThrelte();
-  scene.background = new Color(BACKGROUND_COLOR);
+
+  $effect(() => {
+    scene.background = new Color(colors.background);
+  });
 
   // transmission解像度を上げる
   renderer.transmissionResolutionScale = TRANSMISSION_RESOLUTION_SCALE;
@@ -199,18 +206,18 @@
 </script>
 
 <T.PerspectiveCamera makeDefault fov={70} position={[0, 0, 5]} />
-<T.AmbientLight intensity={0.3} color={LIKE_BUTTON_COLORS.ambientLight} />
+<T.AmbientLight intensity={0.3} color={colors.ambientLight} />
 
 <T.PointLight
   position={[0, 6, 2]}
   intensity={150}
-  color={LIKE_BUTTON_COLORS.pointLight}
+  color={colors.pointLight}
   castShadow
 />
 <T.PointLight
   position={[0, -10, -1]}
   intensity={70}
-  color={LIKE_BUTTON_COLORS.pointLight}
+  color={colors.pointLight}
   castShadow
 />
 

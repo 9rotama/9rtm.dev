@@ -1,13 +1,21 @@
 <script lang="ts">
   import { T, useTask, useThrelte } from "@threlte/core";
   import { Stars } from "@threlte/extras";
+  import { mode } from "mode-watcher";
   import { Color } from "three";
-  import { EMOTI_KUN_COLORS } from "./colors";
+  import { getEmotiKunColors } from "./colors";
   import EmotiKunFloor from "./emoti-kun-floor.svelte";
   import EmotiKunText from "./emoti-kun-text.svelte";
 
   const { scene } = useThrelte();
-  scene.background = new Color(EMOTI_KUN_COLORS.background);
+
+  const colors = $derived(
+    getEmotiKunColors(mode.current === "dark" ? "dark" : "light"),
+  );
+
+  $effect(() => {
+    scene.background = new Color(colors.background);
+  });
 
   // Animation state for rotating spheres
   let time = $state(0);
@@ -32,7 +40,7 @@
   <T.Mesh position={[x, y, z]} rotation={[time * 0.1, time * 0.2, 0]}>
     <T.SphereGeometry args={[0.8, 32, 32]} />
     <T.MeshPhysicalMaterial
-      color={EMOTI_KUN_COLORS.sphere}
+      color={colors.sphere}
       metalness={0}
       roughness={0}
       transmission={1.0}
@@ -50,7 +58,7 @@
 <T.PointLight
   position={[0, 3, 4]}
   intensity={20}
-  color={EMOTI_KUN_COLORS.pointLight}
+  color={colors.pointLight}
   visible
 />
 <T.RectAreaLight
@@ -60,7 +68,7 @@
   width={5}
   height={5}
   visible
-  color={EMOTI_KUN_COLORS.rectAreaLight}
+  color={colors.rectAreaLight}
 />
 
 <Stars count={600} lightness={0.5} opacity={0.5} radius={50} factor={8} />
