@@ -43,6 +43,12 @@
 
 <svelte:head>
   <link rel="canonical" href={data.canonicalUrl} />
+  <link
+    rel="alternate"
+    type="application/rss+xml"
+    title="9rtm.dev"
+    href="/rss.xml"
+  />
   <title>9rtm.dev</title>
   <meta
     name="description"
