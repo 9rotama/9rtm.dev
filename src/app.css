@@ -209,6 +209,15 @@ html {
   }
 }
 
+/* Shiki dual themes */
+.code-block span[style*="--shiki"] {
+  color: var(--shiki-light);
+}
+
+:root.dark .code-block span[style*="--shiki"] {
+  color: var(--shiki-dark);
+}
+
 @layer components {
   .gradient-text {
     @apply from-heading-foreground via-heading-foreground to-heading-foreground-shade font-display bg-gradient-to-b bg-clip-text text-transparent;
