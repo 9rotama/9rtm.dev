@@ -9,6 +9,10 @@ uniform float u_bg_r;
 uniform float u_bg_g;
 uniform float u_bg_b;
 
+vec3 srgbToLinear(vec3 c) {
+    return pow(c, vec3(2.2));
+}
+
 // Grid parameters
 const float GRID_SIZE = 6.0;
 const float LINE_WIDTH = 0.075;
@@ -35,9 +39,7 @@ void main() {
 
     vec3 grid_color = vec3(u_grid_r, u_grid_g, u_grid_b);
     vec3 bg_color = vec3(u_bg_r, u_bg_g, u_bg_b);
-    vec3 color = mix(bg_color, grid_color, grid_pattern);
+    vec3 color = mix(bg_color, grid_color, grid_pattern * fade);
 
-    float alpha = max(grid_pattern * 0.8, (1.0 - grid_pattern) * 0.3) * fade;
-
-    gl_FragColor = vec4(color, alpha);
+    gl_FragColor = vec4(color, 1.0);
 }

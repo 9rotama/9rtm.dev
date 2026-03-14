@@ -42,10 +42,12 @@
     <T.MeshPhysicalMaterial
       color={colors.sphere}
       metalness={0}
-      roughness={0}
+      roughness={0.1}
       transmission={1.0}
       ior={1.5}
-      thickness={0.8}
+      thickness={0.2}
+      attenuationColor={colors.attenuationColor}
+      attenuationDistance={colors.attenuationDistance}
     />
   </T.Mesh>
 {/each}

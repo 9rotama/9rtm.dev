@@ -10,8 +10,8 @@
     getEmotiKunColors(mode.current === "dark" ? "dark" : "light"),
   );
 
-  const gridColor = $derived(new Color(colors.floorGrid));
-  const bgColor = $derived(new Color(colors.floorBg));
+  const gridColor = $derived(new Color(colors.floorGrid).convertLinearToSRGB());
+  const bgColor = $derived(new Color(colors.floorBg).convertLinearToSRGB());
 
   let time = $state(0);
 
@@ -44,7 +44,6 @@
     uniforms.u_bg_r.value={bgColor.r}
     uniforms.u_bg_g.value={bgColor.g}
     uniforms.u_bg_b.value={bgColor.b}
-    transparent
-    alphaTest={0.0}
+    alphaTest={0.5}
   />
 </T.Mesh>

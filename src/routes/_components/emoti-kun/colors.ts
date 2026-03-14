@@ -5,7 +5,9 @@ const EMOTI_KUN_COLORS_DARK = {
   rectAreaLight: "#c494e2",
   text: "#a23bcb",
   floorGrid: "#b89ad8",
-  floorBg: "#000000",
+  floorBg: "#0b0a13",
+  attenuationColor: "#0b0a13",
+  attenuationDistance: 2,
 } as const;
 
 const EMOTI_KUN_COLORS_LIGHT = {
@@ -15,7 +17,9 @@ const EMOTI_KUN_COLORS_LIGHT = {
   rectAreaLight: "#c494e2",
   text: "#a23bcb",
   floorGrid: "#c8aae8",
-  floorBg: "#ffffff",
+  floorBg: "#f5f1ff",
+  attenuationColor: "#ffffff",
+  attenuationDistance: 5,
 } as const;
 
 export function getEmotiKunColors(mode: "light" | "dark") {
