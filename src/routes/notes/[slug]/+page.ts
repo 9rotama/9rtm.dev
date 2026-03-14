@@ -50,10 +50,28 @@ export const load: PageLoad = async ({ params }) => {
   const raw = raws[`../_content/notes/${params.slug}.md`] ?? "";
   const readingMinutes = estimateReadingMinutes(raw);
 
+  // Build sorted list of published notes for prev/next navigation
+  const allNotes = Object.entries(mds)
+    .map(([path, m]) => {
+      const s = path.split("/").at(-1)?.replace(".md", "");
+      const p = selfNoteMetadataSchema.safeParse(m.metadata);
+      if (!s || !p.success || !p.data.published) return null;
+      return { slug: s, title: p.data.title, publishedAt: p.data.published_at };
+    })
+    .filter((n) => n !== null)
+    .sort((a, b) => b.publishedAt.getTime() - a.publishedAt.getTime());
+
+  const currentIndex = allNotes.findIndex((n) => n.slug === params.slug);
+  const prevNote =
+    currentIndex < allNotes.length - 1 ? allNotes[currentIndex + 1] : null;
+  const nextNote = currentIndex > 0 ? allNotes[currentIndex - 1] : null;
+
   return {
     slug: params.slug,
     metadata: metadata.data,
     component: md.default,
     readingMinutes,
+    prevNote: prevNote ? { slug: prevNote.slug, title: prevNote.title } : null,
+    nextNote: nextNote ? { slug: nextNote.slug, title: nextNote.title } : null,
   };
 };

@@ -5,6 +5,7 @@
   import Tag from "../_components/tag.svelte";
   import type { PageProps } from "./$types";
   import LikeButton from "./_components/like-button-3d/index.svelte";
+  import NoteNav from "./_components/note-nav.svelte";
   const { data }: PageProps = $props();
 
   const ogpUrl = new URL(
@@ -70,4 +71,5 @@
   <div class="mt-20 flex justify-center">
     <LikeButton slug={data.slug} />
   </div>
+  <NoteNav prevNote={data.prevNote} nextNote={data.nextNote} />
 </main>
