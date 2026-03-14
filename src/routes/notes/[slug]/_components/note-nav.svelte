@@ -17,12 +17,12 @@
   {@const isPrev = direction === "prev"}
   <a
     href="/notes/{note.slug}"
-    class="group text-muted hover:text-foreground relative flex min-w-0 flex-1 flex-col gap-1 rounded-lg p-4 transition-colors duration-200
+    class="group text-muted hover:text-foreground relative isolate flex min-w-0 flex-1 flex-col gap-1 rounded-lg p-4 transition-colors duration-200
       {isPrev ? '' : 'items-end'}"
   >
     <!-- hover時の背景グラデーション -->
     <div
-      class="from-card-background-vivid-light/70 absolute inset-0 -z-10 rounded-lg to-transparent mask-y-from-70% mask-y-to-100% opacity-0 transition-opacity duration-200 group-hover:opacity-100
+      class="from-active-lighting/70 absolute inset-0 -z-10 rounded-lg to-transparent mask-y-from-70% mask-y-to-100% opacity-0 transition-opacity duration-200 group-hover:opacity-100
         {isPrev ? 'bg-gradient-to-r' : 'bg-gradient-to-l'}"
     ></div>
     <!-- グラデーションborder -->

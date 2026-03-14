@@ -76,10 +76,10 @@
         <Note data={data.latestNote} />
         <a
           href="/notes"
-          class="group text-muted hover:text-foreground font-display relative flex items-center justify-end gap-2 rounded-lg p-4 text-sm transition-colors duration-200"
+          class="group text-muted hover:text-foreground font-display relative isolate flex items-center justify-end gap-2 rounded-lg p-4 text-sm transition-colors duration-200"
         >
           <div
-            class="from-card-background-vivid-light/70 absolute inset-0 -z-10 rounded-lg bg-gradient-to-l to-transparent mask-y-from-70% mask-y-to-100% opacity-0 transition-opacity duration-200 group-hover:opacity-100"
+            class="from-active-lighting/70 absolute inset-0 -z-10 rounded-lg bg-gradient-to-l to-transparent mask-y-from-70% mask-y-to-100% opacity-0 transition-opacity duration-200 group-hover:opacity-100"
           ></div>
           <span>view all notes</span>
           <MoveRight
