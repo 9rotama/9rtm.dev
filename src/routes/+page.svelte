@@ -1,10 +1,15 @@
-<script>
+<script lang="ts">
+  import { ArrowRight } from "@lucide/svelte";
   import EmotiKun from "./_components/emoti-kun/emoti-kun.svelte";
   import Heading from "./_components/heading.svelte";
   import GitHub from "./_components/icons/github.svelte";
   import Zenn from "./_components/icons/zenn.svelte";
   import RepoCard from "./_components/repo-card.svelte";
+  import Note from "./notes/_components/note.svelte";
   import { repos } from "./_lib/repos";
+  import type { PageProps } from "./$types";
+
+  const { data }: PageProps = $props();
 </script>
 
 <main>
@@ -48,6 +53,24 @@
       リズムゲームが好きです。
     </p>
   </div>
+
+  {#if data.latestNote}
+    <div class="mt-10">
+      <Heading text="latest note" />
+      <div class="mt-4">
+        <Note data={data.latestNote} align="center" />
+      </div>
+      <a
+        href="/notes"
+        class="group text-muted hover:text-foreground font-display mt-2 flex items-center justify-center gap-2 text-sm transition-colors"
+      >
+        <span>view all notes</span>
+        <ArrowRight
+          class="size-4 transition-transform ease-out group-hover:translate-x-1"
+        />
+      </a>
+    </div>
+  {/if}
 
   <div class="mt-10">
     <Heading text="crafts" subText="" />

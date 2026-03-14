@@ -5,14 +5,20 @@
   import type { Note } from "../_lib/note";
   import Tag from "./tag.svelte";
 
-  let { data }: { data: Note } = $props();
+  let { data, align = "left" }: { data: Note; align?: "left" | "center" } =
+    $props();
 </script>
 
 <a
   href={data.href}
   target={data.platform !== "self" ? "_blank" : undefined}
   rel={data.platform !== "self" ? "noopener noreferrer" : undefined}
-  class="group relative -mx-4 flex flex-row items-center gap-6 rounded-lg px-4 py-4"
+  class={[
+    "group relative flex rounded-lg px-4 py-4",
+    align === "center"
+      ? "flex-col items-center gap-3 text-center"
+      : "-mx-4 flex-row items-center gap-6",
+  ]}
 >
   <div
     class="from-card-background-vivid absolute inset-0 -z-10 rounded-lg bg-radial-[ellipse_at_bottom] to-transparent to-70% opacity-0 transition-opacity duration-200 group-hover:opacity-100"
@@ -26,7 +32,12 @@
       class="h-16 w-16 object-cover"
     />
   {/if}
-  <div class="flex flex-col items-start gap-2">
+  <div
+    class={[
+      "flex flex-col gap-2",
+      align === "center" ? "items-center" : "items-start",
+    ]}
+  >
     <span class="text-md line-clamp-2 font-bold">
       {data.title}
     </span>
