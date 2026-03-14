@@ -1,5 +1,5 @@
 const EMOTI_KUN_COLORS_DARK = {
-  background: "#0e0d17",
+  background: "#0b0a13",
   sphere: "#ffbbff",
   pointLight: "#bc84f1",
   rectAreaLight: "#c494e2",
@@ -9,7 +9,7 @@ const EMOTI_KUN_COLORS_DARK = {
 } as const;
 
 const EMOTI_KUN_COLORS_LIGHT = {
-  background: "#e8dff5",
+  background: "#f5f1ff",
   sphere: "#e8b8ff",
   pointLight: "#bc84f1",
   rectAreaLight: "#c494e2",
