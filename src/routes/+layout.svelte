@@ -58,8 +58,8 @@
   {@html '<script type="application/ld+json">' + jsonLd + "<" + "/script>"}
 </svelte:head>
 
-<div class="mx-auto max-w-2xl px-4 pb-28">
-  <div class="mx-2">
+<div class="mx-auto flex min-h-screen max-w-2xl flex-col px-4 pb-28">
+  <div class="mx-2 flex-1">
     {@render children()}
   </div>
   <div class="mt-30">
