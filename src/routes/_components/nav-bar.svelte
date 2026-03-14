@@ -1,7 +1,8 @@
 <script lang="ts">
   import { page } from "$app/state";
   import { NavigationMenu } from "bits-ui";
-  import { House, NotebookText } from "@lucide/svelte";
+  import { House, Moon, NotebookText, Sun } from "@lucide/svelte";
+  import { toggleMode, mode } from "mode-watcher";
 
   const navItems = [
     { href: "/", label: "home", icon: House },
@@ -42,5 +43,17 @@
         </NavigationMenu.Link>
       </NavigationMenu.Item>
     {/each}
+    <div class="bg-border/50 mx-1 h-5 w-[1px]"></div>
+    <button
+      onclick={toggleMode}
+      class="text-muted hover:text-foreground relative flex items-center rounded-full p-2 transition-colors duration-150"
+      aria-label="テーマ切り替え"
+    >
+      {#if mode.current === "light"}
+        <Moon class="size-4" />
+      {:else}
+        <Sun class="size-4" />
+      {/if}
+    </button>
   </NavigationMenu.List>
 </NavigationMenu.Root>
