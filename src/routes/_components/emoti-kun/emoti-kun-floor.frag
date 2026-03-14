@@ -2,6 +2,12 @@ precision mediump float;
 varying vec2 vUv;
 varying vec3 vPosition;
 uniform float u_time;
+uniform float u_grid_r;
+uniform float u_grid_g;
+uniform float u_grid_b;
+uniform float u_bg_r;
+uniform float u_bg_g;
+uniform float u_bg_b;
 
 // Grid parameters
 const float GRID_SIZE = 6.0;
@@ -26,11 +32,12 @@ void main() {
     float grid_pattern = grid(grid_uv);
     
     float fade = smoothstep(0.0, 1.0, 1.0 - length(uv));
-    vec3 base_color = vec3(124, 86, 180) / 255.0; // Base color
-    
-    vec3 color = vec3(base_color * grid_pattern * fade);
-    
-    float alpha = grid_pattern * fade * 0.8;
-    
+
+    vec3 grid_color = vec3(u_grid_r, u_grid_g, u_grid_b);
+    vec3 bg_color = vec3(u_bg_r, u_bg_g, u_bg_b);
+    vec3 color = mix(bg_color, grid_color, grid_pattern) * fade;
+
+    float alpha = max(grid_pattern * fade * 0.8, (1.0 - grid_pattern) * fade * 0.3);
+
     gl_FragColor = vec4(color, alpha);
 }
