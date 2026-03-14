@@ -18,6 +18,7 @@ export const load: PageLoad = async () => {
           thumbnail: { type: "emoji", emoji: note.emoji },
           platform: "self",
           tags: note.tags,
+          excerpt: note.excerpt,
         }) satisfies Note,
     )
     .sort((a, b) => b.publishedAt.getTime() - a.publishedAt.getTime());

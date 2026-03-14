@@ -2,6 +2,7 @@
   import { goto } from "$app/navigation";
   import { page } from "$app/state";
   import type { PageProps } from "./$types";
+  import GradientBorder from "../_components/gradient-border.svelte";
   import Note from "./_components/note.svelte";
   import Tag from "./_components/tag.svelte";
 
@@ -71,9 +72,7 @@
     <div class="mt-16 flex w-full flex-col">
       {#each filteredNotes as note, i (i)}
         <Note data={note} />
-        <div
-          class="from-border/0 via-border to-border/0 h-[1px] w-full bg-gradient-to-r"
-        ></div>
+        <GradientBorder />
         <!--↓svelteが動的ルート用のOGPをクロールさせるための空リンク-->
         <a
           class="hidden"

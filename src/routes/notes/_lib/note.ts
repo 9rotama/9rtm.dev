@@ -6,4 +6,5 @@ export type Note = {
   publishedAt: Date;
   platform: "zenn" | "self";
   tags: string[];
+  excerpt?: string;
 };

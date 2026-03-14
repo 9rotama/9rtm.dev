@@ -5,8 +5,15 @@
   import type { Note } from "../_lib/note";
   import Tag from "./tag.svelte";
 
-  let { data, align = "left" }: { data: Note; align?: "left" | "center" } =
-    $props();
+  let {
+    data,
+    align = "left",
+    showExcerpt = false,
+  }: {
+    data: Note;
+    align?: "left" | "center";
+    showExcerpt?: boolean;
+  } = $props();
 </script>
 
 <a
@@ -51,6 +58,11 @@
         {/if}
       </span>
     </div>
+    {#if showExcerpt && data.excerpt}
+      <p class="text-muted line-clamp-2 text-xs leading-relaxed">
+        {data.excerpt}
+      </p>
+    {/if}
     {#if data.tags.length > 0}
       <div class="flex flex-wrap gap-1">
         {#each data.tags as tag (tag)}

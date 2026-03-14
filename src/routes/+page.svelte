@@ -1,13 +1,14 @@
 <script lang="ts">
-  import { ArrowRight } from "@lucide/svelte";
+  import { MoveRight } from "@lucide/svelte";
+  import type { PageProps } from "./$types";
   import EmotiKun from "./_components/emoti-kun/emoti-kun.svelte";
+  import GradientBorder from "./_components/gradient-border.svelte";
   import Heading from "./_components/heading.svelte";
   import GitHub from "./_components/icons/github.svelte";
   import Zenn from "./_components/icons/zenn.svelte";
   import RepoCard from "./_components/repo-card.svelte";
-  import Note from "./notes/_components/note.svelte";
   import { repos } from "./_lib/repos";
-  import type { PageProps } from "./$types";
+  import Note from "./notes/_components/note.svelte";
 
   const { data }: PageProps = $props();
 </script>
@@ -55,24 +56,28 @@
   </div>
 
   {#if data.latestNote}
-    <div class="mt-10">
+    <div class="mt-20">
       <Heading text="latest note" />
-      <div class="mt-4">
-        <Note data={data.latestNote} align="center" />
+      <div class="alitn mx-auto mt-4 max-w-lg">
+        <Note data={data.latestNote} showExcerpt />
+        <GradientBorder />
+        <a
+          href="/notes"
+          class="group text-muted hover:text-foreground font-display relative mt-2 flex items-center justify-end gap-2 rounded-lg p-4 text-sm transition-colors duration-200"
+        >
+          <div
+            class="from-card-background-vivid-light/70 absolute inset-0 -z-10 rounded-lg bg-gradient-to-l to-transparent mask-y-from-70% mask-y-to-100% opacity-0 transition-opacity duration-200 group-hover:opacity-100"
+          ></div>
+          <span>view all notes</span>
+          <MoveRight
+            class="size-5 stroke-1 transition-transform ease-out group-hover:translate-x-1"
+          />
+        </a>
       </div>
-      <a
-        href="/notes"
-        class="group text-muted hover:text-foreground font-display mt-2 flex items-center justify-center gap-2 text-sm transition-colors"
-      >
-        <span>view all notes</span>
-        <ArrowRight
-          class="size-4 transition-transform ease-out group-hover:translate-x-1"
-        />
-      </a>
     </div>
   {/if}
 
-  <div class="mt-10">
+  <div class="mt-20">
     <Heading text="crafts" subText="" />
     <div class="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-2">
       {#each repos as repo (repo.id)}
