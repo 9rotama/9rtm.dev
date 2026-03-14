@@ -38,39 +38,91 @@
 /* Light mode (default) */
 :root {
   --theme-background: oklch(0.97 0.005 291.05);
-  --theme-foreground: oklch(0.25 0.02 291.05);
-  --theme-heading-foreground: oklch(0.2 0.025 291.05);
-  --theme-muted: oklch(0.55 0.02 291.05);
-  --theme-accent: oklch(0.55 0.2 291.05);
-  --theme-heading-foreground-shade: oklch(0.45 0.15 291.05);
-  --theme-selection-background: oklch(0.7 0.1 291.05);
-  --theme-border: oklch(0.8 0.01 291.05);
-  --theme-border-solid: oklch(0.75 0.015 291.05);
-  --theme-card-background-dark: oklch(0.95 0.005 291.05);
-  --theme-card-background-vivid: oklch(0.94 0.01 291.05);
-  --theme-card-background-vivid-light: oklch(0.92 0.02 291.05);
-  --theme-code-foreground: oklch(0.3 0.03 291.05);
-  --theme-pre-background: oklch(0.94 0.005 291.05);
-  --theme-pre-background-dark: oklch(0.92 0.005 291.05);
+  --theme-foreground: oklch(
+    from var(--theme-background) calc(l - 0.72) calc(c + 0.015) h
+  );
+  --theme-heading-foreground: oklch(
+    from var(--theme-foreground) calc(l - 0.05) c h
+  );
+  --theme-muted: oklch(
+    from var(--theme-foreground) calc(l + 0.25) calc(c + 0.02) h
+  );
+  --theme-accent: oklch(
+    from var(--theme-foreground) calc(l + 0.2) calc(c + 0.25) h
+  );
+  --theme-heading-foreground-shade: oklch(
+    from var(--theme-foreground) calc(l + 0.2) calc(c + 0.15) h
+  );
+  --theme-selection-background: oklch(
+    from var(--theme-foreground) calc(l + 0.4) calc(c + 0.1) h
+  );
+  --theme-border: oklch(from var(--theme-foreground) calc(l + 0.55) c h);
+  --theme-border-solid: oklch(
+    from var(--theme-border) calc(l - 0.05) calc(c + 0.01) h
+  );
+  --theme-card-background-dark: oklch(
+    from var(--theme-background) calc(l - 0.02) c h
+  );
+  --theme-card-background-vivid: oklch(
+    from var(--theme-background) calc(l - 0.03) calc(c + 0.01) h
+  );
+  --theme-card-background-vivid-light: oklch(
+    from var(--theme-background) calc(l - 0.07) calc(c + 0.03) h
+  );
+  --theme-code-foreground: oklch(
+    from var(--theme-foreground) calc(l - 0.05) calc(c + 0.02) h
+  );
+  --theme-pre-background: oklch(
+    from var(--theme-background) calc(l - 0.04) calc(c + 0.005) h
+  );
+  --theme-pre-background-dark: oklch(
+    from var(--theme-pre-background) calc(l - 0.03) c h
+  );
 }
 
 /* Dark mode */
-.dark {
+:root.dark {
   --theme-background: oklch(0.15 0.02 291.05);
-  --theme-foreground: oklch(0.9 0.03 291.05);
-  --theme-heading-foreground: oklch(0.95 0.03 291.05);
-  --theme-muted: oklch(0.75 0.06 291.05);
-  --theme-accent: oklch(0.7 0.27 291.05);
-  --theme-heading-foreground-shade: oklch(0.6 0.22 291.05);
-  --theme-selection-background: oklch(0.6 0.12 291.05);
-  --theme-border: oklch(0.4 0.02 291.05);
-  --theme-border-solid: oklch(0.35 0.03 291.05);
-  --theme-card-background-dark: oklch(0.13 0.02 291.05);
-  --theme-card-background-vivid: oklch(0.18 0.03 291.05);
-  --theme-card-background-vivid-light: oklch(0.25 0.06 291.05);
-  --theme-code-foreground: oklch(0.95 0.04 291.05);
-  --theme-pre-background: oklch(0.21 0.025 291.05);
-  --theme-pre-background-dark: oklch(0.18 0.02 291.05);
+  --theme-foreground: oklch(
+    from var(--theme-background) calc(l + 0.75) calc(c + 0.01) h
+  );
+  --theme-heading-foreground: oklch(
+    from var(--theme-foreground) calc(l + 0.05) c h
+  );
+  --theme-muted: oklch(
+    from var(--theme-foreground) calc(l - 0.15) calc(c + 0.04) h
+  );
+  --theme-accent: oklch(
+    from var(--theme-foreground) calc(l - 0.2) calc(c + 0.25) h
+  );
+  --theme-heading-foreground-shade: oklch(
+    from var(--theme-foreground) calc(l - 0.3) calc(c + 0.2) h
+  );
+  --theme-selection-background: oklch(
+    from var(--theme-foreground) calc(l - 0.3) calc(c + 0.1) h
+  );
+  --theme-border: oklch(from var(--theme-foreground) calc(l - 0.5) c h);
+  --theme-border-solid: oklch(
+    from var(--theme-border) calc(l - 0.05) calc(c + 0.01) h
+  );
+  --theme-card-background-dark: oklch(
+    from var(--theme-background) calc(l - 0.02) c h
+  );
+  --theme-card-background-vivid: oklch(
+    from var(--theme-background) calc(l + 0.03) calc(c + 0.01) h
+  );
+  --theme-card-background-vivid-light: oklch(
+    from var(--theme-background) calc(l + 0.1) calc(c + 0.04) h
+  );
+  --theme-code-foreground: oklch(
+    from var(--theme-foreground) calc(l + 0.05) calc(c + 0.02) h
+  );
+  --theme-pre-background: oklch(
+    from var(--theme-background) calc(l + 0.06) calc(c + 0.005) h
+  );
+  --theme-pre-background-dark: oklch(
+    from var(--theme-pre-background) calc(l - 0.03) c h
+  );
 }
 
 html {
