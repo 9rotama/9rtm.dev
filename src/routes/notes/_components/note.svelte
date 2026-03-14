@@ -1,7 +1,9 @@
 <script lang="ts">
+  import { Upload } from "@lucide/svelte";
   import { formatDate } from "date-fns";
   import Zenn from "../../_components/icons/zenn.svelte";
   import type { Note } from "../_lib/note";
+  import Tag from "./tag.svelte";
 
   let { data }: { data: Note } = $props();
 </script>
@@ -29,12 +31,21 @@
       {data.title}
     </span>
     <div class="text-muted flex flex-row items-center gap-2 text-xs">
-      {formatDate(data.publishedAt, "MMM dd, yyyy")}
+      <span class="flex items-center gap-1">
+        <Upload class="size-3" />{formatDate(data.publishedAt, "MMM dd, yyyy")}
+      </span>
       <span class="size-4">
         {#if data.platform === "zenn"}
           <Zenn />
         {/if}
       </span>
     </div>
+    {#if data.tags.length > 0}
+      <div class="flex flex-wrap gap-1">
+        {#each data.tags as tag (tag)}
+          <Tag {tag} size="sm" variant="plain" />
+        {/each}
+      </div>
+    {/if}
   </div>
 </a>
