@@ -46,7 +46,7 @@
     <div class="bg-border/50 mx-1 h-5 w-[1px]"></div>
     <button
       onclick={toggleMode}
-      class="to-card-background-dark from-card-background-vivid-light hover:to-card-background-vivid-light hover:from-card-background-dark border-border text-muted hover:text-foreground flex cursor-pointer items-center justify-center rounded-full border bg-gradient-to-b p-1.5 transition-colors duration-150"
+      class="to-card-background-dark from-card-background-vivid-light hover:to-card-background-vivid-light hover:from-card-background-dark border-border text-muted hover:text-foreground shadow-shadow/30 flex cursor-pointer items-center justify-center rounded-full border bg-gradient-to-b p-1.5 shadow-[0_3px_2px_0] transition-colors duration-150"
       aria-label="テーマ切り替え"
     >
       {#if mode.current === "light"}
