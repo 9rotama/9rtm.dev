@@ -14,7 +14,7 @@
 
 <div
   class={[
-    "font-display border-border/50 rounded-full border transition-colors duration-150",
+    "font-display border-border/50 cursor-pointer rounded-full border transition-colors duration-150",
     size === "sm" ? "px-2 py-0.5 text-[10px]" : "px-3 py-1 text-xs",
     variant === "filled" && " from-background to-accent/20  bg-gradient-to-b",
     active
