@@ -1,15 +1,31 @@
 <script lang="ts">
   import { onNavigate } from "$app/navigation";
   import { PUBLIC_BASE_URL } from "$env/static/public";
-  import "@fontsource/ibm-plex-mono/400.css";
-  import "@fontsource/ibm-plex-mono/700.css";
-  import "@fontsource/ibm-plex-sans-jp/400.css";
-  import "@fontsource/ibm-plex-sans-jp/700.css";
-  import "@fontsource-variable/museomoderno";
+  import "@fontsource/geist-sans/400.css";
+  import "@fontsource/geist-sans/700.css";
+  import "@fontsource/iosevka/400.css";
+  import "@fontsource/iosevka/700.css";
+  import "@fontsource/m-plus-1/400.css";
+  import "@fontsource/m-plus-1/700.css";
 
+  import { ModeWatcher } from "mode-watcher";
   import "../app.css";
   import Footer from "./_components/footer.svelte";
+  import NavBar from "./_components/nav-bar.svelte";
   let { children, data } = $props();
+
+  const jsonLd = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "9rtm.dev",
+    url: PUBLIC_BASE_URL,
+    author: {
+      "@type": "Person",
+      name: "9rotama",
+      url: "https://github.com/9rotama",
+      jobTitle: "web developer",
+    },
+  });
 
   onNavigate((navigation) => {
     if (!document.startViewTransition) return;
@@ -28,21 +44,34 @@
 
 <svelte:head>
   <link rel="canonical" href={data.canonicalUrl} />
+  <link
+    rel="alternate"
+    type="application/rss+xml"
+    title="9rtm.dev"
+    href="/rss.xml"
+  />
   <title>9rtm.dev</title>
-  <meta name="description" content="9rotamaの個人サイト" />
+  <meta
+    name="description"
+    content="9rotama / くろたまのプロフィール・技術ブログ。フロントエンド開発やThree.jsについて書いています。"
+  />
   <meta property="og:title" content="9rtm.dev" />
   <meta
     property="og:image"
     content={new URL(`/ogp.webp`, PUBLIC_BASE_URL).toString()}
   />
   <meta name="twitter:card" content="summary" />
+  <!-- eslint-disable-next-line svelte/no-at-html-tags -->
+  {@html '<script type="application/ld+json">' + jsonLd + "<" + "/script>"}
 </svelte:head>
 
-<div class="mx-auto max-w-2xl px-4 pb-12">
-  <div class="mx-2">
+<ModeWatcher />
+<div class="mx-auto flex min-h-screen max-w-2xl flex-col px-4 pb-28">
+  <div class="mx-2 flex-1">
     {@render children()}
   </div>
   <div class="mt-30">
     <Footer />
   </div>
 </div>
+<NavBar />

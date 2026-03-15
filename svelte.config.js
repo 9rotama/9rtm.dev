@@ -10,10 +10,8 @@ import { createHighlighter } from "shiki";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const highlightTheme = "poimandres";
-
 const highlighter = await createHighlighter({
-  themes: [highlightTheme],
+  themes: ["github-dark", "github-light"],
   langs: [
     "javascript",
     "typescript",
@@ -48,7 +46,11 @@ const mdsvexOptions = {
       const html = escapeSvelte(
         highlighter.codeToHtml(code, {
           lang: actualLang,
-          theme: highlightTheme,
+          themes: {
+            light: "github-light",
+            dark: "github-dark",
+          },
+          defaultColor: false,
           structure: "inline",
         }),
       );

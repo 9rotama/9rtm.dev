@@ -10,67 +10,146 @@
   --animate-blurred-fade-in: blurred-fade-in 0.3s ease-out forwards;
   --animate-blurred-fade-out: blurred-fade-out 0.3s ease-out forwards;
 
-  --color-background: oklch(0.15 0.02 291.05);
-  --color-foreground: oklch(
-    from var(--color-background) calc(l + 0.75) calc(c + 0.01) h
-  );
-  --color-heading-foreground: oklch(
-    from var(--color-foreground) calc(l + 0.05) c h
-  );
-  --color-muted: oklch(
-    from var(--color-foreground) calc(l - 0.15) calc(c + 0.04) h
-  );
-  --color-accent: oklch(
-    from var(--color-foreground) calc(l - 0.2) calc(c + 0.25) h
-  );
-  --color-heading-foreground-shade: oklch(
-    from var(--color-foreground) calc(l - 0.3) calc(c + 0.2) h
-  );
-  --color-selection-background: oklch(
-    from var(--color-foreground) calc(l - 0.3) calc(c + 0.1) h
-  );
-  --color-border: oklch(from var(--color-foreground) calc(l - 0.5) c h);
-  --color-border-solid: oklch(
-    from var(--color-border) calc(l - 0.05) calc(c + 0.01) h
-  );
-  --color-card-background-dark: oklch(
-    from var(--color-background) calc(l - 0.02) c h
-  );
-  --color-card-background-vivid: oklch(
-    from var(--color-background) calc(l + 0.05) calc(c + 0.02) h
-  );
-  --color-card-background-vivid-light: oklch(
-    from var(--color-background) calc(l + 0.1) calc(c + 0.04) h
-  );
-  --color-code-foreground: oklch(
-    from var(--color-foreground) calc(l + 0.05) calc(c + 0.02) h
-  );
-  --color-pre-background: oklch(
-    from var(--color-background) calc(l + 0.06) calc(c + 0.005) h
-  );
-  --color-pre-background-dark: oklch(
-    from var(--color-pre-background) calc(l - 0.03) calc(c) h
-  );
+  --color-background: var(--theme-background);
+  --color-foreground: var(--theme-foreground);
+  --color-heading-foreground: var(--theme-heading-foreground);
+  --color-muted: var(--theme-muted);
+  --color-accent: var(--theme-accent);
+  --color-heading-foreground-shade: var(--theme-heading-foreground-shade);
+  --color-selection-background: var(--theme-selection-background);
+  --color-border: var(--theme-border);
+  --color-border-solid: var(--theme-border-solid);
+  --color-card-background-dark: var(--theme-card-background-dark);
+  --color-card-background-vivid: var(--theme-card-background-vivid);
+  --color-card-background-vivid-light: var(--theme-card-background-vivid-light);
+  --color-code-foreground: var(--theme-code-foreground);
+  --color-pre-background: var(--theme-pre-background);
+  --color-pre-background-dark: var(--theme-pre-background-dark);
+  --color-active-lighting: var(--theme-active-lighting);
+  --color-shadow: var(--theme-shadow);
 
   --font-body:
-    "IBM Plex Sans JP", "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN",
-    "Hiragino Sans", Meiryo, sans-serif;
+    "Geist Sans", "M PLUS 1", "Helvetica Neue", Arial,
+    "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
   --font-code:
-    "IBM Plex Mono", "IBM Plex Sans JP", Consolas, "Courier New", Courier,
-    Monaco, monospace;
+    "Iosevka", "M PLUS 1", Consolas, "Courier New", Courier, Monaco, monospace;
   --font-display:
-    "Michroma", "IBM Plex Sans JP", "Helvetica Neue", Arial, sans-serif;
+    "Michroma", "Geist Sans", "M PLUS 1", "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Light mode (default) */
+:root {
+  --theme-background: oklch(0.97 0.04 291.05);
+  --theme-foreground: oklch(
+    from var(--theme-background) calc(l - 0.62) calc(c + 0.03) h
+  );
+  --theme-heading-foreground: oklch(
+    from var(--theme-foreground) calc(l + 0.1) c h
+  );
+  --theme-muted: oklch(
+    from var(--theme-foreground) calc(l + 0.15) calc(c + 0.01) h
+  );
+  --theme-accent: oklch(
+    from var(--theme-foreground) calc(l + 0.55) calc(c + 0.3) h
+  );
+  --theme-heading-foreground-shade: oklch(
+    from var(--theme-foreground) calc(l) calc(c + 0.15) h
+  );
+  --theme-selection-background: oklch(
+    from var(--theme-foreground) calc(l + 0.4) calc(c + 0.1) h
+  );
+  --theme-border: oklch(from var(--theme-foreground) calc(l + 0.4) c h);
+  --theme-border-solid: oklch(
+    from var(--theme-border) calc(l - 0.05) calc(c + 0.01) h
+  );
+  --theme-card-background-dark: oklch(
+    from var(--theme-background) calc(l - 0.05) c h
+  );
+  --theme-card-background-vivid: oklch(
+    from var(--theme-background) calc(l + 0.01) calc(c + 0.03) h
+  );
+  --theme-card-background-vivid-light: oklch(
+    from var(--theme-background) calc(l + 0.1) calc(c + 0.03) h
+  );
+  --theme-code-foreground: oklch(
+    from var(--theme-foreground) calc(l - 0.05) calc(c + 0.02) h
+  );
+  --theme-pre-background: oklch(
+    from var(--theme-background) calc(l - 0.02) calc(c + 0.005) h
+  );
+  --theme-pre-background-dark: oklch(
+    from var(--theme-pre-background) calc(l - 0.03) c h
+  );
+  --theme-active-lighting: oklch(
+    from var(--theme-background) calc(l - 0.05) calc(c + 0.01) h
+  );
+  --theme-shadow: oklch(
+    from var(--theme-background) calc(l - 0.15) calc(c + 0.03) h
+  );
+}
+
+/* Dark mode */
+:root.dark {
+  --theme-background: oklch(0.15 0.02 291.05);
+  --theme-foreground: oklch(
+    from var(--theme-background) calc(l + 0.75) calc(c + 0.01) h
+  );
+  --theme-heading-foreground: oklch(
+    from var(--theme-foreground) calc(l + 0.05) c h
+  );
+  --theme-muted: oklch(
+    from var(--theme-foreground) calc(l - 0.15) calc(c + 0.04) h
+  );
+  --theme-accent: oklch(
+    from var(--theme-foreground) calc(l - 0.2) calc(c + 0.25) h
+  );
+  --theme-heading-foreground-shade: oklch(
+    from var(--theme-foreground) calc(l - 0.3) calc(c + 0.2) h
+  );
+  --theme-selection-background: oklch(
+    from var(--theme-foreground) calc(l - 0.3) calc(c + 0.1) h
+  );
+  --theme-border: oklch(from var(--theme-foreground) calc(l - 0.5) c h);
+  --theme-border-solid: oklch(
+    from var(--theme-border) calc(l - 0.05) calc(c + 0.01) h
+  );
+  --theme-card-background-dark: oklch(
+    from var(--theme-background) calc(l - 0.02) c h
+  );
+  --theme-card-background-vivid: oklch(
+    from var(--theme-background) calc(l + 0.03) calc(c + 0.01) h
+  );
+  --theme-card-background-vivid-light: oklch(
+    from var(--theme-background) calc(l + 0.1) calc(c + 0.04) h
+  );
+  --theme-code-foreground: oklch(
+    from var(--theme-foreground) calc(l + 0.05) calc(c + 0.02) h
+  );
+  --theme-pre-background: oklch(
+    from var(--theme-background) calc(l + 0.06) calc(c + 0.005) h
+  );
+  --theme-pre-background-dark: oklch(
+    from var(--theme-pre-background) calc(l - 0.03) c h
+  );
+  --theme-active-lighting: oklch(
+    from var(--theme-background) calc(l + 0.07) calc(c + 0.01) h
+  );
+  --theme-shadow: oklch(from var(--theme-background) l calc(c + 0.02) h);
 }
 
 html {
-  @apply text-foreground;
+  @apply bg-background text-foreground;
   @apply font-body antialiased;
+  transition:
+    background-color 0.2s,
+    color 0.2s;
 }
 
 /* Global scrollbar styling */
 * {
   scrollbar-width: thin;
   scrollbar-color: var(--color-muted) var(--color-pre-background);
+  scrollbar-gutter: stable;
   text-autospace: normal;
 }
 
@@ -127,5 +206,20 @@ html {
   to {
     opacity: 0;
     filter: blur(4px);
+  }
+}
+
+/* Shiki dual themes */
+.code-block span[style*="--shiki"] {
+  color: var(--shiki-light);
+}
+
+:root.dark .code-block span[style*="--shiki"] {
+  color: var(--shiki-dark);
+}
+
+@layer components {
+  .gradient-text {
+    @apply from-heading-foreground via-heading-foreground to-heading-foreground-shade font-display bg-gradient-to-b bg-clip-text text-transparent;
   }
 }

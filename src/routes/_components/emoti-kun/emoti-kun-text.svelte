@@ -3,9 +3,14 @@
   import { Align, Text3DGeometry } from "@threlte/extras";
   import { createTimeline, eases } from "animejs";
   import { onMount } from "svelte";
+  import { mode } from "mode-watcher";
   import { FontLoader } from "three/examples/jsm/Addons.js";
-  import { EMOTI_KUN_COLORS } from "./colors";
+  import { getEmotiKunColors } from "./colors";
   const emotiLowerPos = { x: 0, y: 1.5, z: 0 };
+
+  const colors = $derived(
+    getEmotiKunColors(mode.current === "dark" ? "dark" : "light"),
+  );
 
   let meshPos: { x: number; y: number; z: number } = $state(emotiLowerPos);
   let meshScale: { x: number; y: number; z: number } = $state({
@@ -104,7 +109,7 @@
         <T.Mesh oncreate={align} position={[0, 0, 0]}>
           <Text3DGeometry text="(｡･_･｡)" font={$font} size={1.8} depth={0.3} />
           <T.MeshPhysicalMaterial
-            color={EMOTI_KUN_COLORS.text}
+            color={colors.text}
             metalness={0.5}
             roughness={0.1}
           />

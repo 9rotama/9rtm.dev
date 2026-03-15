@@ -3,6 +3,7 @@ title: 個人サイトを作り直した
 emoji: "📒"
 published_at: 2025-07-20
 published: true
+tags: [svelte, design, three.js]
 ---
 
 プロフィール兼ブログとして、9rtm.devをリニューアルしました。以前はNext.jsを使っていましたが、Reactは業務でも使うため勉強も兼ねてSvelteKitに移行しました。また、デザインも新しくしました。

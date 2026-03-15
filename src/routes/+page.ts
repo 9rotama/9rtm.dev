@@ -1,15 +1,14 @@
-import { error } from "@sveltejs/kit";
+import type { Note } from "./notes/_lib/note";
+import { getSelfNotes } from "./notes/_lib/self";
 import type { PageLoad } from "./$types";
-import type { Note } from "./_lib/note";
-import { getSelfNotes } from "./_lib/self";
 
 export const load: PageLoad = async () => {
   const selfRes = await getSelfNotes();
-  if (!selfRes.success)
-    return error(500, { message: "self: " + selfRes.error });
+  if (!selfRes.success) return { latestNote: null };
 
-  const notes = [
-    ...selfRes.data.notes.map(
+  const notes = selfRes.data.notes
+    .filter((n) => n.published)
+    .map(
       (note) =>
         ({
           slug: note.slug,
@@ -21,10 +20,8 @@ export const load: PageLoad = async () => {
           tags: note.tags,
           excerpt: note.excerpt,
         }) satisfies Note,
-    ),
-  ];
+    )
+    .sort((a, b) => b.publishedAt.getTime() - a.publishedAt.getTime());
 
-  notes.sort((a, b) => b.publishedAt.getTime() - a.publishedAt.getTime());
-
-  return { notes };
+  return { latestNote: notes[0] ?? null };
 };

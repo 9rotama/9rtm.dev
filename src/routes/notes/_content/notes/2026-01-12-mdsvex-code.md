@@ -3,6 +3,7 @@ title: mdsvexでコードブロックにコピーボタンを追加する
 emoji: "🧱"
 published_at: 2026-01-12
 published: true
+tags: [svelte, mdsvex]
 ---
 
 本ブログのMarkdown生成方法を**[mdsvex](https://mdsvex.pngwn.io/)**に移行したときの記録になります。\_φ\(･\_･

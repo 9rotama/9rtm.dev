@@ -6,16 +6,36 @@ export const selfNoteMetadataSchema = z.object({
   emoji: z.string(),
   published_at: z.string().transform((str) => new Date(str)),
   published: z.boolean(),
+  tags: z.array(z.string()).default([]),
 });
 
 type SelfNoteMetadata = z.infer<typeof selfNoteMetadataSchema>;
 type SelfNoteData = SelfNoteMetadata & {
   slug: string;
+  excerpt: string;
 };
 
 const selfNotesMds = import.meta.glob("../_content/notes/*.md", {
   eager: true,
 }) as Record<string, App.MdsvexFile>;
+
+const selfNotesRaws = import.meta.glob("../_content/notes/*.md", {
+  eager: true,
+  query: "?raw",
+  import: "default",
+}) as Record<string, string>;
+
+function extractExcerpt(raw: string, maxLength = 100): string {
+  const plain = raw
+    .replace(/---[\s\S]*?---/, "")
+    .replace(/```[\s\S]*?```/g, "")
+    .replace(/!\[.*?\]\(.*?\)/g, "")
+    .replace(/\[([^\]]*)\]\(.*?\)/g, "$1")
+    .replace(/[#*`>~_|\\-]/g, "")
+    .replace(/\n+/g, " ")
+    .trim();
+  return plain.length > maxLength ? plain.slice(0, maxLength) + "…" : plain;
+}
 
 function extractSlug(path: string): string | undefined {
   return path.split("/").at(-1)?.replace(".md", "");
@@ -60,7 +80,9 @@ export async function getSelfNotes(): Promise<
       return { success: false, error: "error" };
     }
 
-    const note = { ...parsed.data, slug };
+    const raw = selfNotesRaws[path] ?? "";
+    const excerpt = extractExcerpt(raw);
+    const note = { ...parsed.data, slug, excerpt };
     notes.push(note);
   }
 

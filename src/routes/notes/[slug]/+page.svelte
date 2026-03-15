@@ -1,9 +1,11 @@
 <script lang="ts">
   import { PUBLIC_BASE_URL } from "$env/static/public";
-  import { ArrowLeft, Upload } from "@lucide/svelte";
+  import { ArrowLeft, Clock, Upload } from "@lucide/svelte";
   import { formatDate } from "date-fns";
+  import Tag from "../_components/tag.svelte";
   import type { PageProps } from "./$types";
   import LikeButton from "./_components/like-button-3d/index.svelte";
+  import NoteNav from "./_components/note-nav.svelte";
   const { data }: PageProps = $props();
 
   const ogpUrl = new URL(
@@ -22,13 +24,13 @@
 
 <a
   href="/notes"
-  class="group text-muted hover:text-foreground font-display absolute top-4 left-4 flex items-center gap-2 text-sm"
+  class="group text-muted hover:text-foreground font-display mt-4 flex items-center gap-2 text-sm"
 >
   <ArrowLeft
     class="size-5 transition-transform ease-out group-hover:-translate-x-1 group-hover:transform"
-  /> <span>back to index</span>
+  /> <span>back to list</span>
 </a>
-<main class="mx-auto mt-16">
+<main class="mx-auto mt-10">
   <div class="flex flex-col items-center">
     <p class="text-6xl">{data.metadata.emoji}</p>
     <h1
@@ -37,12 +39,26 @@
       {data.metadata.title}
     </h1>
 
-    <div class="text-muted mt-2 flex flex-row items-center gap-2 text-sm">
-      <Upload class="size-4" />{formatDate(
-        data.metadata.published_at,
-        "MMM dd, yyyy",
-      )}
+    <div class="text-muted mt-2 flex flex-row items-center gap-4 text-sm">
+      <span class="flex items-center gap-1">
+        <Upload class="size-4" />{formatDate(
+          data.metadata.published_at,
+          "MMM dd, yyyy",
+        )}
+      </span>
+      <span class="flex items-center gap-1">
+        <Clock class="size-4" />{data.readingMinutes} min read
+      </span>
     </div>
+    {#if data.metadata.tags.length > 0}
+      <div class="mt-3 flex flex-wrap justify-center gap-2">
+        {#each data.metadata.tags as tag (tag)}
+          <a href="/notes?tag={encodeURIComponent(tag)}">
+            <Tag {tag} />
+          </a>
+        {/each}
+      </div>
+    {/if}
   </div>
   <div
     class="from-border/0 via-border to-border/0 mt-8 h-[1px] w-full bg-gradient-to-r"
@@ -55,4 +71,5 @@
   <div class="mt-20 flex justify-center">
     <LikeButton slug={data.slug} />
   </div>
+  <NoteNav prevNote={data.prevNote} nextNote={data.nextNote} />
 </main>

@@ -5,4 +5,6 @@ export type Note = {
   thumbnail: { type: "image"; href: string } | { type: "emoji"; emoji: string };
   publishedAt: Date;
   platform: "zenn" | "self";
+  tags: string[];
+  excerpt?: string;
 };
