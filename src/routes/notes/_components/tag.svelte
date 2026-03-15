@@ -18,7 +18,7 @@
     size === "sm" ? "px-2 py-0.5 text-[10px]" : "px-3 py-1 text-xs",
     variant === "filled" && " from-background to-accent/20  bg-gradient-to-b",
     active
-      ? "to-accent/50 text-foreground"
+      ? "to-accent/60 text-foreground"
       : "text-muted hover:text-foreground",
   ]}
 >
