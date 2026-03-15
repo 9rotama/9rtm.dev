@@ -1,5 +1,6 @@
 <script lang="ts">
   import { goto } from "$app/navigation";
+  import { browser } from "$app/environment";
   import { page } from "$app/state";
   import type { PageProps } from "./$types";
   import GradientBorder from "../_components/gradient-border.svelte";
@@ -8,7 +9,9 @@
 
   let { data }: PageProps = $props();
 
-  const selectedTag = $derived(page.url.searchParams.get("tag"));
+  const selectedTag = $derived(
+    browser ? page.url.searchParams.get("tag") : null,
+  );
 
   const allTags = $derived.by(() => {
     const tagSet = new Set<string>();
