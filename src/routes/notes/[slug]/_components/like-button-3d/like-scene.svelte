@@ -1,14 +1,14 @@
 <script lang="ts">
   import { T, useTask, useThrelte } from "@threlte/core";
   import { animate } from "animejs";
-  import { onMount } from "svelte";
+  import { mode } from "mode-watcher";
   import {
     BloomEffect,
     EffectComposer,
     EffectPass,
     RenderPass,
   } from "postprocessing";
-  import { mode } from "mode-watcher";
+  import { onMount } from "svelte";
   import { Color } from "three";
   import { getLikeButtonColors } from "./colors";
   import StarModel from "./star-model.svelte";
@@ -20,19 +20,15 @@
   const TRANSMISSION_RESOLUTION_SCALE = 2.0;
 
   // Bloom settings
-  const BLOOM_INTENSITY_LIKED = 10;
+  const BLOOM_INTENSITY_LIKED_DARK = 10;
+  const BLOOM_INTENSITY_LIKED_LIGHT = 3;
   const BLOOM_INTENSITY_DEFAULT = 0;
-  const BLOOM_CONFIG = {
-    intensity: BLOOM_INTENSITY_DEFAULT,
-    luminanceThreshold: 0.3,
-    luminanceSmoothing: 0.9,
-    radius: 0.7,
-    mipmapBlur: true,
-  } as const;
+  const BLOOM_LUMINANCE_THRESHOLD_DARK = 0.3;
+  const BLOOM_LUMINANCE_THRESHOLD_LIGHT = 0.6;
 
   // Lens settings
   const LENS_IOR_DEFAULT = 1.0;
-  const LENS_IOR_HOVERED = 1.2;
+  const LENS_IOR_HOVERED = 1.25;
   const LENS_ANIMATION_DURATION = 200;
 
   // Star liked positions (triangle formation)
@@ -107,7 +103,13 @@
   const composer = new EffectComposer(renderer);
   composer.addPass(new RenderPass(scene, camera.current));
 
-  const bloomEffect = new BloomEffect(BLOOM_CONFIG);
+  const bloomEffect = new BloomEffect({
+    intensity: BLOOM_INTENSITY_DEFAULT,
+    luminanceThreshold: BLOOM_LUMINANCE_THRESHOLD_DARK,
+    luminanceSmoothing: 0.9,
+    radius: 0.7,
+    mipmapBlur: true,
+  });
   composer.addPass(new EffectPass(camera.current, bloomEffect));
 
   // 可視時のみレンダリング
@@ -135,11 +137,16 @@
   // Effects
   // ===================
 
-  // isLikedのときだけbloomを有効化
+  // isLikedとモードに応じてbloomを調整
   $effect(() => {
-    bloomEffect.intensity = isLiked
-      ? BLOOM_INTENSITY_LIKED
-      : BLOOM_INTENSITY_DEFAULT;
+    const isDark = mode.current === "dark";
+    const likedIntensity = isDark
+      ? BLOOM_INTENSITY_LIKED_DARK
+      : BLOOM_INTENSITY_LIKED_LIGHT;
+    bloomEffect.intensity = isLiked ? likedIntensity : BLOOM_INTENSITY_DEFAULT;
+    bloomEffect.luminanceMaterial.threshold = isDark
+      ? BLOOM_LUMINANCE_THRESHOLD_DARK
+      : BLOOM_LUMINANCE_THRESHOLD_LIGHT;
   });
 
   // isLikedで三角形配置アニメーション
@@ -210,13 +217,13 @@
 
 <T.PointLight
   position={[0, 6, 2]}
-  intensity={150}
+  intensity={100}
   color={colors.pointLight}
   castShadow
 />
 <T.PointLight
   position={[0, -10, -1]}
-  intensity={70}
+  intensity={100}
   color={colors.pointLight}
   castShadow
 />
@@ -245,14 +252,16 @@
 
 <!-- Transmission球体でレンズ効果 -->
 <T.Mesh position={[0, 0, 3]}>
-  <T.SphereGeometry args={[1.19, 64, 64]} />
+  <T.SphereGeometry args={[1.2, 64, 64]} />
   <T.MeshPhysicalMaterial
     transmission={1}
-    roughness={0.7}
-    thickness={50}
+    roughness={0.4}
+    clearcoatRoughness={0.8}
+    thickness={10}
     ior={lensIor}
     transparent
     iridescence={0.06}
-    dispersion={4.0}
+    dispersion={7.0}
+    color="#f8f4ff"
   />
 </T.Mesh>
