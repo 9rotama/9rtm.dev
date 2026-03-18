@@ -8,11 +8,11 @@ const LIKE_BUTTON_COLORS_DARK = {
 } as const;
 
 const LIKE_BUTTON_COLORS_LIGHT = {
-  background: "#e8dff5",
+  background: "#f5f1ff",
   ambientLight: "#99a",
   pointLight: "#a8e",
-  starLiked: "#555",
-  starUnliked: "#888",
+  starLiked: "#eee",
+  starUnliked: "#ddd",
   starEmissive: "#a7c",
 } as const;
 

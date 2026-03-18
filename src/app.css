@@ -50,7 +50,7 @@
     from var(--theme-foreground) calc(l + 0.15) calc(c + 0.01) h
   );
   --theme-accent: oklch(
-    from var(--theme-foreground) calc(l + 0.55) calc(c + 0.3) h
+    from var(--theme-foreground) calc(l + 0.5) calc(c + 0.35) h
   );
   --theme-heading-foreground-shade: oklch(
     from var(--theme-foreground) calc(l) calc(c + 0.15) h

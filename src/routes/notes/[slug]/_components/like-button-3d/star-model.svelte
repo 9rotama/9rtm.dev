@@ -53,7 +53,7 @@
       roughness={0}
       {color}
       emissive={new Color(colors.starEmissive)}
-      emissiveIntensity={isLiked ? 2.0 : 0}
+      emissiveIntensity={isLiked ? 2.0 : mode.current !== "dark" ? 1.0 : 0}
     />
   </T.Mesh>
 {/if}

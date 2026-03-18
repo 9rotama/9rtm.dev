@@ -24,16 +24,7 @@
       />
       <div class="flex flex-col items-start">
         <div class="mt-4 font-bold">9rotama / くろたま</div>
-        <div class="text-muted mt-1 text-sm">
-          front-end developer<br class="sm:hidden" />
-          <a
-            href="https://www.fuller-inc.com/"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="text-foreground decoration-accent font-bold underline underline-offset-4 transition-colors duration-100 hover:decoration-3"
-            >@fuller-inc</a
-          >
-        </div>
+        <div class="text-muted mt-1 text-sm">front-end developer in 千葉</div>
         <div class="mt-4 flex flex-row items-center gap-2 text-sm">
           <a
             class="size-6"
