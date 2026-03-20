@@ -1,8 +1,6 @@
 <script lang="ts">
-  import { onNavigate } from "$app/navigation";
   import { PUBLIC_BASE_URL } from "$env/static/public";
-  import "@fontsource/geist-sans/400.css";
-  import "@fontsource/geist-sans/700.css";
+  import "@fontsource-variable/mona-sans";
   import "@fontsource/iosevka/400.css";
   import "@fontsource/iosevka/700.css";
   import "@fontsource/m-plus-1/400.css";
@@ -25,20 +23,6 @@
       url: "https://github.com/9rotama",
       jobTitle: "web developer",
     },
-  });
-
-  onNavigate((navigation) => {
-    if (!document.startViewTransition) return;
-
-    // Skip animation if navigating to the same page
-    if (navigation.from?.url.pathname === navigation.to?.url.pathname) return;
-
-    return new Promise((resolve) => {
-      document.startViewTransition(async () => {
-        resolve();
-        await navigation.complete;
-      });
-    });
   });
 </script>
 
