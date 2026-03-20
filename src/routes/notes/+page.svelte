@@ -6,6 +6,7 @@
   import GradientBorder from "../_components/gradient-border.svelte";
   import Note from "./_components/note.svelte";
   import Tag from "./_components/tag.svelte";
+  import Mascot from "./_components/mascot.svelte";
 
   let { data }: PageProps = $props();
 
@@ -39,7 +40,7 @@
   }
 </script>
 
-<main class="mx-auto mt-16 max-w-lg">
+<main class="relative mx-auto mt-16 max-w-lg">
   <div class="flex flex-row items-center justify-center gap-2">
     <img
       alt="title frame"
@@ -84,6 +85,9 @@
         ></a>
       {/each}
     </div>
+  </div>
+  <div class="mx-auto mt-16 size-[230px]">
+    <Mascot />
   </div>
 </main>
 
