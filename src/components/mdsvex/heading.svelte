@@ -20,12 +20,12 @@
   };
 
   const headingStyles: Record<HeadingLevel, string> = {
-    1: "mt-20 mb-8 text-3xl tracking-tight font-semibold",
-    2: "mt-18 mb-6 text-2xl tracking-tight font-semibold",
-    3: "mt-12 mb-4 text-xl tracking-tight font-semibold",
-    4: "mt-6 mb-4 text-lg tracking-tight font-semibold",
-    5: "mt-6 mb-4 text-base tracking-tight font-semibold",
-    6: "mt-6 mb-4 text-base tracking-tight font-semibold",
+    1: "mt-20 mb-8 text-3xl tracking-tight font-bold",
+    2: "mt-18 mb-6 text-2xl tracking-tight font-bold",
+    3: "mt-12 mb-4 text-xl tracking-tight font-bold",
+    4: "mt-6 mb-4 text-lg tracking-tight font-bold",
+    5: "mt-6 mb-4 text-base tracking-tight font-bold",
+    6: "mt-6 mb-4 text-base tracking-tight font-bold",
   };
 
   let copied = $state(false);
