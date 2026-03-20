@@ -32,11 +32,11 @@
         >
           <div
             class="from-accent/30 absolute inset-0 rounded-full bg-radial-[ellipse_at_bottom] to-transparent to-70% transition-opacity duration-150
-              {active ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}"
+              {active ? 'opacity-100' : 'opacity-0'}"
           ></div>
           <div
             class="bg-accent/60 absolute inset-x-3 bottom-0 h-[1px] rounded-full transition-opacity duration-150
-              {active ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}"
+              {active ? 'opacity-100' : 'opacity-0'}"
           ></div>
           <item.icon class="relative z-10 size-4" />
           <span class="font-display relative z-10">{item.label}</span>
