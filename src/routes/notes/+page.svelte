@@ -86,7 +86,7 @@
       {/each}
     </div>
   </div>
-  <div class="mx-auto mt-16 size-[230px]">
+  <div class="mx-auto mt-16 size-[230px] opacity-50">
     <Mascot />
   </div>
 </main>
