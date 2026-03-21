@@ -2,7 +2,7 @@ import { getSelfNotes } from "../notes/_lib/self";
 import type { RequestHandler } from "./$types";
 import { PUBLIC_BASE_URL } from "$env/static/public";
 
-const SITE_URL = PUBLIC_BASE_URL;
+const SITE_URL = PUBLIC_BASE_URL.trim();
 
 export const prerender = true;
 
