@@ -1,5 +1,6 @@
 <script lang="ts">
   import { T, useThrelte } from "@threlte/core";
+  import { OrbitControls } from "@threlte/extras";
 
   import { mode } from "mode-watcher";
   import { Color } from "three";
@@ -20,12 +21,9 @@
 
 <EmotiKunText />
 <EmotiKunFloor />
-<T.PerspectiveCamera
-  makeDefault
-  fov={50}
-  position={[0, 3, 8]}
-  rotation={[-Math.PI * 0.08, 0, 0]}
-/>
+<T.PerspectiveCamera makeDefault fov={50} position={[0, 3, 8]}>
+  <OrbitControls target={[0, 1.5, 0]} enableZoom={false} />
+</T.PerspectiveCamera>
 <T.AmbientLight intensity={3} color={colors.pointLight} />
 <T.RectAreaLight
   position={[0, -1, 0]}

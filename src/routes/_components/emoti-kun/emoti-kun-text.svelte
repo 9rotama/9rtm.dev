@@ -21,6 +21,19 @@
 
   useTask((delta) => {
     time += delta;
+
+    if ($gltf) {
+      const tailRoot = $gltf.nodes["tail_root"];
+      if (tailRoot) {
+        tailRoot.rotation.z = Math.sin(time * 1.2) * 0.15;
+        tailRoot.rotation.x = Math.sin(time * 0.9) * 0.1;
+      }
+
+      const tailTip = $gltf.nodes["tail_tip"];
+      if (tailTip) {
+        tailTip.rotation.y += delta * 3;
+      }
+    }
   });
 
   const floatY = $derived(
