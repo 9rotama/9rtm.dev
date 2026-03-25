@@ -1,6 +1,8 @@
 <script lang="ts">
   import { Canvas } from "@threlte/core";
   import EmotiKunScene from "./emoti-kun-scene.svelte";
+
+  let hovered = $state(false);
 </script>
 
 <div
@@ -9,8 +11,11 @@
     "mask-x-from-90% mask-x-to-100%",
     "mask-y-from-90% mask-y-to-100%",
   ]}
+  onpointerenter={() => (hovered = true)}
+  onpointerleave={() => (hovered = false)}
+  role="img"
 >
   <Canvas>
-    <EmotiKunScene />
+    <EmotiKunScene {hovered} />
   </Canvas>
 </div>
