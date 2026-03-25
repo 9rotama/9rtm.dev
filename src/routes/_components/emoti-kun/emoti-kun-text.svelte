@@ -1,12 +1,21 @@
 <script lang="ts">
   import { T, useTask } from "@threlte/core";
   import { useGltf, useGltfAnimations } from "@threlte/extras";
+  import { animate, eases } from "animejs";
+
+  interface Props {
+    hovered?: boolean;
+  }
+
+  const { hovered = false }: Props = $props();
 
   const basePos = { x: 0, y: -0.5, z: 0 };
   const floatAmplitude = 0.15;
   const floatSpeed = 1.5;
 
   let time = $state(0);
+
+  const earAnim = { r: 0, l: 0 };
 
   const gltf = useGltf("/models/mascot.glb");
   const { actions } = useGltfAnimations(gltf);
@@ -16,6 +25,17 @@
       for (const action of Object.values($actions)) {
         action?.play();
       }
+    }
+  });
+
+  $effect(() => {
+    if (hovered) {
+      animate(earAnim, {
+        r: [0, 0.15, 0, 0.15, 0],
+        l: [0, -0.15, 0, -0.15, 0],
+        duration: 600,
+        ease: eases.inOutSine,
+      });
     }
   });
 
@@ -32,6 +52,13 @@
       const tailTip = $gltf.nodes["tail_tip"];
       if (tailTip) {
         tailTip.rotation.y += delta * 3;
+      }
+
+      const earR = $gltf.nodes["ear_R"];
+      const earL = $gltf.nodes["ear_L"];
+      if (earR && earL) {
+        earR.rotation.z = earAnim.r;
+        earL.rotation.z = earAnim.l;
       }
     }
   });

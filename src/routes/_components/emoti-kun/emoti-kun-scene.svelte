@@ -8,6 +8,12 @@
   import EmotiKunFloor from "./emoti-kun-floor.svelte";
   import EmotiKunText from "./emoti-kun-text.svelte";
 
+  interface Props {
+    hovered?: boolean;
+  }
+
+  const { hovered = false }: Props = $props();
+
   const { scene } = useThrelte();
 
   const colors = $derived(
@@ -19,7 +25,7 @@
   });
 </script>
 
-<EmotiKunText />
+<EmotiKunText {hovered} />
 <EmotiKunFloor />
 <T.PerspectiveCamera makeDefault fov={50} position={[0, 3, 8]}>
   <OrbitControls target={[0, 1.5, 0]} enableZoom={false} />
