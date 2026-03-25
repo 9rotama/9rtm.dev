@@ -26,14 +26,9 @@
   position={[0, 3, 8]}
   rotation={[-Math.PI * 0.08, 0, 0]}
 />
-<T.PointLight
-  position={[0, 3, 4]}
-  intensity={20}
-  color={colors.pointLight}
-  visible
-/>
+<T.AmbientLight intensity={3} color={colors.pointLight} />
 <T.RectAreaLight
-  position={[0, -0.1, 0]}
+  position={[0, -1, 0]}
   rotation={[Math.PI / 2, 0, 0]}
   intensity={5}
   width={5}
