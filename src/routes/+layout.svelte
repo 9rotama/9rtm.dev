@@ -35,15 +35,6 @@
     href="/rss.xml"
   />
   <title>9rtm.dev</title>
-  <meta
-    name="description"
-    content="9rotama / くろたまのプロフィール・技術ブログ。フロントエンド開発やThree.jsについて書いています。"
-  />
-  <meta property="og:title" content="9rtm.dev" />
-  <meta
-    property="og:image"
-    content={new URL(`/ogp.webp`, PUBLIC_BASE_URL).toString()}
-  />
   <meta name="twitter:card" content="summary" />
   <!-- eslint-disable-next-line svelte/no-at-html-tags -->
   {@html '<script type="application/ld+json">' + jsonLd + "<" + "/script>"}

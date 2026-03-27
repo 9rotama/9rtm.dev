@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { PUBLIC_BASE_URL } from "$env/static/public";
   import { goto } from "$app/navigation";
   import { browser } from "$app/environment";
   import { page } from "$app/state";
@@ -93,5 +94,13 @@
 
 <svelte:head>
   <title>notes | 9rtm.dev</title>
+  <meta
+    name="description"
+    content="9rotama / くろたまのプロフィール・技術ブログ。フロントエンド開発やThree.jsについて書いています。"
+  />
   <meta property="og:title" content="notes | 9rtm.dev" />
+  <meta
+    property="og:image"
+    content={new URL(`/ogp.webp`, PUBLIC_BASE_URL).toString()}
+  />
 </svelte:head>
