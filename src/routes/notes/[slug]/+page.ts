@@ -1,5 +1,5 @@
 import { error } from "@sveltejs/kit";
-import { selfNoteMetadataSchema } from "../_lib/self";
+import { extractExcerpt, selfNoteMetadataSchema } from "../_lib/self";
 import type { PageLoad } from "./$types";
 
 function estimateReadingMinutes(text: string): number {
@@ -49,6 +49,7 @@ export const load: PageLoad = async ({ params }) => {
 
   const raw = raws[`../_content/notes/${params.slug}.md`] ?? "";
   const readingMinutes = estimateReadingMinutes(raw);
+  const description = extractExcerpt(raw, 120);
 
   // Build sorted list of published notes for prev/next navigation
   const allNotes = Object.entries(mds)
@@ -71,6 +72,7 @@ export const load: PageLoad = async ({ params }) => {
     metadata: metadata.data,
     component: md.default,
     readingMinutes,
+    description,
     prevNote: prevNote ? { slug: prevNote.slug, title: prevNote.title } : null,
     nextNote: nextNote ? { slug: nextNote.slug, title: nextNote.title } : null,
   };

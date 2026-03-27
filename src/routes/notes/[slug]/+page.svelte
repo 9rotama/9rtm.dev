@@ -18,6 +18,7 @@
 
 <svelte:head>
   <title>{data.metadata.title} | 9rtm.dev</title>
+  <meta name="description" content={data.description} />
   <meta property="og:title" content={data.metadata.title} />
   <meta property="og:image" content={ogpUrl} />
 </svelte:head>

@@ -95,6 +95,10 @@
 </main>
 
 <svelte:head>
+  <meta
+    name="description"
+    content="9rotama / くろたまのプロフィール・技術ブログ。フロントエンド開発やThree.jsについて書いています。"
+  />
   <meta property="og:title" content="9rtm.dev" />
   <meta
     property="og:image"

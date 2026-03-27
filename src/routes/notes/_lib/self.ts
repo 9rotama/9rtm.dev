@@ -25,7 +25,7 @@ const selfNotesRaws = import.meta.glob("../_content/notes/*.md", {
   import: "default",
 }) as Record<string, string>;
 
-function extractExcerpt(raw: string, maxLength = 100): string {
+export function extractExcerpt(raw: string, maxLength = 100): string {
   const plain = raw
     .replace(/---[\s\S]*?---/, "")
     .replace(/```[\s\S]*?```/g, "")
