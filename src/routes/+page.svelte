@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { PUBLIC_BASE_URL } from "$env/static/public";
   import { MoveRight } from "@lucide/svelte";
   import type { PageProps } from "./$types";
   import EmotiKun from "./_components/emoti-kun/emoti-kun.svelte";
@@ -92,3 +93,11 @@
     </div>
   </div>
 </main>
+
+<svelte:head>
+  <meta property="og:title" content="9rtm.dev" />
+  <meta
+    property="og:image"
+    content={new URL(`/ogp.webp`, PUBLIC_BASE_URL).toString()}
+  />
+</svelte:head>
