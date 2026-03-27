@@ -39,8 +39,10 @@
     }
   });
 
+  const TIME_CYCLE = Math.PI * 200;
+
   useTask((delta) => {
-    time += delta;
+    time = (time + delta) % TIME_CYCLE;
 
     if ($gltf) {
       const tailRoot = $gltf.nodes["tail_root"];

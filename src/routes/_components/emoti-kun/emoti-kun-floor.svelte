@@ -13,11 +13,13 @@
   const gridColor = $derived(new Color(colors.floorGrid).convertLinearToSRGB());
   const bgColor = $derived(new Color(colors.floorBg).convertLinearToSRGB());
 
+  const TIME_CYCLE = Math.PI * 200;
+
   let time = $state(0);
 
   useTask(
     (delta) => {
-      time += delta;
+      time = (time + delta) % TIME_CYCLE;
     },
     { autoStart: true },
   );
