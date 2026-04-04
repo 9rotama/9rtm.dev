@@ -15,11 +15,11 @@ type SelfNoteData = SelfNoteMetadata & {
   excerpt: string;
 };
 
-const selfNotesMds = import.meta.glob("../_content/notes/*.md", {
+const selfNotesMds = import.meta.glob("/contents/notes/*.md", {
   eager: true,
 }) as Record<string, App.MdsvexFile>;
 
-const selfNotesRaws = import.meta.glob("../_content/notes/*.md", {
+const selfNotesRaws = import.meta.glob("/contents/notes/*.md", {
   eager: true,
   query: "?raw",
   import: "default",

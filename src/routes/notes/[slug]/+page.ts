@@ -24,17 +24,17 @@ function estimateReadingMinutes(text: string): number {
 }
 
 export const load: PageLoad = async ({ params }) => {
-  const mds = import.meta.glob("../_content/notes/*.md", {
+  const mds = import.meta.glob("/contents/notes/*.md", {
     eager: true,
   }) as Record<string, App.MdsvexFile>;
 
-  const raws = import.meta.glob("../_content/notes/*.md", {
+  const raws = import.meta.glob("/contents/notes/*.md", {
     eager: true,
     query: "?raw",
     import: "default",
   }) as Record<string, string>;
 
-  const md = mds[`../_content/notes/${params.slug}.md`];
+  const md = mds[`/contents/notes/${params.slug}.md`];
   if (!md) {
     error(404, { message: "Note not found" });
   }
@@ -47,7 +47,7 @@ export const load: PageLoad = async ({ params }) => {
     });
   }
 
-  const raw = raws[`../_content/notes/${params.slug}.md`] ?? "";
+  const raw = raws[`/contents/notes/${params.slug}.md`] ?? "";
   const readingMinutes = estimateReadingMinutes(raw);
   const description = extractExcerpt(raw, 120);
 
