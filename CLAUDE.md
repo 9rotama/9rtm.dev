@@ -26,7 +26,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Markdown files are processed using **mdsvex** with the following pipeline:
 
-- `src/routes/notes/_content/notes/*.md` - markdown posts with frontmatter
+- `contents/notes/*.md` - markdown posts with frontmatter
 - **shiki** - syntax highlighting (catppuccin-mocha theme)
 - **remark-gfm** - GitHub Flavored Markdown support
 - **rehype-slug + rehype-autolink-headings** - automatic heading links
@@ -48,7 +48,7 @@ Content is loaded via `import.meta.glob` and rendered as Svelte components.
 - `src/routes/` - SvelteKit file-based routing
 - `src/routes/_components/` - shared components (emoti-kun 3D scene, footer, etc.)
 - `src/routes/notes/_lib/` - note-related utilities and types
-- `src/routes/notes/_content/notes/` - markdown blog posts
+- `contents/notes/` - markdown blog posts
 - `src/ogp/` - OGP image generation with satori + sharp
 
 ### Pre-commit Hooks
