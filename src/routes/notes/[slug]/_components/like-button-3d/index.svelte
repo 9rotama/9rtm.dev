@@ -1,6 +1,10 @@
 <script lang="ts">
   import { Canvas } from "@threlte/core";
   import { postLike } from "../../_lib/like-api";
+  import {
+    getLikedFromStorage,
+    setLikedToStorage,
+  } from "../../_lib/like-storage";
   import LikeScene from "./like-scene.svelte";
 
   interface Props {
@@ -9,7 +13,7 @@
 
   const { slug }: Props = $props();
 
-  let isLiked = $state(false);
+  let isLiked = $state(!!getLikedFromStorage()[slug]);
   let isHovered = $state(false);
   let hasTransitioned = $state(false);
 
@@ -35,6 +39,7 @@
 
     hasTransitioned = true;
     isLiked = true;
+    setLikedToStorage(slug, true);
 
     await postLike(slug);
   }
