@@ -1,6 +1,6 @@
 import { PUBLIC_BASE_URL } from "$env/static/public";
 import { Feed } from "feed";
-import { getSelfNotes } from "../notes/_lib/self";
+import { getSelfNotes } from "$lib/content";
 import type { RequestHandler } from "./$types";
 
 export const prerender = true;

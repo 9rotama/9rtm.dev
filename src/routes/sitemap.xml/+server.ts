@@ -1,4 +1,4 @@
-import { getSelfNotes } from "../notes/_lib/self";
+import { getSelfNotes } from "$lib/content";
 import type { RequestHandler } from "./$types";
 import { PUBLIC_BASE_URL } from "$env/static/public";
 

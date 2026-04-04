@@ -2,10 +2,7 @@ import type { RequestHandler } from "./$types";
 import { json } from "@sveltejs/kit";
 import { logger } from "$lib/logger";
 import { z } from "zod";
-import {
-  getSelfNoteSlugs,
-  getSelfNoteTitle,
-} from "../../../../notes/_lib/self";
+import { getSelfNoteSlugs, getSelfNoteTitle } from "$lib/content";
 import checkLikeExistsQuery from "./_queries/check-like-exists.sql?raw";
 import upsertLikeQuery from "./_queries/upsert-like.sql?raw";
 import insertLikeLogQuery from "./_queries/insert-like-log.sql?raw";

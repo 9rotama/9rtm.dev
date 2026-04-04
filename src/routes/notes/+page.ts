@@ -1,7 +1,7 @@
 import { error } from "@sveltejs/kit";
 import type { PageLoad } from "./$types";
 import type { Note } from "./_lib/note";
-import { getSelfNotes } from "./_lib/self";
+import { getSelfNotes } from "$lib/content";
 
 export const load: PageLoad = async () => {
   const selfRes = await getSelfNotes();
