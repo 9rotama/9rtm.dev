@@ -161,6 +161,22 @@ html {
   @apply text-foreground leading-relaxed break-words;
 }
 
+.markdown ul {
+  @apply my-6 list-disc pl-7;
+}
+
+.markdown ol {
+  @apply my-6 list-decimal pl-7;
+}
+
+.markdown li {
+  @apply my-2;
+}
+
+.markdown li::marker {
+  @apply text-muted;
+}
+
 @keyframes blurred-fade-in {
   from {
     opacity: 0;
