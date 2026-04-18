@@ -1,0 +1,231 @@
+---
+title: three.jsで3Dないいねボタンを作った
+emoji: "✨️"
+published_at: 2026-04-05
+published: true
+tags: [svelte, three.js, cloudflare, discord]
+---
+
+<script>
+  import Video from "$lib/components/video.svelte";
+</script>
+
+<Video src="/post-media/like-button-cap.webm" controls/>
+
+## 何を作ったか
+
+記事への反応がほしいなと思い、記事ごとにいいねボタンを配置しました。
+
+単なるボタンを作っても面白くないため、Liquid Glassを意識した質感やアニメーションを入れてみました。
+
+SEOを考えるとjsに頼ったリッチ表現は抑えるべきですが、サンドボックスとして使いたいサイトでもあるため、あまり気にしないことにします。
+
+## 前提
+
+- SvelteKit
+- `@sveltejs/adapter-cloudflare`
+- Threlte(Three.jsのSvelte用ラッパー)
+
+
+
+## ガラスの質感を作る
+
+Three.jsではMeshPhysicalMaterialを使うことでガラス質の見た目を作成できます。
+
+- **transmission**...透明かどうか
+- **ior**...屈折率
+- [**dispersion**](https://threejs.org/examples/webgl_loader_gltf_dispersion.html)...色収差（RGBが分散するやつ）
+- **thickness**...厚み（透明なオブジェクト用）
+
+といったパラメータを調整していい感じにします。
+（他にもいろいろつけていますが、大事なのはこの4つです）
+
+```svelte
+<T.Mesh position={[0, 0, 3]}>
+  <T.SphereGeometry args={[1.2, 64, 64]} />
+  <T.MeshPhysicalMaterial
+    transmission={1}
+    roughness={0.4}
+    thickness={10}
+    ior={lensIor}
+    transparent
+    iridescence={0.06}
+    dispersion={7.0}
+    color="#f8f4ff"
+  />
+</T.Mesh>
+```
+
+IORには`lensIor`というリアクティブな変数を同期させています。ホバー時にこの値を増加(1→1.2)させることで、ガラスに映り込む景色をぐにょんと歪ませる効果を作っています。
+
+### 余談
+
+今回は単なる3D空間で実装しましたが、HTML要素に重ねて使える手法としてSVGのdisplacement mapを実装するという事例もあります。
+
+[Vaso (by huozhi)](https://vaso-react.vercel.app/)
+
+実装のアプローチとして、背景画像を歪ませるようなSVGのdisplacement mapをJSで生成し、それを`<svg>`要素に適用することで屈折や色収差を再現できるらしいです。ネイティブなHTML機能で済むということもあり、しっかりUIの一部として組み込むにはこの方法が良さそうです。
+
+## ブルーム効果をつける
+![bloomがあるときないとき w:100%](/post-media/bloom.png  "Bloomがない時、ある時")
+
+ライトモードだと見づらいのですが、いいね済みの場合ガラス内の星が光を発するようにブルーム効果をつけています。
+
+[Post Processing - Demo - pmndrs](https://pmndrs.github.io/postprocessing/public/demo/#bloom)
+
+このようなポストプロセッシング処理を適用する際、pmndrsが公開している[postprocessing](https://github.com/pmndrs/postprocessing)というプリセットをThree.jsと組み合わせることで、既に用意されたエフェクトを使って簡単に実装できます。
+
+最初にEffectComposerというエフェクトを司る者を用意して、そこに①素の描画結果のRenderPassを追加、②ブルームのEffectPassを追加、というようにパスを追加していきます。
+
+```ts
+const { scene, renderer, camera, renderStage } = useThrelte();
+
+// postprocessing setup
+const composer = new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene, camera.current));
+
+const bloomEffect = new BloomEffect({
+  intensity: BLOOM_INTENSITY_DEFAULT,
+  luminanceThreshold: BLOOM_LUMINANCE_THRESHOLD_DARK,
+  luminanceSmoothing: 0.9,
+  radius: 0.7,
+  mipmapBlur: true,
+});
+composer.addPass(new EffectPass(camera.current, bloomEffect));
+```
+
+注意点として、エフェクトを付けた状態でレンダリングするにはEffectComposer側のレンダラーを自分で呼ぶ必要があります。そのためCanvasコンポーネントの自動レンダリングを切って、useTaskで毎フレームのレンダリング処理を追加します。
+
+```svelte
+<Canvas autoRender={false}>
+  /* デフォルトのレンダリングを無効化 */
+  <LikeScene {isLiked} {isHovered} />
+</Canvas>
+```
+
+### オフスクリーン最適化
+
+先述のブルーム効果か原因なのか、スマホでページの上の方をスクロールしていると時々引っ掛かりを感じるようになってしまいました。何で上部だけで起こるのかは未だわかってないですが、毎フレーム画像処理を実行するのが重いというのは直感的にもわかります。
+
+一番の問題は、Three.js部分を表示していない時に重くなっていることです。そのため、[IntersectionObserver](https://developer.mozilla.org/ja/docs/Web/API/Intersection_Observer_API)を使って、Three.js部分が表示されていなければレンダリングを止めるように修正しました。
+
+```ts:src/routes/notes/[slug]/_components/like-button-3d/like-scene.svelte
+// 可視時のみレンダリング
+onMount(() => {
+  const canvas = renderer.domElement;
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      isVisible = entry.isIntersecting;
+    },
+    { threshold: 0 },
+  );
+  observer.observe(canvas);
+  return () => observer.disconnect();
+});
+
+useTask(
+  (delta) => {
+    if (!isVisible) return; // ここでチェック
+    composer.render(delta); // 映ってなければレンダリングしない
+  },
+  ...
+);
+```
+
+個人的にスクロールの引っ掛かりはストレスを感じやすいため、問題を潰せてよかったです。
+
+## いいねを記録する
+
+9rtm.devはCloudflare Workersでデプロイしているため、それに合わせてDBはCloudflare D1を使っています。
+
+D1への記録処理にはサーバーサイドの処理が必要なため、SvelteKitのAPI Routesで`POST /api/notes/${slug}/like`というエンドポイントを実装しています。Next.jsみたいに、file-based routingに沿って`+server.ts`を切ることでAPIを作成できます。
+
+```ts:src/routes/api/notes/[slug]/like/+server.ts
+export const POST: RequestHandler = async ({ params, platform, request }) => {
+  const { slug } = params;
+
+  logger.debug({ slug }, "like request received");
+
+  ...
+
+  return json({ success: true });
+};
+
+```
+
+また、D1用の.sqlファイルを作っておきます。TypeScriptコードに直接書いても特に問題はないですが、構文ハイライトを効かないのが何となく嫌なので分割しています。
+
+好みの問題なためあんまり意味はないです。
+
+```ts:src/routes/api/notes/[slug]/like/+server.ts
+import upsertLikeQuery from "./_queries/upsert-like.sql?raw";
+import insertLikeLogQuery from "./_queries/insert-like-log.sql?raw";
+
+// いいね記録
+const results = await db.batch([
+  db.prepare(upsertLikeQuery).bind(slug),
+  db.prepare(insertLikeLogQuery).bind(slug, ipHash),
+]);
+
+const likeCountSchema = z.object({ count: z.number() });
+const parsed = likeCountSchema.safeParse(results[0].results[0]);
+const likeCount = parsed.success ? parsed.data.count : undefined;
+```
+
+zodでのパースを一応入れていますが、ランタイムでの型検証はオーバーだしスキーマの追従が必要だしで、多分[DrizzleなどのORMを使うほうがスマート](https://zenn.dev/mizchi/articles/d1-drizzle-orm)なんだろうなと思います。
+
+### 連投防止策
+
+いいねは匿名で押せば押すほど記録されてしまうので、IPハッシュを取ることによって同じデバイスからの連投を防いでいます。
+
+likes_logテーブルにいいねのログを記録しており、同じip_hashが記録されたログがあれば早期returnします。
+
+```ts:src/routes/api/notes/[slug]/like/+server.ts
+// IPハッシュ生成（プライバシー配慮）
+const ip = request.headers.get("cf-connecting-ip") || "unknown";
+const ipHash = await hashIP(ip);
+
+// 連投チェック（同じIP+slugがあるか）
+const existing = await db
+  .prepare(checkLikeExistsQuery) // SELECT 1 FROM likes_log WHERE slug = ? AND ip_hash = ?
+  .bind(slug, ipHash)
+  .first();
+
+if (existing) {
+  logger.info({ slug }, "already liked");
+  return json({ success: true, alreadyLiked: true });
+}
+```
+![D1データプレビュー画面](/post-media/d1-like-table.png)
+
+それとは別に、一度そのデバイス（のブラウザ）でいいねをした場合、LocalStorageに保持しておくようにしています。一度いいねしたら次はいいね済みの状態で表示されるため、挙動としてむしろ自然になるかなと思います。
+
+## いいねを通知する
+
+手軽なプッシュ通知として[Discord Webhook](https://support.discord.com/hc/ja/articles/228383668-%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB-Webhooks%E3%81%B8%E3%81%AE%E5%BA%8F%E7%AB%A0)を使っています。
+チャンネルからWebhook URLを発行し、アプリケーションからはURLにリクエストを送るだけです。
+
+```ts:src/routes/api/notes/[slug]/like/+server.ts
+const title = getSelfNoteTitle(slug) ?? slug;
+const countText = likeCount != null ? ` (${likeCount}件目)` : "";
+await fetch(webhookUrl, {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    content: `「${title}」にいいねがつきました!${countText}`,
+  }),
+});
+logger.debug({ slug }, "discord notification sent");
+```
+
+また、いいねの合計数も見れると嬉しいため、Discordのメッセージに含める形にしています。単にDBからいいね数を取ってきてメッセージに埋め込むだけです。
+
+ついでにWebhookのプロフィールもいい感じに変えておいて完成です。
+
+![discordチャンネルに記事名といいね数が自動送信される](/post-media/discord-webhook.png)
+
+## まとめ
+
+ただのボタン一個にしては話しすぎました...😂
+
+気に入ったら押していただけると喜びます！🙏
