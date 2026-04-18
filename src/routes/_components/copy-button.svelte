@@ -1,7 +1,8 @@
 <script lang="ts">
   import { Check, Copy } from "@lucide/svelte";
 
-  const { code }: { code: string } = $props();
+  const { code, class: className = "" }: { code: string; class?: string } =
+    $props();
   let copied = $state(false);
 
   async function copyCode() {
@@ -15,7 +16,10 @@
 
 <button
   onclick={copyCode}
-  class="group to-card-background-dark from-card-background-vivid-light hover:to-card-background-vivid-light hover:from-card-background-dark border-border rounded-lg border bg-gradient-to-b p-1.5 transition-colors"
+  class={[
+    "group to-card-background-dark from-card-background-vivid-light hover:to-card-background-vivid-light hover:from-card-background-dark border-border inline-flex items-center justify-center rounded-lg border bg-gradient-to-b p-1.5 transition-colors",
+    className,
+  ]}
   aria-label="Copy code"
 >
   {#if copied}
