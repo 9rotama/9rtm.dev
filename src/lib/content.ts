@@ -16,11 +16,11 @@ type SelfNoteData = SelfNoteMetadata & {
   excerpt: string;
 };
 
-const selfNotesMds = import.meta.glob("/contents/notes/*.md", {
+const selfNotesMds = import.meta.glob("/contents/notes/*.{md,svx}", {
   eager: true,
 }) as Record<string, App.MdsvexFile>;
 
-const selfNotesRaws = import.meta.glob("/contents/notes/*.md", {
+const selfNotesRaws = import.meta.glob("/contents/notes/*.{md,svx}", {
   eager: true,
   query: "?raw",
   import: "default",
@@ -60,7 +60,10 @@ export function estimateReadingMinutes(text: string): number {
 }
 
 function extractSlug(path: string): string | undefined {
-  return path.split("/").at(-1)?.replace(".md", "");
+  return path
+    .split("/")
+    .at(-1)
+    ?.replace(/\.(md|svx)$/, "");
 }
 
 // Cached parsed notes (computed once on first access)

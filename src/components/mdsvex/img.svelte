@@ -5,7 +5,7 @@
 </script>
 
 <figure class="mt-8 mb-8">
-  <img {...rest} class="border-border-solid rounded-lg border" />
+  <img {...rest} class="border-border-solid w-full rounded-lg border" />
   {#if title}
     <figcaption class="text-muted mt-2 text-center text-sm">
       {title}
