@@ -3,6 +3,8 @@ import { Feed } from "feed";
 import { getSelfNotes } from "$lib/content";
 import type { RequestHandler } from "./$types";
 
+const SITE_URL = PUBLIC_BASE_URL.trim();
+
 export const prerender = true;
 
 export const GET: RequestHandler = async () => {
@@ -16,8 +18,8 @@ export const GET: RequestHandler = async () => {
     title: "9rtm.dev",
     description:
       "9rotama / くろたまのプロフィール・技術ブログ。フロントエンド開発やThree.jsについて書いています。",
-    id: PUBLIC_BASE_URL,
-    link: PUBLIC_BASE_URL,
+    id: SITE_URL,
+    link: SITE_URL,
     language: "ja",
     copyright: `© 2026 9rotama`,
     author: {
@@ -36,8 +38,8 @@ export const GET: RequestHandler = async () => {
   for (const note of notes) {
     feed.addItem({
       title: note.title,
-      id: `${PUBLIC_BASE_URL}/notes/${note.slug}`,
-      link: `${PUBLIC_BASE_URL}/notes/${note.slug}`,
+      id: `${SITE_URL}/notes/${note.slug}`,
+      link: `${SITE_URL}/notes/${note.slug}`,
       date: new Date(note.published_at),
       description: note.excerpt,
     });
