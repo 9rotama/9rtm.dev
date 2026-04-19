@@ -1,5 +1,5 @@
 ---
-title: three.jsで3Dないいねボタンを作った
+title: 立体ないいねボタンを作った
 emoji: "✨️"
 published_at: 2026-04-19
 published: true
