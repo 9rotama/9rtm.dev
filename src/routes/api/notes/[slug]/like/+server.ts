@@ -41,6 +41,14 @@ export const POST: RequestHandler = async ({ params, platform, request }) => {
   const ip = request.headers.get("cf-connecting-ip") || "unknown";
   const ipHash = await hashIP(ip);
 
+  const { success: withinLimit } = await env.LIKE_RATE_LIMITER.limit({
+    key: ipHash,
+  });
+  if (!withinLimit) {
+    logger.warn({ slug }, "rate limit exceeded");
+    return json({ error: "Too Many Requests" }, { status: 429 });
+  }
+
   // 連投チェック（同じIP+slugがあるか）
   const existing = await db
     .prepare(checkLikeExistsQuery)

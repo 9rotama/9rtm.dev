@@ -11,6 +11,7 @@ declare module "*.sql?raw" {
 interface Env {
   _9rtm_dev_db: D1Database;
   DISCORD_WEBHOOK_URL: string;
+  LIKE_RATE_LIMITER: RateLimit;
 }
 
 declare global {

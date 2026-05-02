@@ -24,4 +24,14 @@
       "database_id": "8b5304c0-cf2f-4aa5-8b07-5d89995ddc56",
     },
   ],
+  "ratelimits": [
+    {
+      "name": "LIKE_RATE_LIMITER",
+      "namespace_id": "1001",
+      "simple": {
+        "limit": 5,
+        "period": 10,
+      },
+    },
+  ],
 }
