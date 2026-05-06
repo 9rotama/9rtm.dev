@@ -17,7 +17,7 @@
   {@const isPrev = direction === "prev"}
   <a
     href="/notes/{note.slug}"
-    class="group text-muted hover:text-foreground relative isolate flex min-w-0 flex-1 flex-col gap-1 rounded-lg p-4 transition-colors duration-200
+    class="group text-muted hover:text-foreground relative isolate flex min-w-0 flex-col gap-1 rounded-lg p-4 transition-colors duration-200 sm:flex-1
       {isPrev ? '' : 'items-end'}"
   >
     <!-- hover時の背景グラデーション -->
@@ -48,16 +48,18 @@
 {/snippet}
 
 {#if prevNote || nextNote}
-  <div class="mt-16 flex items-stretch justify-between gap-4">
+  <div
+    class="mt-16 flex flex-col gap-4 sm:flex-row sm:items-stretch sm:justify-between"
+  >
     {#if prevNote}
       {@render navItem(prevNote, "prev")}
     {:else}
-      <div class="flex-1"></div>
+      <div class="hidden sm:block sm:flex-1"></div>
     {/if}
     {#if nextNote}
       {@render navItem(nextNote, "next")}
     {:else}
-      <div class="flex-1"></div>
+      <div class="hidden sm:block sm:flex-1"></div>
     {/if}
   </div>
 {/if}
