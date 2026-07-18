@@ -1,15 +1,15 @@
 # 9rtm.dev
 
-9rotama's personal website includes blog
+個人サイト・ブログ
 
 ## stack
 
-| uses                  | name                                          |
+| 項目                  | 名前                                          |
 | --------------------- | --------------------------------------------- |
-| framework             | [sveltekit](https://svelte.dev/docs/kit)      |
+| フレームワーク        | [sveltekit](https://svelte.dev/docs/kit)      |
 | markdown preprocessor | [mdsvex](https://mdsvex.pngwn.io/)            |
-| 3d                    | [threlte](https://threlte.xyz/)               |
-| hosting               | [cf workers](https://workers.cloudflare.com/) |
+| 3D                    | [threlte](https://threlte.xyz/)               |
+| ホスティング          | [cf workers](https://workers.cloudflare.com/) |
 
 ## environment variables
 
