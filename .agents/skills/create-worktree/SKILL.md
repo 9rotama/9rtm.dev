@@ -7,7 +7,7 @@ description: Create and validate a sibling Git worktree for this project from a 
 
 1. Translate the requested work into a concise English kebab-case name containing only lowercase letters, numbers, and hyphens. Preserve the request's meaning; do not include the branch type in the name.
 2. Select a branch type. Use `fix` for bug fixes, `docs` for documentation, `refactor` for refactoring, and `chore` for maintenance. Use `feat` for features and whenever the type is ambiguous.
-3. Run the repository script from any branch or worktree without asking for confirmation. The script always creates the new branch from the local `main` branch:
+3. Run the repository script from any branch or worktree without asking for confirmation. Use escalated sandbox permissions on the first attempt because the script writes Git refs and creates a sibling directory outside the workspace root. Scope the escalation to this script. The script always creates the new branch from the local `main` branch:
 
    ```sh
    ./scripts/create-worktree --type TYPE WORKTREE_NAME
