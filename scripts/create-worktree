@@ -72,12 +72,11 @@ fi
 command -v git >/dev/null 2>&1 || fail "git is required"
 command -v pnpm >/dev/null 2>&1 || fail "pnpm is required"
 
+git rev-parse --show-toplevel >/dev/null 2>&1 || fail "run this command inside the repository"
 main_worktree=$(git worktree list --porcelain | awk '/^worktree / { sub(/^worktree /, ""); print; exit }')
-current_worktree=$(git rev-parse --show-toplevel 2>/dev/null) || fail "run this command inside the repository"
-current_branch=$(git symbolic-ref --quiet --short HEAD 2>/dev/null) || fail "detached HEAD is not supported"
 
-if [[ "$current_worktree" != "$main_worktree" || "$current_branch" != main ]]; then
-  fail "run this command from the main branch in the main worktree"
+if ! git show-ref --verify --quiet refs/heads/main; then
+  fail "local main branch does not exist"
 fi
 
 branch_name="${branch_type}/${worktree_name}"
