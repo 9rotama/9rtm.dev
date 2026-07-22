@@ -22,6 +22,39 @@ export type OgpInput = SiteOgpInput | NoteOgpInput;
 
 const WIDTH = 1200;
 const HEIGHT = 630;
+const SURFACE_MARGIN = 24;
+
+function OgpSurface({ children }: { children: React.ReactNode }) {
+  return (
+    <div
+      style={{
+        display: "flex",
+        position: "relative",
+        width: `${WIDTH - SURFACE_MARGIN * 2}px`,
+        height: `${HEIGHT - SURFACE_MARGIN * 2}px`,
+        overflow: "hidden",
+        border: "1px solid #4A4561",
+        borderRadius: "28px",
+        backgroundImage: "linear-gradient(180deg, #15121F 0%, #211C30 100%)",
+        boxShadow: "0 18px 42px rgba(3, 2, 8, 0.52)",
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          position: "absolute",
+          top: 0,
+          left: "28px",
+          right: "28px",
+          height: "1px",
+          backgroundImage:
+            "linear-gradient(90deg, transparent, rgba(227, 221, 255, 0.3), transparent)",
+        }}
+      />
+      {children}
+    </div>
+  );
+}
 
 function Avatar({
   size,
@@ -39,6 +72,9 @@ function Avatar({
       height={size}
       style={{
         borderRadius: "100%",
+        border: "1px solid rgba(211, 206, 242, 0.28)",
+        boxShadow: "0 10px 24px rgba(3, 2, 8, 0.38)",
+        boxSizing: "border-box",
         transform: `rotate(${rotation}deg)`,
       }}
     />
@@ -51,7 +87,7 @@ function Logo({ fontSize }: { fontSize: number }) {
       style={{
         display: "flex",
         alignItems: "flex-end",
-        fontFamily: "funnel-display",
+        fontFamily: "michroma",
         fontSize: `${fontSize}px`,
       }}
     >
@@ -108,8 +144,8 @@ function NoteOgp({
         justifyContent: "space-between",
         width: "100%",
         height: "100%",
-        padding: "64px 72px 52px",
-        fontFamily: "m-plus-1",
+        padding: "40px 48px 28px",
+        fontFamily: "mona-sans, m-plus-1",
       }}
     >
       <div style={{ display: "flex", flexDirection: "column" }}>
@@ -156,8 +192,13 @@ function NoteOgp({
                     whiteSpace: "nowrap",
                     border: "1px solid #5B557A",
                     borderRadius: "999px",
+                    backgroundImage:
+                      "linear-gradient(180deg, rgba(20, 17, 30, 0.78), rgba(78, 66, 108, 0.5))",
+                    boxShadow:
+                      "0 3px 8px rgba(3, 2, 8, 0.24), inset 0 1px rgba(227, 221, 255, 0.08)",
                     padding: "7px 16px",
                     color: "#BDB7E0",
+                    fontFamily: "michroma",
                     fontSize: "20px",
                   }}
                 >
@@ -178,12 +219,13 @@ function NoteOgp({
 }
 
 export async function generateOgpImage(input: OgpInput) {
-  const funnelDisplayFont = readFileSync(
-    path.resolve("src/ogp/fonts/funnel_display_sb.ttf"),
-  );
   const mPlus1Font = readFileSync(
     path.resolve("src/ogp/fonts/m_plus_1_sb.ttf"),
   );
+  const monaSansFont = readFileSync(
+    path.resolve("src/ogp/fonts/mona_sans_regular.otf"),
+  );
+  const michromaFont = readFileSync(path.resolve("static/fonts/michroma.ttf"));
   const avatarSrc = `data:image/png;base64,${readFileSync(
     path.resolve("src/routes/_img/avatar.png"),
   ).toString("base64")}`;
@@ -193,25 +235,36 @@ export async function generateOgpImage(input: OgpInput) {
     <div
       style={{
         display: "flex",
-        backgroundColor: "#0F0D17",
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundImage:
+          "radial-gradient(circle at 50% 100%, #211B31 0%, #0B0912 68%)",
         color: "#D3CEF2",
         width: "100%",
         height: "100%",
       }}
     >
-      {input.type === "site" ? (
-        <SiteOgp rotation={rotation} avatarSrc={avatarSrc} />
-      ) : (
-        <NoteOgp input={input} rotation={rotation} avatarSrc={avatarSrc} />
-      )}
+      <OgpSurface>
+        {input.type === "site" ? (
+          <SiteOgp rotation={rotation} avatarSrc={avatarSrc} />
+        ) : (
+          <NoteOgp input={input} rotation={rotation} avatarSrc={avatarSrc} />
+        )}
+      </OgpSurface>
     </div>,
     {
       width: WIDTH,
       height: HEIGHT,
       fonts: [
         {
-          name: "funnel-display",
-          data: funnelDisplayFont,
+          name: "michroma",
+          data: michromaFont,
+          weight: 400,
+          style: "normal",
+        },
+        {
+          name: "mona-sans",
+          data: monaSansFont,
           weight: 400,
           style: "normal",
         },
