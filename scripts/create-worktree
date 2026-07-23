@@ -1,0 +1,124 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+usage() {
+  cat <<'EOF'
+Usage: ./scripts/create-worktree [--type TYPE] WORKTREE_NAME
+
+Create a sibling worktree from the local main branch and validate its setup.
+
+Arguments:
+  WORKTREE_NAME  Lowercase letters, numbers, and hyphens only
+
+Options:
+  --type TYPE    Branch type: feat, fix, docs, refactor, or chore (default: feat)
+  --help         Show this help
+EOF
+}
+
+fail() {
+  printf 'Error: %s\n\n' "$1" >&2
+  usage >&2
+  exit 1
+}
+
+branch_type=feat
+branch_type_set=false
+worktree_name=
+
+while (( $# > 0 )); do
+  case "$1" in
+    --help)
+      if (( $# != 1 )); then
+        fail "--help cannot be combined with other arguments"
+      fi
+      usage
+      exit 0
+      ;;
+    --type)
+      if [[ "$branch_type_set" == true ]]; then
+        fail "--type may only be specified once"
+      fi
+      if (( $# < 2 )); then
+        fail "--type requires a value"
+      fi
+      branch_type=$2
+      branch_type_set=true
+      shift 2
+      ;;
+    --*) fail "unknown option: $1" ;;
+    *)
+      if [[ -n "$worktree_name" ]]; then
+        fail "WORKTREE_NAME may only be specified once"
+      fi
+      worktree_name=$1
+      shift
+      ;;
+  esac
+done
+
+[[ -n "$worktree_name" ]] || fail "WORKTREE_NAME is required"
+
+case "$branch_type" in
+  feat | fix | docs | refactor | chore) ;;
+  *) fail "invalid branch type: $branch_type" ;;
+esac
+
+if [[ ! "$worktree_name" =~ ^[a-z0-9]([a-z0-9-]*[a-z0-9])?$ ]]; then
+  fail "WORKTREE_NAME must contain only lowercase letters, numbers, and hyphens, and must start and end with a letter or number"
+fi
+
+command -v git >/dev/null 2>&1 || fail "git is required"
+command -v pnpm >/dev/null 2>&1 || fail "pnpm is required"
+
+git rev-parse --show-toplevel >/dev/null 2>&1 || fail "run this command inside the repository"
+main_worktree=$(git worktree list --porcelain | awk '/^worktree / { sub(/^worktree /, ""); print; exit }')
+
+if ! git show-ref --verify --quiet refs/heads/main; then
+  fail "local main branch does not exist"
+fi
+
+branch_name="${branch_type}/${worktree_name}"
+target_path="$(dirname "$main_worktree")/$(basename "$main_worktree")-${worktree_name}"
+
+if git show-ref --verify --quiet "refs/heads/${branch_name}"; then
+  fail "branch already exists: $branch_name"
+fi
+
+if [[ -e "$target_path" || -L "$target_path" ]]; then
+  fail "target path already exists: $target_path"
+fi
+
+copy_env=false
+copy_answer=
+printf 'Copy .env.local and .dev.vars to the new worktree? [y/N] '
+read -r copy_answer || true
+case "$copy_answer" in
+  y | Y | yes | YES | Yes) copy_env=true ;;
+esac
+
+printf 'Creating %s at %s...\n' "$branch_name" "$target_path"
+git worktree add -b "$branch_name" "$target_path" main
+
+if [[ "$copy_env" == true ]]; then
+  for env_file in .env.local .dev.vars; do
+    if [[ -f "$main_worktree/$env_file" ]]; then
+      cp "$main_worktree/$env_file" "$target_path/$env_file"
+      printf 'Copied %s\n' "$env_file"
+    else
+      printf 'Warning: %s does not exist; skipping\n' "$main_worktree/$env_file" >&2
+    fi
+  done
+fi
+
+printf 'Installing dependencies...\n'
+(cd "$target_path" && pnpm install --frozen-lockfile)
+
+printf 'Running checks...\n'
+(cd "$target_path" && pnpm check)
+
+printf '\nWorktree is ready.\n'
+printf 'Branch: %s\n' "$branch_name"
+printf 'Path:   %s\n' "$target_path"
+printf 'Checks: passed\n'

@@ -1,6 +1,6 @@
-# 9rtm.dev
+# 9rtm.dev Development
 
-9rtm.dev で公開するコンテンツと、その共有時の見え方を扱う。
+9rtm.dev の開発作業で使うリポジトリ固有の用語と、公開するコンテンツおよびその共有時の見え方を定義する。
 
 ## Language
 
@@ -39,3 +39,11 @@ _Avoid_: 背景グラデーション、光彩
 **OGP 視覚トーン**:
 記事 OGP とサイト OGP の情報配置を維持したまま、書体、色、面照明、境界線、影によって 9rtm.dev との一貫性を作る表現。情報の配置や優先順位は含めない。
 _Avoid_: OGP レイアウト、OGP デザイン
+
+**Worktree name**:
+作業用ブランチと worktree の名前を導出するために利用者が指定する、Branch type を含まない名前。
+_Avoid_: Branch name
+
+**Branch type**:
+作業の種類を表すブランチ名の接頭辞。`feat`、`fix`、`docs`、`refactor`、`chore` のいずれかで、既定値は `feat`。
+_Avoid_: Prefix

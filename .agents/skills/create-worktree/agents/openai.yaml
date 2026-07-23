@@ -1,0 +1,4 @@
+interface:
+  display_name: "Create Worktree"
+  short_description: "Create and validate a sibling Git worktree"
+  default_prompt: "Use $create-worktree to create a worktree for my next task."
