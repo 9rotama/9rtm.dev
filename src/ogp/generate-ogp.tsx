@@ -23,6 +23,11 @@ export type OgpInput = SiteOgpInput | NoteOgpInput;
 const WIDTH = 1200;
 const HEIGHT = 630;
 const SURFACE_MARGIN = 24;
+const FLUENT_EMOJI_3D_PATHS: Record<string, string> = {
+  "1f4d2": "Ledger/3D/ledger_3d.png",
+  "1f9f1": "Brick/3D/brick_3d.png",
+  "2728": "Sparkles/3D/sparkles_3d.png",
+};
 
 function OgpSurface({ children }: { children: React.ReactNode }) {
   return (
@@ -35,7 +40,7 @@ function OgpSurface({ children }: { children: React.ReactNode }) {
         overflow: "hidden",
         border: "1px solid #4A4561",
         borderRadius: "28px",
-        backgroundImage: "linear-gradient(180deg, #15121F 0%, #211C30 100%)",
+        backgroundImage: "linear-gradient(180deg, #120F1E 0%, #07060F 100%)",
         boxShadow: "0 18px 42px rgba(3, 2, 8, 0.52)",
       }}
     >
@@ -159,8 +164,8 @@ function NoteOgp({
             maxHeight: "176px",
             overflow: "hidden",
             lineClamp: 2,
-            fontSize: "64px",
-            fontWeight: 400,
+            fontSize: "60px",
+            fontWeight: 700,
             lineHeight: 1.35,
           }}
         >
@@ -193,7 +198,7 @@ function NoteOgp({
                     border: "1px solid #5B557A",
                     borderRadius: "999px",
                     backgroundImage:
-                      "linear-gradient(180deg, rgba(20, 17, 30, 0.78), rgba(78, 66, 108, 0.5))",
+                      "linear-gradient(180deg, rgba(11, 9, 18, 0.82), rgba(55, 37, 79, 0.52))",
                     boxShadow:
                       "0 3px 8px rgba(3, 2, 8, 0.24), inset 0 1px rgba(227, 221, 255, 0.08)",
                     padding: "7px 16px",
@@ -220,7 +225,9 @@ function NoteOgp({
 
 export async function generateOgpImage(input: OgpInput) {
   const mPlus1Font = readFileSync(
-    path.resolve("src/ogp/fonts/m_plus_1_sb.ttf"),
+    path.resolve(
+      "node_modules/@fontsource/m-plus-1/files/m-plus-1-japanese-700-normal.woff",
+    ),
   );
   const monaSansFont = readFileSync(
     path.resolve("src/ogp/fonts/mona_sans_regular.otf"),
@@ -237,8 +244,7 @@ export async function generateOgpImage(input: OgpInput) {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        backgroundImage:
-          "radial-gradient(circle at 50% 100%, #211B31 0%, #0B0912 68%)",
+        backgroundColor: "#0B0912",
         color: "#D3CEF2",
         width: "100%",
         height: "100%",
@@ -271,7 +277,7 @@ export async function generateOgpImage(input: OgpInput) {
         {
           name: "m-plus-1",
           data: mPlus1Font,
-          weight: 400,
+          weight: 700,
           style: "normal",
         },
       ],
@@ -282,14 +288,20 @@ export async function generateOgpImage(input: OgpInput) {
           .map((character) => character.codePointAt(0)?.toString(16))
           .filter((codePoint) => codePoint && codePoint !== "fe0f")
           .join("-");
+        const assetPath = FLUENT_EMOJI_3D_PATHS[codePoints];
+        if (!assetPath) {
+          throw new Error(`Unsupported Fluent Emoji asset: ${segment}`);
+        }
         const response = await fetch(
-          `https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/${codePoints}.svg`,
+          `https://raw.githubusercontent.com/microsoft/fluentui-emoji/main/assets/${assetPath}`,
         );
         if (!response.ok) {
           throw new Error(`Failed to load emoji asset: ${segment}`);
         }
-        const svg = Buffer.from(await response.text()).toString("base64");
-        return `data:image/svg+xml;base64,${svg}`;
+        const png = Buffer.from(await response.arrayBuffer()).toString(
+          "base64",
+        );
+        return `data:image/png;base64,${png}`;
       },
     },
   );
