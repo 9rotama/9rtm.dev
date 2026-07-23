@@ -4,7 +4,7 @@ import { generateOgpImage } from "../../ogp/generate-ogp";
 export const prerender = true;
 
 export const GET: RequestHandler = async () => {
-  const webp = await generateOgpImage({ isRandom: false });
+  const webp = await generateOgpImage({ type: "site", isRandom: false });
 
   return new Response(new Uint8Array(webp), {
     headers: {

@@ -35,7 +35,7 @@
     href="/rss.xml"
   />
   <title>9rtm.dev</title>
-  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:card" content={data.twitterCard} />
   <!-- eslint-disable-next-line svelte/no-at-html-tags -->
   {@html '<script type="application/ld+json">' + jsonLd + "<" + "/script>"}
 </svelte:head>

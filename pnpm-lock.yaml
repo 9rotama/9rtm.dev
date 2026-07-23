@@ -8,9 +8,6 @@ importers:
 
   .:
     dependencies:
-      '@fontsource-variable/funnel-display':
-        specifier: ^5.2.6
-        version: 5.2.6
       '@fontsource-variable/geist-mono':
         specifier: ^5.2.6
         version: 5.2.6
@@ -443,9 +440,6 @@ packages:
 
   '@floating-ui/utils@0.2.11':
     resolution: {integrity: sha512-RiB/yIh78pcIxl6lLMG0CgBXAZ2Y0eVHqMPYugu+9U0AeT6YBeiJpf7lbdJNIugFP5SIjwNRgo4DhR1Qxi26Gg==}
-
-  '@fontsource-variable/funnel-display@5.2.6':
-    resolution: {integrity: sha512-Y8iQzxkMN/jSfTb5VIkGnGV26k7sx4KlMbdQLpRVuU9Q6BQhSoIx7RHt9npT9ccMfqLbh75PJ+DsqYVn7om7Ag==}
 
   '@fontsource-variable/geist-mono@5.2.6':
     resolution: {integrity: sha512-vw6T9JGTrYJ980bn7W8iTPhe2jVK5ifunVs7xh9dfTVArjDSkJs03JjeZrH5LKEpGABLXSlSlNU57HRm4tmFMg==}
@@ -3060,8 +3054,6 @@ snapshots:
       '@floating-ui/utils': 0.2.11
 
   '@floating-ui/utils@0.2.11': {}
-
-  '@fontsource-variable/funnel-display@5.2.6': {}
 
   '@fontsource-variable/geist-mono@5.2.6': {}
 

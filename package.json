@@ -52,7 +52,6 @@
     ]
   },
   "dependencies": {
-    "@fontsource-variable/funnel-display": "^5.2.6",
     "@fontsource-variable/geist-mono": "^5.2.6",
     "@fontsource-variable/m-plus-1": "^5.2.6",
     "@fontsource-variable/mona-sans": "^5.2.8",

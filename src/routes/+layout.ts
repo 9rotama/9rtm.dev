@@ -7,5 +7,8 @@ export const trailingSlash = "never";
 export const load: LayoutLoad = ({ url }) => {
   return {
     canonicalUrl: new URL(url.pathname, PUBLIC_BASE_URL).toString(),
+    twitterCard: /^\/notes\/[^/]+$/.test(url.pathname)
+      ? "summary_large_image"
+      : "summary",
   };
 };
