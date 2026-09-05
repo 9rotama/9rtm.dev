@@ -38,6 +38,7 @@ jobs:
     permissions:
       contents: read
       issues: write
+      pull-requests: write
     env:
       PUBLIC_BASE_URL: http://127.0.0.1:4173
     steps:
