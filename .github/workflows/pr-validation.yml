@@ -56,20 +56,22 @@ jobs:
       - name: Build
         run: pnpm build
 
-      - name: Start local preview
+      - name: Measure Lighthouse
         run: |
           pnpm preview:ci > /tmp/wrangler-preview.log 2>&1 &
+          preview_pid=$!
+          trap 'kill "$preview_pid"' EXIT
           for attempt in {1..30}; do
             if curl --fail --silent http://127.0.0.1:4173 > /dev/null; then
-              exit 0
+              break
             fi
             sleep 1
           done
-          cat /tmp/wrangler-preview.log
-          exit 1
-
-      - name: Measure Lighthouse
-        run: pnpm lighthouse
+          curl --fail --silent http://127.0.0.1:4173 > /dev/null || {
+            cat /tmp/wrangler-preview.log
+            exit 1
+          }
+          pnpm lighthouse
 
       - name: Upload Lighthouse reports
         if: always()
