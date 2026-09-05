@@ -1,11 +1,10 @@
 <script lang="ts">
-  import { Canvas } from "@threlte/core";
+  import { onMount } from "svelte";
   import { postLike } from "../../_lib/like-api";
   import {
     getLikedFromStorage,
     setLikedToStorage,
   } from "../../_lib/like-storage";
-  import LikeScene from "./like-scene.svelte";
 
   interface Props {
     slug: string;
@@ -16,6 +15,27 @@
   let isLiked = $state(!!getLikedFromStorage()[slug]);
   let isHovered = $state(false);
   let hasTransitioned = $state(false);
+  let container = $state<HTMLDivElement>();
+  let LikeScene = $state<
+    null | typeof import("./like-scene-wrapper.svelte").default
+  >(null);
+
+  onMount(() => {
+    if (!container) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        void import("./like-scene-wrapper.svelte").then((module) => {
+          LikeScene = module.default;
+        });
+        observer.disconnect();
+      },
+      { rootMargin: "200px" },
+    );
+    observer.observe(container);
+    return () => observer.disconnect();
+  });
 
   const canHover =
     typeof window !== "undefined" &&
@@ -65,10 +85,10 @@
     aria-pressed={isLiked}
     class="focus-visible:outline-accent flex cursor-pointer flex-row items-center gap-2 overflow-clip rounded-full transition-colors focus-visible:outline-2 focus-visible:outline-offset-4"
   >
-    <div aria-hidden="true" class="size-20">
-      <Canvas autoRender={false}>
+    <div bind:this={container} aria-hidden="true" class="size-20">
+      {#if LikeScene}
         <LikeScene {isLiked} {isHovered} />
-      </Canvas>
+      {/if}
     </div>
   </button>
 
