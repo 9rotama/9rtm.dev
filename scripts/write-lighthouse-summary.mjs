@@ -19,8 +19,8 @@ const formatMilliseconds = (value) => `${(value / 1000).toFixed(1)} s`;
 const formatBytes = (value) =>
   `${Math.round(value / 1024).toLocaleString()} KiB`;
 
-const reportFiles = (await readdir(reportsDirectory)).filter((file) =>
-  file.endsWith(".json"),
+const reportFiles = (await readdir(reportsDirectory)).filter(
+  (file) => file.startsWith("lhr-") && file.endsWith(".json"),
 );
 const reports = await Promise.all(
   reportFiles.map(async (file) =>
