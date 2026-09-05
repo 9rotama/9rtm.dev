@@ -1,6 +1,26 @@
 import { readdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
+type LighthouseReport = {
+  requestedUrl: string;
+  audits: Record<string, { numericValue: number }>;
+  categories: {
+    performance: { score: number };
+    accessibility: { score: number };
+  };
+};
+
+type SummaryRow = {
+  url: string;
+  performance: number;
+  accessibility: number;
+  fcp: number;
+  lcp: number;
+  cls: number;
+  tbt: number;
+  transferSize: number;
+};
+
 const reportsDirectory = ".lighthouseci";
 const warningThresholds = {
   performance: 95,
@@ -10,21 +30,26 @@ const warningThresholds = {
   cls: 0.1,
 };
 
-const median = (values) => {
+type WarningMetric = keyof typeof warningThresholds;
+
+const median = (values: number[]) => {
   const sorted = [...values].sort((left, right) => left - right);
   return sorted[Math.floor(sorted.length / 2)];
 };
 
-const formatMilliseconds = (value) => `${(value / 1000).toFixed(1)} s`;
-const formatBytes = (value) =>
+const formatMilliseconds = (value: number) => `${(value / 1000).toFixed(1)} s`;
+const formatBytes = (value: number) =>
   `${Math.round(value / 1024).toLocaleString()} KiB`;
 
 const reportFiles = (await readdir(reportsDirectory)).filter(
   (file) => file.startsWith("lhr-") && file.endsWith(".json"),
 );
 const reports = await Promise.all(
-  reportFiles.map(async (file) =>
-    JSON.parse(await readFile(path.join(reportsDirectory, file), "utf8")),
+  reportFiles.map(
+    async (file) =>
+      JSON.parse(
+        await readFile(path.join(reportsDirectory, file), "utf8"),
+      ) as LighthouseReport,
   ),
 );
 
@@ -32,10 +57,10 @@ const groupedReports = Map.groupBy(
   reports,
   (report) => new URL(report.requestedUrl).pathname,
 );
-const rows = [...groupedReports.entries()]
+const rows: SummaryRow[] = [...groupedReports.entries()]
   .sort(([left], [right]) => left.localeCompare(right))
   .map(([url, pageReports]) => {
-    const value = (audit) =>
+    const value = (audit: string) =>
       median(pageReports.map((report) => report.audits[audit].numericValue));
     return {
       url,
@@ -67,7 +92,7 @@ const table = [
 ].join("\n");
 
 const warnings = rows.flatMap((row) =>
-  Object.entries(warningThresholds)
+  (Object.entries(warningThresholds) as [WarningMetric, number][])
     .filter(([metric, threshold]) =>
       ["performance", "accessibility"].includes(metric)
         ? row[metric] < threshold

@@ -23,6 +23,7 @@
     "./src/**/*.ts",
     "./src/**/*.svelte",
     "./src/**/*.tsx",
+    "./scripts/**/*.ts",
     "./tests/**/*.js",
     "./tests/**/*.ts",
     "./tests/**/*.svelte"
