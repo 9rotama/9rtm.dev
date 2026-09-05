@@ -3,8 +3,8 @@
 
   type Props = HTMLVideoAttributes & {
     title?: string;
-    width?: number;
-    height?: number;
+    width: number;
+    height: number;
     autoplay?: boolean;
     controls?: boolean;
   };
@@ -29,7 +29,7 @@
     muted={autoplay}
     {controls}
     playsinline
-    class="rounded-lg"
+    class="h-auto max-w-full rounded-lg"
   ></video>
   {#if title}
     <figcaption class="text-muted mt-2 text-center text-sm">

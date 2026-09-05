@@ -10,7 +10,7 @@ tags: [svelte, three.js, cloudflare, discord]
   import Video from "$lib/components/video.svelte";
 </script>
 
-<Video src="/post-media/like-button-cap.webm" controls/>
+<Video src="/post-media/like-button-cap.webm" width={1020} height={720} controls />
 
 ## 何を作ったか
 
