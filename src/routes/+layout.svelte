@@ -1,10 +1,6 @@
 <script lang="ts">
   import { PUBLIC_BASE_URL } from "$env/static/public";
   import "@fontsource-variable/mona-sans";
-  import "@fontsource/iosevka/400.css";
-  import "@fontsource/iosevka/700.css";
-  import "@fontsource/m-plus-1/400.css";
-  import "@fontsource/m-plus-1/700.css";
 
   import { ModeWatcher } from "mode-watcher";
   import "../app.css";

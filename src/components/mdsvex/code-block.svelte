@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { Snippet } from "svelte";
+  import "./code-font.css";
   import CopyButton from "../../routes/_components/copy-button.svelte";
 
   const {

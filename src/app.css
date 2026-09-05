@@ -1,6 +1,22 @@
 @import "tailwindcss";
 
 @font-face {
+  font-family: "M PLUS 1";
+  src: url("@fontsource/m-plus-1/files/m-plus-1-japanese-400-normal.woff2")
+    format("woff2");
+  font-display: swap;
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "M PLUS 1";
+  src: url("@fontsource/m-plus-1/files/m-plus-1-japanese-700-normal.woff2")
+    format("woff2");
+  font-display: swap;
+  font-weight: 700;
+}
+
+@font-face {
   font-family: "Michroma";
   src: url("/fonts/michroma.ttf") format("truetype");
   font-display: swap;
