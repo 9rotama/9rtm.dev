@@ -55,14 +55,17 @@
 
 <div class="flex flex-col items-center gap-3">
   <button
+    type="button"
     onclick={handleClick}
     onpointerenter={handlePointerEnter}
     onpointerleave={handlePointerLeave}
     onpointerdown={handlePointerDown}
     onpointerup={handlePointerUp}
-    class="flex cursor-pointer flex-row items-center gap-2 overflow-clip rounded-full transition-colors"
+    aria-label={isLiked ? "いいね済み" : "この記事にいいねする"}
+    aria-pressed={isLiked}
+    class="focus-visible:outline-accent flex cursor-pointer flex-row items-center gap-2 overflow-clip rounded-full transition-colors focus-visible:outline-2 focus-visible:outline-offset-4"
   >
-    <div class="size-20">
+    <div aria-hidden="true" class="size-20">
       <Canvas autoRender={false}>
         <LikeScene {isLiked} {isHovered} />
       </Canvas>

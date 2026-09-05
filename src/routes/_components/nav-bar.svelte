@@ -18,32 +18,34 @@
 <NavigationMenu.Root
   class="fixed bottom-0 left-0 z-50 flex w-full items-center justify-center pb-[env(safe-area-inset-bottom)]"
 >
-  <NavigationMenu.List
+  <div
     class="border-border/50 from-card-background-dark/70 to-card-background-vivid-light/70 shadow-shadow/50 mb-4 flex items-center gap-1 rounded-full border bg-gradient-to-b px-2 py-1.5 shadow-lg backdrop-blur-xs"
   >
-    {#each navItems as item (item.href)}
-      {@const active = isActive(item.href, page.url.pathname)}
-      <NavigationMenu.Item>
-        <NavigationMenu.Link
-          href={item.href}
-          {active}
-          class="group relative flex items-center gap-1.5 rounded-full px-4 py-2 text-xs transition-colors duration-150
-            {active ? 'text-foreground' : 'text-muted hover:text-foreground'}"
-        >
-          <div
-            class="from-accent/30 absolute inset-0 rounded-full bg-radial-[ellipse_at_bottom] to-transparent to-70% transition-opacity duration-150
-              {active ? 'opacity-100' : 'opacity-0'}"
-          ></div>
-          <div
-            class="bg-accent/60 absolute inset-x-3 bottom-0 h-[1px] rounded-full transition-opacity duration-150
-              {active ? 'opacity-100' : 'opacity-0'}"
-          ></div>
-          <item.icon class="relative z-10 size-4" />
-          <span class="font-display relative z-10">{item.label}</span>
-        </NavigationMenu.Link>
-      </NavigationMenu.Item>
-    {/each}
-    <div class="bg-border/50 mx-1 h-5 w-[1px]"></div>
+    <NavigationMenu.List class="flex items-center gap-1">
+      {#each navItems as item (item.href)}
+        {@const active = isActive(item.href, page.url.pathname)}
+        <NavigationMenu.Item>
+          <NavigationMenu.Link
+            href={item.href}
+            {active}
+            class="group relative flex items-center gap-1.5 rounded-full px-4 py-2 text-xs transition-colors duration-150
+              {active ? 'text-foreground' : 'text-muted hover:text-foreground'}"
+          >
+            <div
+              class="from-accent/30 absolute inset-0 rounded-full bg-radial-[ellipse_at_bottom] to-transparent to-70% transition-opacity duration-150
+                {active ? 'opacity-100' : 'opacity-0'}"
+            ></div>
+            <div
+              class="bg-accent/60 absolute inset-x-3 bottom-0 h-[1px] rounded-full transition-opacity duration-150
+                {active ? 'opacity-100' : 'opacity-0'}"
+            ></div>
+            <item.icon class="relative z-10 size-4" />
+            <span class="font-display relative z-10">{item.label}</span>
+          </NavigationMenu.Link>
+        </NavigationMenu.Item>
+      {/each}
+    </NavigationMenu.List>
+    <div aria-hidden="true" class="bg-border/50 mx-1 h-5 w-[1px]"></div>
     <button
       onclick={toggleMode}
       class="to-card-background-dark from-card-background-vivid-light hover:to-card-background-vivid-light hover:from-card-background-dark border-border text-muted hover:text-foreground shadow-shadow/30 flex cursor-pointer items-center justify-center rounded-full border bg-gradient-to-b p-1.5 shadow-[0_3px_2px_0] transition-colors duration-150"
@@ -55,5 +57,5 @@
         <Sun class="size-4" />
       {/if}
     </button>
-  </NavigationMenu.List>
+  </div>
 </NavigationMenu.Root>
