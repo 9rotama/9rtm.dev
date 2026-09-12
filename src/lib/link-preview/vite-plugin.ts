@@ -1,0 +1,141 @@
+import { readdir, readFile } from "node:fs/promises";
+import path from "node:path";
+import { unified } from "unified";
+import remarkGfm from "remark-gfm";
+import remarkParse from "remark-parse";
+import type { Plugin } from "vite";
+import {
+  DEFAULT_LINK_PREVIEW_BASE_URL,
+  DEFAULT_LINK_PREVIEW_STATIC_DIR,
+  prefetchLinkPreviews,
+  resolveHttpUrl,
+  validateHttpUrl,
+  type LinkPreviewOptions,
+} from "./ogp.ts";
+
+type MarkdownNode = {
+  type?: string;
+  url?: string;
+  children?: MarkdownNode[];
+};
+
+export type LinkPreviewBuildPluginOptions = LinkPreviewOptions & {
+  contentDir?: string;
+};
+
+function collectMarkdownLinks(node: MarkdownNode, links: string[]): void {
+  if (node.type === "link" && typeof node.url === "string") {
+    links.push(node.url);
+  }
+  for (const child of node.children ?? []) collectMarkdownLinks(child, links);
+}
+
+export function extractMarkdownLinks(markdown: string): string[] {
+  try {
+    const tree = unified()
+      .use(remarkParse)
+      .use(remarkGfm)
+      .parse(markdown) as MarkdownNode;
+    const links: string[] = [];
+    collectMarkdownLinks(tree, links);
+    return links;
+  } catch {
+    return [];
+  }
+}
+
+async function readMarkdownLinks(
+  contentDir: string,
+  baseUrl: string,
+): Promise<string[]> {
+  const links: string[] = [];
+  const visit = async (directory: string): Promise<void> => {
+    let entries: Array<{
+      name: string;
+      isDirectory(): boolean;
+      isFile(): boolean;
+    }>;
+    try {
+      entries = await readdir(directory, { withFileTypes: true });
+    } catch {
+      return;
+    }
+
+    for (const entry of entries) {
+      const entryPath = path.join(directory, entry.name);
+      if (entry.isDirectory()) {
+        await visit(entryPath);
+        continue;
+      }
+      if (!entry.isFile() || !/\.(?:md|svx)$/.test(entry.name)) continue;
+      try {
+        const markdown = await readFile(entryPath, "utf8");
+        for (const href of extractMarkdownLinks(markdown)) {
+          if (resolveHttpUrl(href, baseUrl)) links.push(href);
+        }
+      } catch {
+        // A single unreadable draft must not prevent the other notes from building.
+      }
+    }
+  };
+
+  await visit(contentDir);
+  return [...new Set(links)];
+}
+
+/**
+ * Prefetch every note link before Svelte starts compiling modules and emit the
+ * generated WebP files as Vite assets. The plugin is build-only; development
+ * requests are initiated by the async mdsvex transform for changed notes.
+ */
+export function linkPreviewBuildPlugin(
+  options: LinkPreviewBuildPluginOptions = {},
+): Plugin {
+  const configuredBaseUrl = options.baseUrl ?? DEFAULT_LINK_PREVIEW_BASE_URL;
+  const baseValidation = validateHttpUrl(configuredBaseUrl);
+  const baseUrl = baseValidation.valid
+    ? baseValidation.url.href
+    : DEFAULT_LINK_PREVIEW_BASE_URL;
+  const staticDir = options.staticDir ?? DEFAULT_LINK_PREVIEW_STATIC_DIR;
+  let previews = new Map<string, { image?: string }>();
+
+  return {
+    name: "link-preview-build",
+    apply: "build",
+    async buildStart() {
+      const contentDir = path.resolve(options.contentDir ?? "contents/notes");
+      const hrefs = await readMarkdownLinks(contentDir, baseUrl);
+      const result = await prefetchLinkPreviews(hrefs, {
+        ...options,
+        baseUrl,
+        staticDir,
+      });
+      previews = new Map(
+        [...result.entries()].map(([href, preview]) => [
+          href,
+          { image: preview.image },
+        ]),
+      );
+    },
+    async generateBundle(_outputOptions, bundle) {
+      for (const preview of previews.values()) {
+        if (!preview.image) continue;
+        const publicPath = preview.image.replace(/^\/+/, "");
+        if (
+          Object.values(bundle).some((asset) => asset.fileName === publicPath)
+        ) {
+          continue;
+        }
+        const filePath = path.join(staticDir, path.basename(publicPath));
+        try {
+          const source = await readFile(filePath);
+          this.emitFile({ type: "asset", fileName: publicPath, source });
+        } catch {
+          // The card remains useful without an image if the cache filesystem is unavailable.
+        }
+      }
+    },
+  };
+}
+
+export default linkPreviewBuildPlugin;

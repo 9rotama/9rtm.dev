@@ -7,6 +7,7 @@ import rehypeSlug from "rehype-slug";
 import rehypeUnwrapImages from "rehype-unwrap-images";
 import remarkGfm from "remark-gfm";
 import { createHighlighter } from "shiki";
+import rehypeLinkPreview from "./src/lib/link-preview/rehype-link-preview.ts";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -34,7 +35,13 @@ const mdsvexOptions = {
     _: path.join(__dirname, "src/components/mdsvex/layout.svelte"),
   },
   remarkPlugins: [remarkGfm],
-  rehypePlugins: [rehypeSlug, rehypeUnwrapImages],
+  rehypePlugins: [
+    rehypeSlug,
+    rehypeUnwrapImages,
+    rehypeLinkPreview({
+      baseUrl: process.env.PUBLIC_BASE_URL || "https://9rtm.dev",
+    }),
+  ],
   highlight: {
     highlighter: async (code, lang = "text") => {
       // "javascript:example.js" → ["javascript", "example.js"]
