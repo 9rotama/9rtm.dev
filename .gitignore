@@ -9,6 +9,7 @@ node_modules
 /build
 /.lighthouseci
 /static/link-previews
+/storybook-static
 
 # OS
 .DS_Store
