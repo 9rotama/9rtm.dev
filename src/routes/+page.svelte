@@ -2,7 +2,7 @@
   import { PUBLIC_BASE_URL } from "$env/static/public";
   import { MoveRight } from "@lucide/svelte";
   import type { PageProps } from "./$types";
-  import EmotiKun from "./_components/emoti-kun/emoti-kun.svelte";
+  import DeferredEmotiKun from "./_components/emoti-kun/deferred-emoti-kun.svelte";
   import Heading from "./_components/heading.svelte";
   import GitHub from "./_components/icons/github.svelte";
   import Zenn from "./_components/icons/zenn.svelte";
@@ -14,7 +14,7 @@
 </script>
 
 <main>
-  <EmotiKun />
+  <DeferredEmotiKun />
   <div class="mt-10">
     <Heading text="me" />
     <div class="mt-4 flex flex-row items-center justify-center gap-8">

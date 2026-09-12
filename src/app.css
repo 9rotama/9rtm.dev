@@ -29,12 +29,11 @@
   --color-shadow: var(--theme-shadow);
 
   --font-body:
-    "Mona Sans Variable", "M PLUS 1", "Helvetica Neue", Arial,
-    "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+    "Mona Sans Variable", "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN",
+    "Hiragino Sans", Meiryo, sans-serif;
   --font-code:
-    "Iosevka", "M PLUS 1", Consolas, "Courier New", Courier, Monaco, monospace;
-  --font-display:
-    "Michroma", "Geist Sans", "M PLUS 1", "Helvetica Neue", Arial, sans-serif;
+    "Geist Mono Variable", Consolas, "Courier New", Courier, Monaco, monospace;
+  --font-display: "Michroma", "Helvetica Neue", Arial, sans-serif;
 }
 
 /* Light mode (default) */
