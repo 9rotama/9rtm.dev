@@ -44,18 +44,18 @@
     {href}
     target={external ? "_blank" : undefined}
     rel={external ? "noopener noreferrer" : undefined}
-    class="border-border-solid bg-card-background-vivid hover:bg-card-background-vivid-light group my-6 flex min-h-28 overflow-hidden rounded-lg border text-inherit no-underline transition-colors"
+    class="border-border-solid from-card-background-dark to-card-background-vivid hover:from-card-background-vivid hover:to-card-background-dark my-6 flex min-h-28 overflow-hidden rounded-lg border bg-gradient-to-t text-inherit no-underline transition-colors"
   >
     {#if image}
       <img
         src={image}
         alt=""
         loading="lazy"
-        class="bg-card-background-dark h-28 w-36 shrink-0 object-cover"
+        class="bg-card-background-dark w-36 shrink-0 self-stretch object-cover"
       />
     {:else}
       <div
-        class="bg-card-background-dark text-muted flex h-28 w-20 shrink-0 items-center justify-center"
+        class="bg-card-background-dark text-muted flex w-20 shrink-0 items-center justify-center self-stretch"
         aria-hidden="true"
       >
         <LinkIcon class="size-6" />
@@ -82,7 +82,7 @@
     </span>
     {#if external}
       <ExternalLink
-        class="text-muted m-3 size-4 shrink-0 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+        class="text-muted my-3 mr-1 ml-3 size-4 shrink-0"
         aria-hidden="true"
       />
     {/if}
@@ -92,22 +92,31 @@
     {href}
     target={external ? "_blank" : undefined}
     rel={external ? "noopener noreferrer" : undefined}
-    class="border-border-solid bg-card-background-vivid hover:bg-card-background-vivid-light inline-flex max-w-full items-center gap-1 rounded-md border px-1.5 py-0.5 align-baseline text-inherit no-underline transition-colors"
+    class="group inline max-w-full align-baseline text-inherit no-underline"
     title={label ? title : undefined}
   >
     {#if icon && !iconFailed}
       <img
         src={icon}
         alt=""
-        class="size-4 shrink-0 rounded-sm"
+        class="relative -top-0.5 mr-1 ml-1 inline-block size-4 rounded-sm align-middle"
         onerror={hideBrokenIcon}
       />
     {:else}
-      <LinkIcon class="text-muted size-3.5 shrink-0" aria-hidden="true" />
+      <LinkIcon
+        class="text-muted relative -top-0.5 mr-0.5 inline-block size-3.5 align-middle"
+        aria-hidden="true"
+      />
     {/if}
-    <span class="truncate">{label || truncateInlineTitle(title)}</span>
+    <span
+      class="text-foreground decoration-accent font-bold underline underline-offset-4 transition-colors duration-100 group-hover:decoration-3"
+      >{label || truncateInlineTitle(title)}</span
+    >
     {#if external}
-      <ExternalLink class="text-muted size-3 shrink-0" aria-hidden="true" />
+      <ExternalLink
+        class="text-muted relative -top-0.5 inline-block size-3 align-middle"
+        aria-hidden="true"
+      />
     {/if}
   </a>
 {/if}
