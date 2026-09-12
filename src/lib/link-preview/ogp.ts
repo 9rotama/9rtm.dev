@@ -1,5 +1,5 @@
 import { lookup as defaultLookup } from "node:dns/promises";
-import { randomUUID } from "node:crypto";
+import { createHash, randomUUID } from "node:crypto";
 import {
   copyFile,
   mkdir,
@@ -325,13 +325,6 @@ export function resolveHttpUrl(
   return parseHttpUrl(trimmedHref, baseUrl);
 }
 
-export function truncateTitle(value: string, maxLength = 40): string {
-  const text = value.trim();
-  const characters = Array.from(text);
-  if (characters.length <= maxLength) return text;
-  return characters.slice(0, Math.max(0, maxLength - 1)).join("") + "…";
-}
-
 function getAttr(node: ParseNode, name: string): string | undefined {
   return node.attrs?.find(
     (attr) => attr.name.toLowerCase() === name.toLowerCase(),
@@ -558,12 +551,7 @@ async function download(
 }
 
 function hashUrl(url: string): string {
-  let hash = 0;
-  for (let index = 0; index < url.length; index += 1) {
-    hash = (hash << 5) - hash + url.charCodeAt(index);
-    hash |= 0;
-  }
-  return Math.abs(hash).toString(36).padStart(8, "0");
+  return createHash("sha256").update(url).digest("hex").slice(0, 8);
 }
 
 function cacheFileStem(url: string): string {

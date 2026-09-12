@@ -13,7 +13,6 @@ import {
   isPrivateAddress,
   parseOpenGraphHtml,
   resolveHttpUrl,
-  truncateTitle,
 } from "../src/lib/link-preview/ogp.ts";
 
 it("validates HTTP URLs and rejects private destinations", () => {
@@ -53,7 +52,6 @@ it("extracts OGP metadata in the documented priority order", () => {
     "https://example.com/image.png",
   ]);
   expect(metadata.iconUrl).toBe("/icon.svg");
-  expect(truncateTitle("あ".repeat(41)).length).toBe(40);
 });
 
 it("fetches and caches metadata and optimized WebP assets", async () => {
@@ -353,7 +351,6 @@ it("uses named labels only as fallback titles and truncates bare titles", async 
   expect(bare.properties?.title).toBe(
     "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
   );
-  expect(truncateTitle(String(bare.properties?.title)).length).toBe(40);
 });
 
 it("validates redirects, enforces the redirect limit, and refreshes stale cache", async () => {

@@ -47,39 +47,34 @@ async function readMarkdownLinks(
   contentDir: string,
   baseUrl: string,
 ): Promise<string[]> {
-  const links: string[] = [];
-  const visit = async (directory: string): Promise<void> => {
-    let entries: Array<{
-      name: string;
-      isDirectory(): boolean;
-      isFile(): boolean;
-    }>;
-    try {
-      entries = await readdir(directory, { withFileTypes: true });
-    } catch {
-      return;
-    }
+  let entries;
+  try {
+    entries = await readdir(contentDir, {
+      recursive: true,
+      withFileTypes: true,
+    });
+  } catch {
+    return [];
+  }
 
-    for (const entry of entries) {
-      const entryPath = path.join(directory, entry.name);
-      if (entry.isDirectory()) {
-        await visit(entryPath);
-        continue;
-      }
-      if (!entry.isFile() || !/\.(?:md|svx)$/.test(entry.name)) continue;
-      try {
-        const markdown = await readFile(entryPath, "utf8");
-        for (const href of extractMarkdownLinks(markdown)) {
-          if (resolveHttpUrl(href, baseUrl)) links.push(href);
+  const links = await Promise.all(
+    entries
+      .filter((entry) => entry.isFile() && /\.(?:md|svx)$/.test(entry.name))
+      .map(async (entry) => {
+        try {
+          const markdown = await readFile(
+            path.join(entry.parentPath, entry.name),
+            "utf8",
+          );
+          return extractMarkdownLinks(markdown).filter((href) =>
+            resolveHttpUrl(href, baseUrl),
+          );
+        } catch {
+          return [];
         }
-      } catch {
-        // A single unreadable draft must not prevent the other notes from building.
-      }
-    }
-  };
-
-  await visit(contentDir);
-  return [...new Set(links)];
+      }),
+  );
+  return [...new Set(links.flat())];
 }
 
 /**
