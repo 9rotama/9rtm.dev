@@ -12,6 +12,7 @@ import path from "node:path";
 import { isIP } from "node:net";
 import { parse } from "parse5";
 import sharp from "sharp";
+import z from "zod";
 
 export const LINK_PREVIEW_LIMITS = {
   cacheTtlMs: 24 * 60 * 60 * 1000,
@@ -59,10 +60,6 @@ export type LinkPreviewData = {
   icon?: string;
 };
 
-export type UrlValidation =
-  | { valid: true; url: URL }
-  | { valid: false; reason: string };
-
 export type ParsedPageMetadata = {
   title?: string;
   description?: string;
@@ -71,10 +68,16 @@ export type ParsedPageMetadata = {
   iconUrl?: string;
 };
 
-type CacheRecord = LinkPreviewData & {
-  fetchedAt: number;
-  imageUrl?: string;
-};
+const cacheRecordSchema = z.object({
+  title: z.string(),
+  description: z.string().optional(),
+  siteName: z.string(),
+  image: z.string().optional(),
+  icon: z.string().optional(),
+  fetchedAt: z.number().finite(),
+});
+
+type CacheRecord = z.infer<typeof cacheRecordSchema>;
 
 type DownloadResult = {
   bytes: Buffer;
@@ -250,48 +253,40 @@ function isBlockedHostname(hostname: string): boolean {
   );
 }
 
-export function validateHttpUrl(
-  value: string | URL,
-  baseUrl?: string,
-): UrlValidation {
+function parseHttpUrl(value: string | URL, baseUrl?: string): URL | null {
   let url: URL;
   try {
     url = value instanceof URL ? new URL(value.href) : new URL(value, baseUrl);
   } catch {
-    return { valid: false, reason: "invalid-url" };
+    return null;
   }
 
   if (url.protocol !== "http:" && url.protocol !== "https:") {
-    return { valid: false, reason: "unsupported-protocol" };
+    return null;
   }
   if (url.username || url.password) {
-    return { valid: false, reason: "credentials-not-allowed" };
+    return null;
   }
   if (!url.hostname || url.href.length > 4096) {
-    return { valid: false, reason: "invalid-host" };
+    return null;
   }
 
   const hostname = stripIpv6Brackets(url.hostname);
   if (isBlockedHostname(hostname)) {
-    return { valid: false, reason: "private-hostname" };
+    return null;
   }
   if (isIP(hostname) !== 0 && isPrivateAddress(hostname)) {
-    return { valid: false, reason: "private-address" };
+    return null;
   }
 
-  return { valid: true, url };
-}
-
-export function isSafeHttpUrl(value: string | URL, baseUrl?: string): boolean {
-  return validateHttpUrl(value, baseUrl).valid;
+  return url;
 }
 
 async function assertSafeUrl(
   url: URL,
   options: LinkPreviewOptions,
 ): Promise<void> {
-  const validation = validateHttpUrl(url);
-  if (!validation.valid) throw new Error(validation.reason);
+  if (!parseHttpUrl(url)) throw new Error("invalid-url");
   if (
     options.resolveDns === false ||
     isIP(stripIpv6Brackets(url.hostname)) !== 0
@@ -315,12 +310,10 @@ async function assertSafeUrl(
 }
 
 function getBaseUrl(options: LinkPreviewOptions): URL {
-  const validation = validateHttpUrl(
-    options.baseUrl ?? DEFAULT_LINK_PREVIEW_BASE_URL,
+  return (
+    resolveHttpUrl(options.baseUrl ?? DEFAULT_LINK_PREVIEW_BASE_URL) ??
+    new URL(DEFAULT_LINK_PREVIEW_BASE_URL)
   );
-  return validation.valid
-    ? validation.url
-    : new URL(DEFAULT_LINK_PREVIEW_BASE_URL);
 }
 
 export function resolveHttpUrl(
@@ -329,8 +322,7 @@ export function resolveHttpUrl(
 ): URL | null {
   const trimmedHref = href.trim();
   if (!trimmedHref || trimmedHref.startsWith("#")) return null;
-  const validation = validateHttpUrl(trimmedHref, baseUrl);
-  return validation.valid ? validation.url : null;
+  return parseHttpUrl(trimmedHref, baseUrl);
 }
 
 export function truncateTitle(value: string, maxLength = 40): string {
@@ -504,7 +496,6 @@ async function download(
 ): Promise<DownloadResult> {
   const controller = new AbortController();
   let activeReader: ReadableStreamDefaultReader<Uint8Array> | undefined;
-  let timedOut = false;
   let timeout: ReturnType<typeof setTimeout> | undefined;
 
   const operation = async (): Promise<DownloadResult> => {
@@ -527,9 +518,9 @@ async function download(
         if (!location || redirect === LINK_PREVIEW_LIMITS.redirects) {
           throw new Error("too-many-redirects");
         }
-        const next = validateHttpUrl(location, url.href);
-        if (!next.valid) throw new Error(next.reason);
-        url = next.url;
+        const next = resolveHttpUrl(location, url.href);
+        if (!next) throw new Error("invalid-url");
+        url = next;
         continue;
       }
       if (!response.ok) throw new Error(`http-${response.status}`);
@@ -540,7 +531,7 @@ async function download(
           : LINK_PREVIEW_LIMITS.imageBytes;
       const bytes = await readResponseBody(response, maxBytes, (reader) => {
         activeReader = reader;
-        if (reader && timedOut) void reader.cancel();
+        if (reader && controller.signal.aborted) void reader.cancel();
       });
       return {
         bytes,
@@ -553,7 +544,6 @@ async function download(
 
   const timeoutPromise = new Promise<DownloadResult>((_, reject) => {
     timeout = setTimeout(() => {
-      timedOut = true;
       controller.abort();
       void activeReader?.cancel();
       reject(new Error("request-timeout"));
@@ -564,10 +554,6 @@ async function download(
     return await Promise.race([operation(), timeoutPromise]);
   } finally {
     if (timeout) clearTimeout(timeout);
-    if (timedOut) {
-      controller.abort();
-      void activeReader?.cancel();
-    }
   }
 }
 
@@ -580,10 +566,14 @@ function hashUrl(url: string): string {
   return Math.abs(hash).toString(36).padStart(8, "0");
 }
 
-function imageFileName(url: string): string {
+function cacheFileStem(url: string): string {
   // A short deterministic name keeps generated HTML readable while the URL
   // itself remains in the cache key. Collisions are checked by the cache URL.
-  return `${hashUrl(url)}-${Buffer.from(url).toString("base64url").slice(0, 16)}.webp`;
+  return `${hashUrl(url)}-${Buffer.from(url).toString("base64url").slice(0, 16)}`;
+}
+
+function imageFileName(url: string): string {
+  return `${cacheFileStem(url)}.webp`;
 }
 
 function publicImagePath(fileName: string, publicPath: string): string {
@@ -614,15 +604,10 @@ async function writeAtomically(
 
 async function readCache(cachePath: string): Promise<CacheRecord | null> {
   try {
-    const value = JSON.parse(await readFile(cachePath, "utf8")) as CacheRecord;
-    if (
-      typeof value.fetchedAt !== "number" ||
-      typeof value.title !== "string" ||
-      typeof value.siteName !== "string"
-    ) {
-      return null;
-    }
-    return value;
+    const result = cacheRecordSchema.safeParse(
+      JSON.parse(await readFile(cachePath, "utf8")),
+    );
+    return result.success ? result.data : null;
   } catch {
     return null;
   }
@@ -674,10 +659,7 @@ async function fetchAndCache(
   );
   const staticDir = options.staticDir ?? DEFAULT_LINK_PREVIEW_STATIC_DIR;
   const publicPath = options.publicPath ?? DEFAULT_LINK_PREVIEW_PUBLIC_PATH;
-  const fileStem =
-    hashUrl(url.href) +
-    "-" +
-    Buffer.from(url.href).toString("base64url").slice(0, 16);
+  const fileStem = cacheFileStem(url.href);
   const cachePath = path.join(cacheDir, `${fileStem}.json`);
   const cacheImagePath = path.join(cacheDir, `${fileStem}.webp`);
   const now = options.now?.() ?? Date.now();
@@ -699,7 +681,6 @@ async function fetchAndCache(
   }
 
   let data = fallbackData(url, fallbackTitle);
-  let selectedImageUrl: string | undefined;
   try {
     const document = await download(url, "html", options);
     const isHtml =
@@ -711,8 +692,8 @@ async function fetchAndCache(
       : { imageUrls: [] };
     const pageUrl = document.url;
     const icon = metadata.iconUrl
-      ? validateHttpUrl(metadata.iconUrl, pageUrl.href)
-      : null;
+      ? resolveHttpUrl(metadata.iconUrl, pageUrl.href)
+      : undefined;
 
     data = {
       title:
@@ -721,27 +702,24 @@ async function fetchAndCache(
       description: metadata.description,
       siteName:
         firstNonEmpty(metadata.siteName, pageUrl.hostname) ?? pageUrl.hostname,
-      icon: icon?.valid
-        ? icon.url.toString()
-        : new URL("/favicon.ico", pageUrl).toString(),
+      icon: icon?.toString() ?? new URL("/favicon.ico", pageUrl).toString(),
     };
 
     for (const imageUrl of metadata.imageUrls) {
-      const candidate = validateHttpUrl(imageUrl, pageUrl.href);
-      if (!candidate.valid) continue;
+      const candidate = resolveHttpUrl(imageUrl, pageUrl.href);
+      if (!candidate) continue;
       try {
-        const image = await download(candidate.url, "image", options);
+        const image = await download(candidate, "image", options);
         if (image.contentType && !image.contentType.startsWith("image/"))
           continue;
         const webp = await sharp(image.bytes, { limitInputPixels: 25_000_000 })
           .webp({ quality: 82 })
           .toBuffer();
-        const fileName = imageFileName(candidate.url.href);
+        const fileName = imageFileName(candidate.href);
         await mkdir(cacheDir, { recursive: true });
         await writeAtomically(cacheImagePath, webp);
         await materializeImage(cacheImagePath, staticDir, fileName);
         data.image = publicImagePath(fileName, publicPath);
-        selectedImageUrl = candidate.url.href;
         break;
       } catch {
         // An unavailable or unsupported image must not hide usable text metadata.
@@ -754,7 +732,6 @@ async function fetchAndCache(
   const record: CacheRecord = {
     ...data,
     fetchedAt: now,
-    imageUrl: selectedImageUrl,
   };
   try {
     await mkdir(cacheDir, { recursive: true });
@@ -794,10 +771,6 @@ export async function getLinkPreview(
   const url = resolveHttpUrl(href, baseUrl.href);
   if (!url) {
     return fallbackData(baseUrl, fallbackTitle);
-  }
-  const validation = validateHttpUrl(url);
-  if (!validation.valid) {
-    return fallbackData(url, fallbackTitle);
   }
   return getLinkPreviewInternal(url, fallbackTitle, options);
 }

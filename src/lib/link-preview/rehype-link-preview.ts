@@ -2,7 +2,6 @@ import {
   DEFAULT_LINK_PREVIEW_BASE_URL,
   getLinkPreview,
   resolveHttpUrl,
-  validateHttpUrl,
   type LinkPreviewData,
   type LinkPreviewOptions,
 } from "./ogp.ts";
@@ -26,8 +25,10 @@ type ParentNode = RootNode | ElementNode;
 export type RehypeLinkPreviewOptions = LinkPreviewOptions;
 
 function getSafeBaseUrl(value?: string): string {
-  const validation = validateHttpUrl(value ?? DEFAULT_LINK_PREVIEW_BASE_URL);
-  return validation.valid ? validation.url.href : DEFAULT_LINK_PREVIEW_BASE_URL;
+  return (
+    resolveHttpUrl(value ?? DEFAULT_LINK_PREVIEW_BASE_URL)?.href ??
+    DEFAULT_LINK_PREVIEW_BASE_URL
+  );
 }
 
 function isElement(node: HastNode): node is ElementNode {

@@ -9,7 +9,6 @@ import {
   DEFAULT_LINK_PREVIEW_STATIC_DIR,
   prefetchLinkPreviews,
   resolveHttpUrl,
-  validateHttpUrl,
   type LinkPreviewOptions,
 } from "./ogp.ts";
 
@@ -92,10 +91,8 @@ export function linkPreviewBuildPlugin(
   options: LinkPreviewBuildPluginOptions = {},
 ): Plugin {
   const configuredBaseUrl = options.baseUrl ?? DEFAULT_LINK_PREVIEW_BASE_URL;
-  const baseValidation = validateHttpUrl(configuredBaseUrl);
-  const baseUrl = baseValidation.valid
-    ? baseValidation.url.href
-    : DEFAULT_LINK_PREVIEW_BASE_URL;
+  const baseUrl =
+    resolveHttpUrl(configuredBaseUrl)?.href ?? DEFAULT_LINK_PREVIEW_BASE_URL;
   const staticDir = options.staticDir ?? DEFAULT_LINK_PREVIEW_STATIC_DIR;
   let previews = new Map<string, { image?: string }>();
 

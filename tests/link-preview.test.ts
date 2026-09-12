@@ -25,6 +25,11 @@ test("validates HTTP URLs and rejects private destinations", () => {
   assert.equal(resolveHttpUrl("http://[::1]/"), null);
   assert.equal(isPrivateAddress("169.254.169.254"), true);
   assert.equal(isPrivateAddress("10.0.0.1"), true);
+  assert.equal(isPrivateAddress("198.18.0.1"), true);
+  assert.equal(isPrivateAddress("::ffff:127.0.0.1"), true);
+  assert.equal(isPrivateAddress("2001:db8::1"), true);
+  assert.equal(isPrivateAddress("8.8.8.8"), false);
+  assert.equal(isPrivateAddress("2001:4860:4860::8888"), false);
   assert.equal(
     resolveHttpUrl("/notes/example", "https://9rtm.dev")?.href,
     "https://9rtm.dev/notes/example",
