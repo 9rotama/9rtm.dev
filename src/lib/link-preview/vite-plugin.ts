@@ -4,13 +4,12 @@ import { unified } from "unified";
 import remarkGfm from "remark-gfm";
 import remarkParse from "remark-parse";
 import type { Plugin } from "vite";
+import { prefetchLinkPreviews, resolveHttpUrl } from "./ogp.ts";
 import {
   DEFAULT_LINK_PREVIEW_BASE_URL,
   DEFAULT_LINK_PREVIEW_STATIC_DIR,
-  prefetchLinkPreviews,
-  resolveHttpUrl,
-  type LinkPreviewOptions,
-} from "./ogp.ts";
+} from "./constants.ts";
+import type { LinkPreviewOptions } from "./types.ts";
 
 type MarkdownNode = {
   type?: string;

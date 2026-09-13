@@ -1,10 +1,6 @@
-import {
-  DEFAULT_LINK_PREVIEW_BASE_URL,
-  getLinkPreview,
-  resolveHttpUrl,
-  type LinkPreviewData,
-  type LinkPreviewOptions,
-} from "./ogp.ts";
+import { getLinkPreview, resolveHttpUrl } from "./ogp.ts";
+import { DEFAULT_LINK_PREVIEW_BASE_URL } from "./constants.ts";
+import type { LinkPreviewData, LinkPreviewOptions } from "./types.ts";
 import type { Plugin } from "unified";
 import type { Node } from "unist";
 

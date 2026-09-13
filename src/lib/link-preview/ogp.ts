@@ -13,60 +13,33 @@ import { isIP } from "node:net";
 import { parse } from "parse5";
 import sharp from "sharp";
 import z from "zod";
+import {
+  DEFAULT_LINK_PREVIEW_BASE_URL,
+  DEFAULT_LINK_PREVIEW_CACHE_DIR,
+  DEFAULT_LINK_PREVIEW_PUBLIC_PATH,
+  DEFAULT_LINK_PREVIEW_STATIC_DIR,
+  LINK_PREVIEW_LIMITS,
+} from "./constants.ts";
+import type {
+  LinkPreviewData,
+  LinkPreviewOptions,
+  Lookup,
+  LookupAddress,
+  ParsedPageMetadata,
+} from "./types.ts";
 
-export const LINK_PREVIEW_LIMITS = {
-  cacheTtlMs: 24 * 60 * 60 * 1000,
-  concurrency: 4,
-  htmlBytes: 2 * 1024 * 1024,
-  imageBytes: 10 * 1024 * 1024,
-  redirects: 5,
-  timeoutMs: 5_000,
-} as const;
-
-export const DEFAULT_LINK_PREVIEW_BASE_URL = "https://9rtm.dev";
-export const DEFAULT_LINK_PREVIEW_CACHE_DIR = path.resolve(
-  ".svelte-kit/cache/link-previews",
-);
-export const DEFAULT_LINK_PREVIEW_STATIC_DIR = path.resolve(
-  "static/link-previews",
-);
-export const DEFAULT_LINK_PREVIEW_PUBLIC_PATH = "/link-previews";
-
-type LookupAddress = { address: string; family: number };
-type Lookup = (
-  hostname: string,
-  options: { all: true; verbatim: true },
-) => Promise<LookupAddress[]>;
-type FetchLike = (input: string | URL, init?: RequestInit) => Promise<Response>;
-
-export type LinkPreviewOptions = {
-  baseUrl?: string;
-  cacheDir?: string;
-  staticDir?: string;
-  publicPath?: string;
-  cacheTtlMs?: number;
-  now?: () => number;
-  fetch?: FetchLike;
-  lookup?: Lookup;
-  /** Disable DNS checks only for tests or a trusted, isolated fetch implementation. */
-  resolveDns?: boolean;
-};
-
-export type LinkPreviewData = {
-  title: string;
-  description?: string;
-  siteName: string;
-  image?: string;
-  icon?: string;
-};
-
-export type ParsedPageMetadata = {
-  title?: string;
-  description?: string;
-  siteName?: string;
-  imageUrls: string[];
-  iconUrl?: string;
-};
+export {
+  DEFAULT_LINK_PREVIEW_BASE_URL,
+  DEFAULT_LINK_PREVIEW_CACHE_DIR,
+  DEFAULT_LINK_PREVIEW_PUBLIC_PATH,
+  DEFAULT_LINK_PREVIEW_STATIC_DIR,
+  LINK_PREVIEW_LIMITS,
+} from "./constants.ts";
+export type {
+  LinkPreviewData,
+  LinkPreviewOptions,
+  ParsedPageMetadata,
+} from "./types.ts";
 
 const cacheRecordSchema = z.object({
   title: z.string(),
