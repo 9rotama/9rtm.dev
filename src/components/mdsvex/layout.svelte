@@ -9,6 +9,7 @@
   export { default as h5 } from "./h5.svelte";
   export { default as h6 } from "./h6.svelte";
   export { default as img } from "./img.svelte";
+  export { default as LinkPreview } from "./link-preview.svelte";
   export { default as p } from "./p.svelte";
 </script>
 

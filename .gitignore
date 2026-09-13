@@ -8,6 +8,8 @@ node_modules
 /.svelte-kit
 /build
 /.lighthouseci
+/static/link-previews
+/storybook-static
 
 # OS
 .DS_Store
