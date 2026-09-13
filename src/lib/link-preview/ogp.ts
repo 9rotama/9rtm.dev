@@ -12,6 +12,7 @@ import path from "node:path";
 import { isIP } from "node:net";
 import { parse } from "parse5";
 import sharp from "sharp";
+import { Agent } from "undici";
 import z from "zod";
 import {
   DEFAULT_LINK_PREVIEW_BASE_URL,
@@ -267,7 +268,9 @@ async function assertSafeUrl(
     return;
   }
 
-  const lookup = options.lookup ?? (defaultLookup as unknown as Lookup);
+  const lookup: Lookup =
+    options.lookup ??
+    ((hostname, lookupOptions) => defaultLookup(hostname, lookupOptions));
   let addresses: LookupAddress[];
   try {
     addresses = await lookup(url.hostname, { all: true, verbatim: true });
@@ -280,6 +283,32 @@ async function assertSafeUrl(
   ) {
     throw new Error("private-address");
   }
+}
+
+function createSafeDispatcher(lookup: Lookup): Agent {
+  return new Agent({
+    connect: {
+      lookup(hostname, _options, callback) {
+        lookup(hostname, { all: true, verbatim: true }).then(
+          (addresses) => {
+            if (
+              addresses.length === 0 ||
+              addresses.some(({ address }) => isPrivateAddress(address))
+            ) {
+              callback(new Error("private-address"), []);
+              return;
+            }
+            callback(null, addresses);
+          },
+          (error) =>
+            callback(
+              error instanceof Error ? error : new Error("dns-lookup-failed"),
+              [],
+            ),
+        );
+      },
+    },
+  });
 }
 
 function getBaseUrl(options: LinkPreviewOptions): URL {
@@ -440,9 +469,9 @@ async function fetchResponse(
   kind: FetchKind,
   options: LinkPreviewOptions,
   signal: AbortSignal,
+  dispatcher?: Agent,
 ): Promise<Response> {
-  const fetchImpl = options.fetch ?? fetch;
-  return fetchImpl(url, {
+  const init: RequestInit = {
     redirect: "manual",
     signal,
     headers: {
@@ -452,7 +481,13 @@ async function fetchResponse(
           : "image/avif,image/webp,image/apng,image/*,*/*;q=0.8",
       "user-agent": "9rtm.dev-link-preview/1.0",
     },
-  });
+  };
+  if (options.fetch) return options.fetch(url, init);
+  const nodeInit: RequestInit & { dispatcher?: Agent } = {
+    ...init,
+    dispatcher,
+  };
+  return fetch(url, nodeInit);
 }
 
 async function download(
@@ -461,6 +496,12 @@ async function download(
   options: LinkPreviewOptions,
 ): Promise<DownloadResult> {
   const controller = new AbortController();
+  const dispatcher = options.fetch
+    ? undefined
+    : createSafeDispatcher(
+        options.lookup ??
+          ((hostname, lookupOptions) => defaultLookup(hostname, lookupOptions)),
+      );
   let activeReader: ReadableStreamDefaultReader<Uint8Array> | undefined;
   let timeout: ReturnType<typeof setTimeout> | undefined;
 
@@ -477,6 +518,7 @@ async function download(
         kind,
         options,
         controller.signal,
+        dispatcher,
       );
       if (response.status >= 300 && response.status < 400) {
         void response.body?.cancel();
@@ -520,6 +562,7 @@ async function download(
     return await Promise.race([operation(), timeoutPromise]);
   } finally {
     if (timeout) clearTimeout(timeout);
+    await dispatcher?.destroy();
   }
 }
 
@@ -553,13 +596,15 @@ async function fileExists(filePath: string): Promise<boolean> {
 async function writeAtomically(
   filePath: string,
   data: string | Buffer,
-): Promise<void> {
+): Promise<boolean> {
   const temporaryPath = `${filePath}.${process.pid}.${randomUUID()}.tmp`;
   try {
     await writeFile(temporaryPath, data);
     await rename(temporaryPath, filePath);
+    return true;
   } catch {
     // A cache is an optimisation. A read-only filesystem must not fail a build.
+    return false;
   }
 }
 
@@ -588,13 +633,15 @@ async function materializeImage(
   imagePath: string,
   staticDir: string | undefined,
   fileName: string,
-): Promise<void> {
-  if (!staticDir) return;
+): Promise<boolean> {
+  if (!staticDir) return false;
   try {
     await mkdir(staticDir, { recursive: true });
     await copyFile(imagePath, path.join(staticDir, fileName));
+    return true;
   } catch {
     // The generated asset is best effort; metadata can still render without it.
+    return false;
   }
 }
 
@@ -678,8 +725,9 @@ async function fetchAndCache(
           .toBuffer();
         const fileName = imageFileName(candidate.href);
         await mkdir(cacheDir, { recursive: true });
-        await writeAtomically(cacheImagePath, webp);
-        await materializeImage(cacheImagePath, staticDir, fileName);
+        if (!(await writeAtomically(cacheImagePath, webp))) continue;
+        if (!(await materializeImage(cacheImagePath, staticDir, fileName)))
+          continue;
         data.image = publicImagePath(fileName, publicPath);
         break;
       } catch {

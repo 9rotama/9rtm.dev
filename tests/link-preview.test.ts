@@ -1,4 +1,4 @@
-import { mkdtemp, readFile, readdir, stat } from "node:fs/promises";
+import { mkdtemp, readFile, readdir, stat, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { tmpdir } from "node:os";
 import { compile as compileMdsvex } from "mdsvex";
@@ -440,6 +440,52 @@ it("validates redirects, enforces the redirect limit, and refreshes stale cache"
     (await getLinkPreview("https://example.com/stale", staleOptions)).title,
   ).toBe("Refreshed title");
   expect(calls).toBe(2);
+});
+
+it("revalidates DNS when opening the connection", async () => {
+  const root = await mkdtemp(path.join(tmpdir(), "9rtm-link-preview-dns-"));
+  let lookups = 0;
+  const preview = await getLinkPreview("https://example.com/rebinding", {
+    cacheDir: path.join(root, "cache"),
+    staticDir: path.join(root, "static"),
+    lookup: async () => {
+      lookups += 1;
+      return [{ address: lookups === 1 ? "8.8.8.8" : "127.0.0.1", family: 4 }];
+    },
+  });
+
+  expect(lookups).toBe(2);
+  expect(preview.title).toBe("example.com");
+});
+
+it("omits image URLs when generated files cannot be published", async () => {
+  const root = await mkdtemp(path.join(tmpdir(), "9rtm-link-preview-image-"));
+  const blocker = path.join(root, "blocker");
+  await writeFile(blocker, "not a directory");
+  const png = await sharp({
+    create: {
+      width: 1,
+      height: 1,
+      channels: 3,
+      background: "black",
+    },
+  })
+    .png()
+    .toBuffer();
+  const preview = await getLinkPreview("https://example.com/article", {
+    cacheDir: path.join(root, "cache"),
+    staticDir: path.join(blocker, "static"),
+    fetch: async (input) =>
+      String(input).endsWith("image.png")
+        ? new Response(png, { headers: { "content-type": "image/png" } })
+        : new Response(
+            '<meta property="og:image" content="https://example.com/image.png">',
+            { headers: { "content-type": "text/html" } },
+          ),
+    resolveDns: false,
+  });
+
+  expect(preview.image).toBeUndefined();
 });
 
 it("escapes remote metadata before mdsvex emits Svelte attributes", async () => {
