@@ -14,6 +14,7 @@ import type { LinkPreviewOptions } from "./types.ts";
 type MarkdownNode = {
   type?: string;
   url?: string;
+  value?: string;
   children?: MarkdownNode[];
 };
 
@@ -21,22 +22,22 @@ export type LinkPreviewBuildPluginOptions = LinkPreviewOptions & {
   contentDir?: string;
 };
 
-function collectMarkdownLinks(node: MarkdownNode, links: string[]): void {
-  if (node.type === "link" && typeof node.url === "string") {
-    links.push(node.url);
-  }
-  for (const child of node.children ?? []) collectMarkdownLinks(child, links);
-}
-
 export function extractMarkdownLinks(markdown: string): string[] {
   try {
     const tree = unified()
       .use(remarkParse)
       .use(remarkGfm)
       .parse(markdown) as MarkdownNode;
-    const links: string[] = [];
-    collectMarkdownLinks(tree, links);
-    return links;
+    return (tree.children ?? []).flatMap((node) => {
+      if (node.type !== "paragraph") return [];
+      const children = (node.children ?? []).filter(
+        (child) => child.type !== "text" || child.value?.trim(),
+      );
+      const link = children.length === 1 ? children[0] : undefined;
+      return link?.type === "link" && typeof link.url === "string"
+        ? [link.url]
+        : [];
+    });
   } catch {
     return [];
   }
@@ -77,7 +78,7 @@ async function readMarkdownLinks(
 }
 
 /**
- * Prefetch every note link before Svelte starts compiling modules and emit the
+ * Prefetch card links before Svelte starts compiling modules and emit the
  * generated WebP files as Vite assets. The plugin is build-only; development
  * requests are initiated by the async mdsvex transform for changed notes.
  */

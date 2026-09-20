@@ -2,12 +2,14 @@ import { mkdtemp, readFile, readdir, stat, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { tmpdir } from "node:os";
 import { compile as compileMdsvex } from "mdsvex";
+import remarkGfm from "remark-gfm";
 import sharp from "sharp";
 import { compile as compileSvelte } from "svelte/compiler";
 import { expect, it } from "vitest";
 import rehypeLinkPreview, {
   transformLinkPreviewTree,
 } from "../src/lib/link-preview/rehype-link-preview.ts";
+import { extractMarkdownLinks } from "../src/lib/link-preview/vite-plugin.ts";
 import {
   getLinkPreview,
   isPrivateAddress,
@@ -52,6 +54,45 @@ it("extracts OGP metadata in the documented priority order", () => {
     "https://example.com/image.png",
   ]);
   expect(metadata.iconUrl).toBe("/icon.svg");
+});
+
+it("extracts only standalone paragraph links for card prefetching", () => {
+  expect(
+    extractMarkdownLinks(`
+https://example.com/bare-card
+
+[Named card](https://example.com/named-card)
+
+Inline https://example.com/inline text
+
+- https://example.com/list
+`),
+  ).toEqual([
+    "https://example.com/bare-card",
+    "https://example.com/named-card",
+  ]);
+});
+
+it("keeps mixed inline links as anchors without fetching previews", async () => {
+  const compiled = await compileMdsvex(
+    "コードのハイライトには[**Shiki**](https://shiki.style/)を使ってみました。今どき? https://shiki.style/ なカラーテーマが搭載されています。",
+    {
+      remarkPlugins: [remarkGfm],
+      rehypePlugins: [
+        rehypeLinkPreview({
+          baseUrl: "https://9rtm.dev",
+          fetch: async () => {
+            throw new Error("Inline links must not fetch previews");
+          },
+          resolveDns: false,
+        }),
+      ],
+    },
+  );
+
+  expect(compiled?.code).not.toContain("<LinkPreview");
+  expect(compiled?.code.match(/<a /g)).toHaveLength(2);
+  expect(compiled?.code).toContain("なカラーテーマが搭載されています。");
 });
 
 it("fetches and caches metadata and optimized WebP assets", async () => {
@@ -179,7 +220,6 @@ it("classifies standalone paragraphs as cards and keeps named inline links", asy
   const children = tree.children as unknown as TestElement[];
   expect(children[0].type).toBe("element");
   expect(children[0].tagName).toBe("LinkPreview");
-  expect(children[0].properties?.variant).toBe("card");
   const listLink = children[1].children?.[0].children?.[0];
   expect(listLink).toBeDefined();
   if (!listLink) return;
@@ -273,7 +313,7 @@ it("keeps non-standalone structures inline and preserves non-HTTP links", async 
   const paragraph = children[0];
   expect(paragraph.tagName).toBe("p");
   expect(paragraph.children?.[0].tagName).toBe("a");
-  expect(paragraph.children?.[2].tagName).toBe("LinkPreview");
+  expect(paragraph.children?.[2].tagName).toBe("a");
 
   expect(children[1].tagName).toBe("blockquote");
   expect(children[1].children?.[0].children?.[0].tagName).toBe("a");
@@ -282,7 +322,6 @@ it("keeps non-standalone structures inline and preserves non-HTTP links", async 
 
   const relative = children[3];
   expect(relative.tagName).toBe("LinkPreview");
-  expect(relative.properties?.variant).toBe("card");
   expect(relative.properties?.href).toBe("/notes/relative");
   expect(relative.properties?.external).toBeUndefined();
 
@@ -292,7 +331,7 @@ it("keeps non-standalone structures inline and preserves non-HTTP links", async 
   expect(unchanged[4].tagName).toBe("a");
 });
 
-it("keeps named inline links and resolves bare inline previews", async () => {
+it("keeps named and bare inline links without fetching previews", async () => {
   const root = await mkdtemp(path.join(tmpdir(), "9rtm-link-preview-labels-"));
   const tree = {
     type: "root" as const,
@@ -321,11 +360,10 @@ it("keeps named inline links and resolves bare inline previews", async () => {
       },
     ],
   };
-  const fetchImpl = async (input: string | URL) => {
-    const title = String(input).endsWith("/named")
-      ? "<title></title>"
-      : `<title>${"A".repeat(50)}</title>`;
-    return new Response(`<html><head>${title}</head></html>`, {
+  let fetches = 0;
+  const fetchImpl = async () => {
+    fetches += 1;
+    return new Response("<html><head><title>Fetched</title></head></html>", {
       headers: { "content-type": "text/html" },
     });
   };
@@ -339,16 +377,17 @@ it("keeps named inline links and resolves bare inline previews", async () => {
   });
 
   type TestNode = {
+    tagName?: string;
     properties?: Record<string, unknown>;
   };
   const links = tree.children[0].children as unknown as TestNode[];
   const named = links[0];
   const bare = links[2];
+  expect(named.tagName).toBe("a");
   expect(named.properties?.href).toBe("https://example.com/named");
-  expect(bare.properties?.label).toBeUndefined();
-  expect(bare.properties?.title).toBe(
-    "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-  );
+  expect(bare.tagName).toBe("a");
+  expect(bare.properties?.href).toBe("https://example.com/bare");
+  expect(fetches).toBe(0);
 });
 
 it("validates redirects, enforces the redirect limit, and refreshes stale cache", async () => {
@@ -517,7 +556,6 @@ it("escapes remote metadata before mdsvex emits Svelte attributes", async () => 
   expect(compiled.code).toMatch(
     /title="Title &quot;quoted&quot; &lt;tag&gt; &#123;expr&#125; &amp; more"/,
   );
-  expect(compiled.code).toMatch(/label="A &amp; ” &lt; &gt; &#123; &#125;"/);
   expect(() =>
     compileSvelte(compiled.code, { generate: "server" }),
   ).not.toThrow();
