@@ -84,14 +84,11 @@ function isBareLink(
 }
 
 function createPreviewNode(
-  variant: "inline" | "card",
   href: string,
   preview: LinkPreviewData,
   external: boolean,
-  label?: string,
 ): ElementNode {
   const properties: Record<string, unknown> = {
-    variant,
     href: escapeSvelteAttribute(href),
     title: escapeSvelteAttribute(preview.title),
     siteName: escapeSvelteAttribute(preview.siteName),
@@ -100,7 +97,6 @@ function createPreviewNode(
     properties.description = escapeSvelteAttribute(preview.description);
   if (preview.image) properties.image = escapeSvelteAttribute(preview.image);
   if (preview.icon) properties.icon = escapeSvelteAttribute(preview.icon);
-  if (label) properties.label = escapeSvelteAttribute(label);
   if (external) properties.external = true;
   return { type: "element", tagName: "LinkPreview", properties, children: [] };
 }
@@ -179,6 +175,8 @@ export async function transformLinkPreviewTree(
 
   const previews = await Promise.all(
     links.map(async (link) => {
+      const paragraph = link.standaloneParagraph;
+      if (!paragraph) return null;
       const bare = isBareLink(
         link.label,
         link.href,
@@ -190,31 +188,19 @@ export async function transformLinkPreviewTree(
         previewOptions,
         bare ? undefined : link.label,
       );
-      return { link, preview, bare };
+      return { link, paragraph, preview };
     }),
   );
 
-  for (const { link, preview, bare } of previews) {
+  for (const item of previews) {
+    if (!item) continue;
+    const { link, paragraph, preview } = item;
     const external = link.resolvedHref.origin !== baseOrigin;
-    if (link.standaloneParagraph) {
-      replaceChild(
-        link.parent,
-        link.standaloneParagraph,
-        createPreviewNode("card", link.href, preview, external, link.label),
-      );
-    } else {
-      replaceChild(
-        link.parent,
-        link.node,
-        createPreviewNode(
-          "inline",
-          link.href,
-          preview,
-          external,
-          bare ? undefined : link.label,
-        ),
-      );
-    }
+    replaceChild(
+      link.parent,
+      paragraph,
+      createPreviewNode(link.href, preview, external),
+    );
   }
   return tree;
 }

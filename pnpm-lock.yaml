@@ -8,12 +8,6 @@ importers:
 
   .:
     dependencies:
-      '@fontsource-variable/geist-mono':
-        specifier: ^5.2.6
-        version: 5.2.6
-      '@fontsource-variable/mona-sans':
-        specifier: ^5.2.8
-        version: 5.2.8
       '@fontsource/m-plus-1':
         specifier: ^5.2.8
         version: 5.2.8
@@ -497,12 +491,6 @@ packages:
 
   '@floating-ui/utils@0.2.11':
     resolution: {integrity: sha512-RiB/yIh78pcIxl6lLMG0CgBXAZ2Y0eVHqMPYugu+9U0AeT6YBeiJpf7lbdJNIugFP5SIjwNRgo4DhR1Qxi26Gg==}
-
-  '@fontsource-variable/geist-mono@5.2.6':
-    resolution: {integrity: sha512-vw6T9JGTrYJ980bn7W8iTPhe2jVK5ifunVs7xh9dfTVArjDSkJs03JjeZrH5LKEpGABLXSlSlNU57HRm4tmFMg==}
-
-  '@fontsource-variable/mona-sans@5.2.8':
-    resolution: {integrity: sha512-8OWdTcP8KvRxkU1Skkk+tX3D5XHN9buejxSDwrT7teRfGnpKBYxQUApV/+zS8TzeHiSU8H5Tc0HfBr57ahgcvA==}
 
   '@fontsource/m-plus-1@5.2.8':
     resolution: {integrity: sha512-hB4p/xm++/aR4igrkv3uTfRh5MY/beknTuO3izDlyrDXHhpMqFuELcdJ1ZhSoyQd4CzX1tRQcGA/ktphtXjCGw==}
@@ -4803,10 +4791,6 @@ snapshots:
       '@floating-ui/utils': 0.2.11
 
   '@floating-ui/utils@0.2.11': {}
-
-  '@fontsource-variable/geist-mono@5.2.6': {}
-
-  '@fontsource-variable/mona-sans@5.2.8': {}
 
   '@fontsource/m-plus-1@5.2.8': {}
 
