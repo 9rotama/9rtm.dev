@@ -6,11 +6,11 @@ published: true
 tags: [svelte, mdsvex]
 ---
 
-本ブログのMarkdown生成方法を**[mdsvex](https://mdsvex.pngwn.io/)**に移行したときの記録になります。\_φ\(･\_･
+本ブログのMarkdown生成方法を[**mdsvex**](https://mdsvex.pngwn.io/)に移行したときの記録になります。\_φ\(･\_･
 
 ## mdsvex
 
-mdsvexは[MDX](https://mdxjs.com/)のSvelte版のようなライブラリで、Markdown内でSvelteコンポーネントを呼び出すことができます。拡張子は`.svx`で記述します。
+mdsvexは[**MDX**](https://mdxjs.com/)のSvelte版のようなライブラリで、Markdown内でSvelteコンポーネントを呼び出すことができます。拡張子は`.svx`で記述します。
 
 明示的にSvelteコンポーネントを呼び出す方法もありますが、Markdownタグに対してコンポーネントをマッピングすることもできます。そのため、素の`.md`だけを管理したい場合でもmdsvexは重宝します💪
 
@@ -38,7 +38,7 @@ Custom Componentsとコンポーネントの対応付けは、mdsvex用のLayout
 
 ## やったこと
 
-CodeBlockというコンポーネントを実装し、**コピーボタン**と**ファイル名**をコード本文と一緒に表示できるようにします。
+CodeBlockというコンポーネントを実装し、「コピーボタン」と「ファイル名」をコード本文と一緒に表示できるようにします。
 
 ### Highlighterにコンポーネントを渡す
 
@@ -56,7 +56,7 @@ CodeBlockコンポーネントを作ったらLayoutファイルでexportしま�
 <slot />
 ```
 
-Shiki + mdsvexの組み合わせ設定を[公式docs](https://mdsvex.pngwn.io/docs#with-shiki)の通りに追加します。
+Shiki + mdsvexの組み合わせ設定を[公式ドキュメント](https://mdsvex.pngwn.io/docs#with-shiki)の通りに追加します。
 
 ```javascript:svelte.config.js
 /** @type {import('mdsvex').MdsvexOptions} */

@@ -5,7 +5,6 @@ const meta = {
   title: "mdsvex/LinkPreview",
   component: LinkPreview,
   args: {
-    variant: "card",
     href: "https://9rtm.dev/notes/like-button",
     title: "SvelteKit と Cloudflare D1 でいいねボタンを実装する",
     description:
@@ -14,12 +13,6 @@ const meta = {
     image: "/post-media/bloom.png",
     icon: "/favicon.svg",
     external: true,
-  },
-  argTypes: {
-    variant: {
-      control: "inline-radio",
-      options: ["card", "inline"],
-    },
   },
 } satisfies Meta<typeof LinkPreview>;
 
@@ -37,13 +30,6 @@ export const CardWithoutImage: Story = {
     image: undefined,
     icon: undefined,
     external: false,
-  },
-};
-
-export const Inline: Story = {
-  args: {
-    variant: "inline",
-    label: "Storybook 公式サイト",
   },
 };
 
