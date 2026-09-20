@@ -8,7 +8,7 @@
 
 <a
   {...rest}
-  class="text-foreground hover:text-foreground decoration-accent font-bold underline underline-offset-4 transition-colors duration-100 hover:decoration-3"
+  class="text-foreground hover:text-foreground decoration-accent underline underline-offset-4 transition-colors duration-100 hover:decoration-3"
 >
   {@render children()}
 </a>
