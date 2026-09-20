@@ -15,6 +15,7 @@
   --color-heading-foreground: var(--theme-heading-foreground);
   --color-muted: var(--theme-muted);
   --color-accent: var(--theme-accent);
+  --color-link: var(--theme-link);
   --color-heading-foreground-shade: var(--theme-heading-foreground-shade);
   --color-selection-background: var(--theme-selection-background);
   --color-border: var(--theme-border);
@@ -50,6 +51,9 @@
   );
   --theme-accent: oklch(
     from var(--theme-foreground) calc(l + 0.5) calc(c + 0.35) h
+  );
+  --theme-link: oklch(
+    from var(--theme-foreground) calc(l + 0.05) calc(c + 0.06) h
   );
   --theme-heading-foreground-shade: oklch(
     from var(--theme-foreground) calc(l) calc(c + 0.15) h
@@ -101,6 +105,9 @@
   );
   --theme-accent: oklch(
     from var(--theme-foreground) calc(l - 0.2) calc(c + 0.25) h
+  );
+  --theme-link: oklch(
+    from var(--theme-foreground) calc(l - 0.08) calc(c + 0.06) h
   );
   --theme-heading-foreground-shade: oklch(
     from var(--theme-foreground) calc(l - 0.3) calc(c + 0.2) h
