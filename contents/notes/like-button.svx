@@ -71,9 +71,9 @@ IORには`lensIor`というリアクティブな変数を同期させていま�
 
 ライトモードだと見づらいのですが、いいね済みの場合ガラス内の星が光を発するようにブルーム効果をつけています。
 
-[Post Processing - Demo - pmndrs](https://pmndrs.github.io/postprocessing/public/demo/#bloom)
+https://pmndrs.github.io/postprocessing/public/demo/#bloom
 
-このようなポストプロセッシング処理を適用する際、pmndrsが公開している[postprocessing](https://github.com/pmndrs/postprocessing)というプリセットをThree.jsと組み合わせることで、既に用意されたエフェクトを使って簡単に実装できます。
+このようなポストプロセッシング処理を適用する際、pmndrsが公開している[**postprocessing**](https://github.com/pmndrs/postprocessing)というプリセットをThree.jsと組み合わせることで、既に用意されたエフェクトを使って簡単に実装できます。
 
 最初にEffectComposerというエフェクトを司る者を用意して、そこに①素の描画結果のRenderPassを追加、②ブルームのEffectPassを追加、というようにパスを追加していきます。
 
@@ -107,7 +107,7 @@ composer.addPass(new EffectPass(camera.current, bloomEffect));
 
 先述のブルーム効果か原因なのか、スマホでページの上の方をスクロールしていると時々引っ掛かりを感じるようになってしまいました。何で上部だけで起こるのかは未だわかってないですが、毎フレーム画像処理を実行するのが重いというのは直感的にもわかります。
 
-一番の問題は、Three.js部分を表示していない時に重くなっていることです。そのため、[IntersectionObserver](https://developer.mozilla.org/ja/docs/Web/API/Intersection_Observer_API)を使って、Three.js部分が表示されていなければレンダリングを止めるように修正しました。
+一番の問題は、Three.js部分を表示していない時に重くなっていることです。そのため、[**IntersectionObserver**](https://developer.mozilla.org/ja/docs/Web/API/Intersection_Observer_API)を使って、Three.js部分が表示されていなければレンダリングを止めるように修正しました。
 
 ```ts:src/routes/notes/[slug]/_components/like-button-3d/like-scene.svelte
 // 可視時のみレンダリング
@@ -172,7 +172,10 @@ const parsed = likeCountSchema.safeParse(results[0].results[0]);
 const likeCount = parsed.success ? parsed.data.count : undefined;
 ```
 
-zodでのパースを一応入れていますが、ランタイムでの型検証はオーバーだしスキーマの追従が必要だしで、多分[DrizzleなどのORMを使うほうがスマート](https://zenn.dev/mizchi/articles/d1-drizzle-orm)なんだろうなと思います。
+zodでのパースを一応入れていますが、実態のDBスキーマとの同期を手動で行う必要があります。
+これ以上のデータ取得の実装はまだ予定にないですが、今後ネックになるのであればDrizzleなどのORMへ移行することも考えています。
+
+https://orm.drizzle.team/docs/sqlite/connect-cloudflare-d1
 
 ### 連投防止策
 
@@ -226,6 +229,6 @@ logger.debug({ slug }, "discord notification sent");
 
 ## まとめ
 
-ただのボタン一個にしては話しすぎました...😂
+ただのボタン一個にしては話しすぎました...
 
 気に入ったら押していただけると喜びます！🙏

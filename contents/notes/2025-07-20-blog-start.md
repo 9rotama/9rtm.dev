@@ -10,7 +10,11 @@ tags: [svelte, design, three.js]
 
 ## 相対色構文を使ってみた
 
-Tailwindのカラーは、`oklch()`関数と相対色構文を使って定義しています。([honey32様の資料](https://speakerdeck.com/honey32/xiang-dui-se-gou-wen-x-oklch-gajian-yi-de-nakaraparetutodukurinibian-li-najian?slide=13)を参考)
+Tailwindのカラーは、`oklch()`関数と相対色構文を使って定義しています。
+
+`oklch()`についてはhoney32様のスライドが参考になりました。
+
+https://speakerdeck.com/honey32/xiang-dui-se-gou-wen-x-oklch-gajian-yi-de-nakaraparetutodukurinibian-li-najian?slide=13
 
 ほとんどのカラーが背景色をもとに作成されている形になります。
 
@@ -30,9 +34,9 @@ Tailwindのカラーは、`oklch()`関数と相対色構文を使って定義し
 
 ## threlte
 
-移行前はReact Three Fiberを使っており、シーンを宣言的に記述できたりHooksを使えたりするのがとても良かったです。Svelte にも同等のライブラリである[threlte](https://threlte.xyz/)があり、同じくフレームワークらしい実装ができます。
+移行前はReact Three Fiberを使っており、シーンを宣言的に記述できたりHooksを使えたりするのがとても良かったです。Svelte にも同等のライブラリである[**Threlte**](https://threlte.xyz/)があり、同じくフレームワークらしい実装ができます。
 
-また、いくつかのヘルパーをthree.jsのexamplesや[drei](https://drei.docs.pmnd.rs/getting-started/introduction)からポートしており、さくっとリッチな表現を作ることができます。
+また、いくつかのヘルパーをthree.jsのexamplesや[**@react-three/drei**](https://drei.docs.pmnd.rs/getting-started/introduction)からポートしており、さくっとリッチな表現を作ることができます。
 
 homeページトップにある無限に移動するグリッド床はシェーダで実装しています。
 
@@ -102,7 +106,7 @@ const html = await remark()
 const metadata = selfNoteMetadataSchema.safeParse(matter(md).data);
 ```
 
-`.md`ファイルは、`src/lib/content.ts`内で一括で読み込んでいます。最初はfsで愚直にやるつもりでしたが、Viteの機能に[glob import](https://vite.dev/guide/features.html#glob-import)があるためそっちを使いました。非同期や実行環境を考えなくていいので、便利です。
+`.md`ファイルは、`src/lib/content.ts`内で一括で読み込んでいます。最初はfsで愚直にやるつもりでしたが、Viteの機能に[**Glob Import**](https://vite.dev/guide/features.html#glob-import)があるためそっちを使いました。非同期や実行環境を考えなくていいので、便利です。
 
 ```ts:src/lib/content.ts
 export const selfNotesMds = import.meta.glob("/content/notes/*.md", {
@@ -114,7 +118,7 @@ export const selfNotesMds = import.meta.glob("/content/notes/*.md", {
 
 ### code block
 
-コードのハイライトには[Shiki](https://shiki.style/)を使ってみました。今どき?なカラーテーマが搭載されてたり、Svelteコードにもデフォルトで対応していて本当に楽に実装できました。
+コードのハイライトには[**Shiki**](https://shiki.style/)を使ってみました。新しめなカラーテーマが搭載されてたり、Svelteコードにもデフォルトで対応していて本当に楽に実装できました。
 
 ## おわりに
 
