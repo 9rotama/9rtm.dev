@@ -185,6 +185,7 @@ export async function transformLinkPreviewTree(
         link.resolvedHref,
         baseUrl,
       );
+      if (!link.standaloneParagraph && !bare) return null;
       const preview = await getLinkPreview(
         link.href,
         previewOptions,
@@ -194,7 +195,9 @@ export async function transformLinkPreviewTree(
     }),
   );
 
-  for (const { link, preview, bare } of previews) {
+  for (const item of previews) {
+    if (!item) continue;
+    const { link, preview, bare } = item;
     const external = link.resolvedHref.origin !== baseOrigin;
     if (link.standaloneParagraph) {
       replaceChild(

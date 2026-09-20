@@ -115,7 +115,7 @@ it("fetches and caches metadata and optimized WebP assets", async () => {
   );
 });
 
-it("classifies standalone paragraphs as cards and nested links as mentions", async () => {
+it("classifies standalone paragraphs as cards and keeps named inline links", async () => {
   const root = await mkdtemp(path.join(tmpdir(), "9rtm-link-preview-hast-"));
   const tree = {
     type: "root" as const,
@@ -184,9 +184,8 @@ it("classifies standalone paragraphs as cards and nested links as mentions", asy
   expect(listLink).toBeDefined();
   if (!listLink) return;
   expect(listLink.type).toBe("element");
-  expect(listLink.tagName).toBe("LinkPreview");
-  expect(listLink.properties?.variant).toBe("inline");
-  expect(listLink.properties?.label).toBe("Named link");
+  expect(listLink.tagName).toBe("a");
+  expect(listLink.properties?.href).toBe("https://example.com/list");
 });
 
 it("keeps non-standalone structures inline and preserves non-HTTP links", async () => {
@@ -273,13 +272,13 @@ it("keeps non-standalone structures inline and preserves non-HTTP links", async 
   const children = tree.children as unknown as TestNode[];
   const paragraph = children[0];
   expect(paragraph.tagName).toBe("p");
-  expect(paragraph.children?.[0].tagName).toBe("LinkPreview");
+  expect(paragraph.children?.[0].tagName).toBe("a");
   expect(paragraph.children?.[2].tagName).toBe("LinkPreview");
 
   expect(children[1].tagName).toBe("blockquote");
-  expect(children[1].children?.[0].children?.[0].tagName).toBe("LinkPreview");
+  expect(children[1].children?.[0].children?.[0].tagName).toBe("a");
   expect(children[2].tagName).toBe("h2");
-  expect(children[2].children?.[0].tagName).toBe("LinkPreview");
+  expect(children[2].children?.[0].tagName).toBe("a");
 
   const relative = children[3];
   expect(relative.tagName).toBe("LinkPreview");
@@ -293,7 +292,7 @@ it("keeps non-standalone structures inline and preserves non-HTTP links", async 
   expect(unchanged[4].tagName).toBe("a");
 });
 
-it("uses named labels only as fallback titles and truncates bare titles", async () => {
+it("keeps named inline links and resolves bare inline previews", async () => {
   const root = await mkdtemp(path.join(tmpdir(), "9rtm-link-preview-labels-"));
   const tree = {
     type: "root" as const,
@@ -345,8 +344,7 @@ it("uses named labels only as fallback titles and truncates bare titles", async 
   const links = tree.children[0].children as unknown as TestNode[];
   const named = links[0];
   const bare = links[2];
-  expect(named.properties?.title).toBe("Named fallback");
-  expect(named.properties?.label).toBe("Named fallback");
+  expect(named.properties?.href).toBe("https://example.com/named");
   expect(bare.properties?.label).toBeUndefined();
   expect(bare.properties?.title).toBe(
     "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
