@@ -1,7 +1,5 @@
 <script lang="ts">
   import { PUBLIC_BASE_URL } from "$env/static/public";
-  import "@fontsource-variable/geist-mono";
-  import "@fontsource-variable/mona-sans";
 
   import { ModeWatcher } from "mode-watcher";
   import "../app.css";
