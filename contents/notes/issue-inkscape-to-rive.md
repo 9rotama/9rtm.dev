@@ -1,6 +1,6 @@
 ---
 title: Riveで使うパスをInkscapeで作る時に詰まったこと
-emoji: "✒️"
+emoji: "🖋️"
 published_at: 2026-09-17
 published: true
 tags: [svg, rive]
