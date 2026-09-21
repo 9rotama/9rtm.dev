@@ -26,6 +26,7 @@ const SURFACE_MARGIN = 24;
 const FLUENT_EMOJI_3D_PATHS: Record<string, string> = {
   "1f4d2": "Ledger/3D/ledger_3d.png",
   "1f9f1": "Brick/3D/brick_3d.png",
+  "1f58b": "Fountain pen/3D/fountain_pen_3d.png",
   "2728": "Sparkles/3D/sparkles_3d.png",
 };
 
