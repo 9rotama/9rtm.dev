@@ -18,6 +18,7 @@ const highlighter = await createHighlighter({
     "typescript",
     "svelte",
     "html",
+    "xml",
     "css",
     "json",
     "markdown",
@@ -44,6 +45,7 @@ const mdsvexOptions = {
   ],
   highlight: {
     highlighter: async (code, lang = "text") => {
+      lang ??= "text";
       // "javascript:example.js" → ["javascript", "example.js"]
       const colonIndex = lang.indexOf(":");
       const hasFilename = colonIndex !== -1;
@@ -52,7 +54,7 @@ const mdsvexOptions = {
 
       const html = escapeSvelte(
         highlighter.codeToHtml(code, {
-          lang: actualLang,
+          lang: actualLang === "svg" ? "xml" : actualLang,
           themes: {
             light: "github-light",
             dark: "github-dark",
