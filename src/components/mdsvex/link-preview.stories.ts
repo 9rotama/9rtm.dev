@@ -38,7 +38,30 @@ export const LongContent: Story = {
     title:
       "長いタイトルが複数行になったときにもカード全体の高さと余白が崩れないことを確認するためのリンクプレビュー",
     description:
-      "説明文も長い場合を想定しています。表示できる行数を超えたテキストが省略され、サイト名と外部リンクアイコンが押し出されないことを確認します。",
+      "説明文も長い場合を想定しています。表示できる行数を超えたテキストが省略され、サイト名が押し出されないことを確認します。",
     siteName: "A very long example website name",
+  },
+};
+
+export const MobileLongContent: Story = {
+  args: LongContent.args,
+  parameters: {
+    viewport: {
+      options: {
+        iphoneSe: {
+          name: "iPhone SE",
+          styles: {
+            width: "375px",
+            height: "667px",
+          },
+        },
+      },
+    },
+  },
+  globals: {
+    viewport: {
+      value: "iphoneSe",
+      isRotated: false,
+    },
   },
 };

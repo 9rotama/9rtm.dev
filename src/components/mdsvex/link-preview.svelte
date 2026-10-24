@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ExternalLink, Link as LinkIcon } from "@lucide/svelte";
+  import { Link as LinkIcon } from "@lucide/svelte";
 
   type Props = {
     href: string;
@@ -39,20 +39,27 @@
       src={image}
       alt=""
       loading="lazy"
-      class="bg-card-background-dark w-36 shrink-0 self-stretch object-cover"
+      class="bg-card-background-dark w-24 shrink-0 self-stretch object-cover sm:w-36"
     />
   {:else}
     <div
-      class="bg-card-background-dark text-muted flex w-20 shrink-0 items-center justify-center self-stretch"
+      class="bg-card-background-dark text-muted flex w-16 shrink-0 items-center justify-center self-stretch sm:w-20"
       aria-hidden="true"
     >
       <LinkIcon class="size-6" />
     </div>
   {/if}
-  <span class="flex min-w-0 flex-1 flex-col justify-center gap-1 px-4 py-3">
-    <span class="text-foreground line-clamp-2 font-bold">{title}</span>
+  <span
+    class="flex min-w-0 flex-1 flex-col justify-center gap-1 px-3 py-2 sm:px-4 sm:py-3"
+  >
+    <span
+      class="text-foreground line-clamp-2 text-sm/5 font-bold sm:text-base/6"
+      >{title}</span
+    >
     {#if description}
-      <span class="text-muted line-clamp-2 text-sm/5">{description}</span>
+      <span class="text-muted line-clamp-2 text-xs/4 sm:text-sm/5"
+        >{description}</span
+      >
     {/if}
     <span class="text-muted flex items-center gap-1 text-xs">
       {#if icon && !iconFailed}
@@ -68,10 +75,4 @@
       <span class="truncate">{siteName}</span>
     </span>
   </span>
-  {#if external}
-    <ExternalLink
-      class="text-muted my-3 mr-1 ml-3 size-4 shrink-0"
-      aria-hidden="true"
-    />
-  {/if}
 </a>
