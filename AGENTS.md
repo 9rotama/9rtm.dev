@@ -2,6 +2,9 @@
 
 ## プロジェクトの概要
 
+SvelteKitとTypeScriptを中心に構築した個人サイト・ブログ。
+コンテンツにはmdsvex、3D表現にはThrelteを使用し、Cloudflare Workersへデプロイする。
+
 @README.md
 
 ## Webフォント
