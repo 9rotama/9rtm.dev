@@ -247,6 +247,11 @@ html {
   @apply text-muted;
 }
 
+.markdown video {
+  @apply my-8 block h-auto max-w-full rounded-lg;
+  margin-inline: auto;
+}
+
 @keyframes blurred-fade-in {
   from {
     opacity: 0;

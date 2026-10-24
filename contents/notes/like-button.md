@@ -6,11 +6,7 @@ published: true
 tags: [svelte, three.js, cloudflare, discord]
 ---
 
-<script>
-  import Video from "$lib/components/video.svelte";
-</script>
-
-<Video src="/post-media/like-button-cap.webm" width={1020} height={720} controls />
+<video src="/post-media/like-button-cap.webm" width="1020" height="720" autoplay loop muted controls playsinline></video>
 
 ## 何を作ったか
 
@@ -25,8 +21,6 @@ SEOを考えるとjsに頼ったリッチ表現は抑えるべきですが、サ
 - SvelteKit
 - `@sveltejs/adapter-cloudflare`
 - Threlte(Three.jsのSvelte用ラッパー)
-
-
 
 ## ガラスの質感を作る
 
@@ -67,7 +61,8 @@ IORには`lensIor`というリアクティブな変数を同期させていま�
 実装のアプローチとして、背景画像を歪ませるようなSVGのdisplacement mapをJSで生成し、それを`<svg>`要素に適用することで屈折や色収差を再現できるらしいです。ネイティブなHTML機能で済むということもあり、しっかりUIの一部として組み込むにはこの方法が良さそうです。
 
 ## ブルーム効果をつける
-![bloomがあるときないとき w:100%](/post-media/bloom.png  "Bloomがない時、ある時")
+
+![bloomがあるときないとき w:100%](/post-media/bloom.png "Bloomがない時、ある時")
 
 ライトモードだと見づらいのですが、いいね済みの場合ガラス内の星が光を発するようにブルーム効果をつけています。
 
@@ -199,6 +194,7 @@ if (existing) {
   return json({ success: true, alreadyLiked: true });
 }
 ```
+
 ![D1データプレビュー画面](/post-media/d1-like-table.png)
 
 それとは別に、一度そのデバイス（のブラウザ）でいいねをした場合、LocalStorageに保持しておくようにしています。一度いいねしたら次はいいね済みの状態で表示されるため、挙動としてむしろ自然になるかなと思います。

@@ -31,7 +31,7 @@ const highlighter = await createHighlighter({
 
 /** @type {import('mdsvex').MdsvexOptions} */
 const mdsvexOptions = {
-  extensions: [".md", ".svx"],
+  extensions: [".md"],
   layout: {
     _: path.join(__dirname, "src/components/mdsvex/layout.svelte"),
   },
@@ -76,7 +76,7 @@ const mdsvexOptions = {
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
-  extensions: [".svelte", ".md", ".svx"],
+  extensions: [".svelte", ".md"],
   // Consult https://svelte.dev/docs/kit/integrations
   // for more information about preprocessors
   preprocess: [vitePreprocess(), mdsvex(mdsvexOptions)],

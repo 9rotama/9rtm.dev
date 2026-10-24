@@ -59,7 +59,7 @@ async function readMarkdownLinks(
 
   const links = await Promise.all(
     entries
-      .filter((entry) => entry.isFile() && /\.(?:md|svx)$/.test(entry.name))
+      .filter((entry) => entry.isFile() && entry.name.endsWith(".md"))
       .map(async (entry) => {
         try {
           const markdown = await readFile(
