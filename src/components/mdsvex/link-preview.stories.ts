@@ -10,7 +10,7 @@ const meta = {
     description:
       "個人サイトの技術記事に、軽量で扱いやすいいいね機能を追加したときの設計と実装を紹介します。",
     siteName: "9rtm.dev",
-    image: "/post-media/bloom.png",
+    image: "https://media.9rtm.dev/notes/like-button/bloom-f353a3289458.png",
     icon: "/favicon.svg",
     external: true,
   },

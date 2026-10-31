@@ -6,7 +6,7 @@ published: true
 tags: [svelte, three.js, cloudflare, discord]
 ---
 
-<video src="/post-media/like-button-cap.webm" width="1020" height="720" autoplay loop muted controls playsinline></video>
+<video src="https://media.9rtm.dev/notes/like-button/like-button-cap-da53dea8dd4c.webm" width="1020" height="720" autoplay loop muted controls playsinline></video>
 
 ## 何を作ったか
 
@@ -62,7 +62,7 @@ IORには`lensIor`というリアクティブな変数を同期させていま�
 
 ## ブルーム効果をつける
 
-![bloomがあるときないとき w:100%](/post-media/bloom.png "Bloomがない時、ある時")
+![bloomがあるときないとき w:100%](https://media.9rtm.dev/notes/like-button/bloom-f353a3289458.png "Bloomがない時、ある時")
 
 ライトモードだと見づらいのですが、いいね済みの場合ガラス内の星が光を発するようにブルーム効果をつけています。
 
@@ -195,7 +195,7 @@ if (existing) {
 }
 ```
 
-![D1データプレビュー画面](/post-media/d1-like-table.png)
+![D1データプレビュー画面](https://media.9rtm.dev/notes/like-button/d1-like-table-e67eb4523f15.png)
 
 それとは別に、一度そのデバイス（のブラウザ）でいいねをした場合、LocalStorageに保持しておくようにしています。一度いいねしたら次はいいね済みの状態で表示されるため、挙動としてむしろ自然になるかなと思います。
 
@@ -221,7 +221,7 @@ logger.debug({ slug }, "discord notification sent");
 
 ついでにWebhookのプロフィールもいい感じに変えておいて完成です。
 
-![discordチャンネルに記事名といいね数が自動送信される](/post-media/discord-webhook.png)
+![discordチャンネルに記事名といいね数が自動送信される](https://media.9rtm.dev/notes/like-button/discord-webhook-7f0dcf81f72a.png)
 
 ## まとめ
 
