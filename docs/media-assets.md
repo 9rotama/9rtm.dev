@@ -2,6 +2,7 @@
 
 ブログ記事の画像と動画は、Cloudflare R2の `9rtm-dev-media` バケットから `https://media.9rtm.dev` で配信する。
 R2オブジェクトは内容ハッシュを含むキーで保存し、変更後のファイルには新しいURLを使う。
+実装計画と移行の完了条件は [GitHub Issue #86](https://github.com/9rotama/9rtm.dev/issues/86) で管理する。
 
 ## 新しいメディアを記事に追加する
 
