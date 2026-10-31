@@ -1,36 +1,59 @@
-# ブログメディアの追加と移行
+# ブログメディアの管理
 
-ブログ記事の画像と動画は、Cloudflare R2の `9rtm-dev-media` バケットから `https://media.9rtm.dev` で配信する。
-R2オブジェクトは内容ハッシュを含むキーで保存し、変更後のファイルには新しいURLを使う。
-実装計画と移行の完了条件は [GitHub Issue #86](https://github.com/9rotama/9rtm.dev/issues/86) で管理する。
+ブログ記事の画像と動画は、Cloudflare R2の `9rtm-dev-media` バケットへアップロードし、`https://media.9rtm.dev` から配信する。
 
-## 新しいメディアを記事に追加する
+配信用ファイルはGitに追加せず、編集可能な原本は別の場所へバックアップする。
 
-画像には代替テキストを指定してアップロードする。
+## R2を初期構築する
+
+CloudflareアカウントでWranglerにログインし、R2バケットを作成する。
+
+```bash
+pnpm wrangler login
+pnpm wrangler r2 bucket create 9rtm-dev-media
+```
+
+Cloudflare Dashboardで `9rtm-dev-media` バケットを開き、Custom Domainとして `media.9rtm.dev` を接続する。
+
+Custom DomainがActiveになったら、Public Development URL（`r2.dev`）を無効にする。
+
+この構築はプロジェクト全体で一度だけ行い、新しい開発環境を作るたびにバケットを作り直さない。
+
+## 新しい開発環境を準備する
+
+依存関係をインストールし、メディアをアップロードするCloudflareアカウントでWranglerにログインする。
+
+```bash
+pnpm install --frozen-lockfile
+pnpm wrangler login
+pnpm wrangler whoami
+```
+
+`whoami` で対象のCloudflareアカウントへログインできていることを確認する。
+
+## 画像を追加する
+
+記事のslug、代替テキスト、画像ファイルを指定する。
 
 ```bash
 pnpm media:upload -- --slug like-button --alt "いいねボタンの操作" ./like-button.webp
 ```
 
-動画には表示寸法を指定する。
-
-```bash
-pnpm media:upload -- --slug like-button --width 1020 --height 720 ./like-button-cap.webm
-```
-
-`--dry-run` を付けるとR2へアップロードせず、URLと貼り付け用スニペットを確認できる。
-
-```bash
-pnpm media:upload -- --slug like-button --alt "いいねボタンの操作" --dry-run ./like-button.webp
-```
-
-画像ではCLIが出力するMarkdownを記事へ貼り付ける。
+コマンドが出力したMarkdownを記事へ貼り付ける。
 
 ```markdown
 ![いいねボタンの操作](https://media.9rtm.dev/notes/like-button/like-button-84d23147a2cb.webp)
 ```
 
-動画ではCLIが出力するHTMLを記事へ貼り付ける。
+## 動画を追加する
+
+記事のslug、表示幅、表示高さ、動画ファイルを指定する。
+
+```bash
+pnpm media:upload -- --slug like-button --width 1020 --height 720 ./like-button-cap.webm
+```
+
+コマンドが出力したHTMLを記事へ貼り付ける。
 
 ```html
 <video
@@ -45,59 +68,28 @@ pnpm media:upload -- --slug like-button --alt "いいねボタンの操作" --dr
 ></video>
 ```
 
-ローカルプレビューで代替テキスト、画像表示、動画再生を確認してから、記事のMarkdownをコミットする。
-アップロードしたファイルはGitに追加しない。
+## アップロード内容を事前確認する
 
-同じ内容を再度アップロードすると同じURLになる。
-ファイルの内容を変更すると別のURLが生成されるため、記事の参照も更新する。
-R2は配信用データの保存先として扱い、編集可能な原本は別の場所へバックアップする。
-
-## R2を使う前に人間が行う設定
-
-CloudflareアカウントでWranglerにログインし、`9rtm-dev-media` バケットを作成する。
+`--dry-run` を付けると、R2へアップロードせずにURLと貼り付け用スニペットを確認できる。
 
 ```bash
-pnpm wrangler login
-pnpm wrangler r2 bucket create 9rtm-dev-media
+pnpm media:upload -- --slug like-button --alt "いいねボタンの操作" --dry-run ./like-button.webp
 ```
 
-Cloudflare Dashboardでバケットに `media.9rtm.dev` をCustom Domainとして接続する。
-Domainの状態がActiveになった後、Public Development URL（`r2.dev`）を無効にする。
-必要に応じてSmart Tiered Cacheと `media.9rtm.dev/*` のCache Ruleを設定する。
+## メディアを差し替える
 
-R2へ書き込むAPI tokenはローカルの認証情報として保存し、リポジトリへ追加しない。
-公開配信だけを使うため、サイトのWorkerへR2 bindingを設定する必要はない。
+変更後のファイルを `media:upload` でアップロードし、記事内のURLを新しいURLへ置き換える。
 
-## 既存メディアを移行する
+ファイルの内容が変わると内容ハッシュを含む別のURLが生成されるため、既存のR2オブジェクトは上書きされない。
 
-移行を始める前にCustom DomainをActiveにし、WranglerからR2へ書き込めることを確認する。
+## 表示を確認する
 
-まずdry-runで記事とStorybookの参照、移行先URL、未参照ファイル、欠損ファイルを確認する。
+ローカルプレビューで代替テキスト、画像表示、動画再生を確認する。
 
-```bash
-node scripts/media-migrate.ts
-```
-
-未参照の `static/post-media/discord-webhook-setting.png` は自動でアップロードも削除もしない。
-保存するか削除するかを人間が決める。
-
-内容を確認したら、`--apply` でR2へアップロードし、全アップロードの成功後に記事とStorybookの参照を書き換える。
-
-```bash
-node scripts/media-migrate.ts --apply
-```
-
-アップロードが途中で失敗した場合、R2には成功済みオブジェクトが残るが、記事とStorybookのファイルは書き換わらない。
-同じコマンドを再実行すると内容ハッシュから同じキーが作られ、移行をやり直せる。
-
-公開URLが利用できることを確認する。
+記事とStorybookに記載されたR2 URLをまとめて検証する場合は、次のコマンドを実行する。
 
 ```bash
 pnpm media:verify
 ```
 
-この検証コマンドは記事とStorybookの `media.9rtm.dev` URLへHTTP HEADリクエストを送る。
-外部ネットワークへ接続するため、CIからは実行しない。
-
-変更されたMarkdownとStorybookをローカルでプレビューし、表示を確認してから参照変更をコミットする。
-`static/post-media` の削除はこの移行に含めず、公開後の確認を経た別の作業として判断する。
+`media:verify` は外部ネットワークへ接続するため、CIでは実行しない。
