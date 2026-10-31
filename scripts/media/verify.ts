@@ -1,7 +1,38 @@
-import { readFile } from "node:fs/promises";
-import { listMediaSourceFiles } from "./migration.ts";
+import { readdir, readFile } from "node:fs/promises";
+import path from "node:path";
 
 const publicMediaUrlPattern = /https:\/\/media\.9rtm\.dev\/[^\s"'<>)]*/g;
+const storyFilePattern = /\.stories\.(?:[cm]?[jt]sx?|svelte)$/;
+
+async function walkFiles(directory: string): Promise<string[]> {
+  let entries;
+  try {
+    entries = await readdir(directory, { withFileTypes: true });
+  } catch (cause) {
+    if ((cause as NodeJS.ErrnoException).code === "ENOENT") return [];
+    throw cause;
+  }
+
+  const paths = await Promise.all(
+    entries.map(async (entry) => {
+      const entryPath = path.join(directory, entry.name);
+      if (entry.isDirectory()) return await walkFiles(entryPath);
+      return entry.isFile() ? [entryPath] : [];
+    }),
+  );
+  return paths.flat().sort((left, right) => left.localeCompare(right));
+}
+
+async function listMediaSourceFiles(root: string): Promise<string[]> {
+  const [notes, stories] = await Promise.all([
+    walkFiles(path.join(root, "contents", "notes")),
+    walkFiles(path.join(root, "src")),
+  ]);
+  return [
+    ...notes.filter((file) => file.endsWith(".md")),
+    ...stories.filter((file) => storyFilePattern.test(file)),
+  ].sort((left, right) => left.localeCompare(right));
+}
 
 export type PublicMediaReference = {
   url: string;
