@@ -97,7 +97,7 @@ const mdsvexOptions = {
 
 Shikiはデフォルトで`<pre>`と`<code>`要素を直接生成するため、Custom Componentsからスタイルを適用するのが難しくなります。(`:globals`記法を使えますが、スコープの点で好ましくない)
 
-![コードブロックの背景色が微妙に明るかったり、フォントがOSデフォルトのものに変化している](/post-media/pre-background.png "pre codeに直接スタイリングしないと、フォントや背景色が異なってしまう")
+![コードブロックの背景色が微妙に明るかったり、フォントがOSデフォルトのものに変化している](https://media.9rtm.dev/notes/2026-01-12-mdsvex-code/pre-background-35839b752194.png "pre codeに直接スタイリングしないと、フォントや背景色が異なってしまう")
 
 解決法として、Shiki highlighterのオプションに`structure: inline`を指定します。これによってCustom Components内で`<pre>`と`<code>`要素を自分で実装し、Svelteコード内でスタイリングをコントロールできます。
 

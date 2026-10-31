@@ -22,12 +22,12 @@ Riveはベクターアニメーションに特化しています。ベクター�
 Inkscapeには、「スウォッチ」という複数オブジェクト間で色を共有できる便利な機能があります。
 スウォッチを設定したオブジェクトはパレット内の色を参照するため、パレットの色を変更するだけで、対象のオブジェクトの色を一括で変更できます。
 
-![スウォッチを指定したオブジェクトが2つあり、色相スライダーをドラッグすると2つとも色相が変わる](/post-media/swatch_test.webp)
+![スウォッチを指定したオブジェクトが2つあり、色相スライダーをドラッグすると2つとも色相が変わる](https://media.9rtm.dev/notes/issue-inkscape-to-rive/swatch-test-0c9312ee2d10.webp)
 
 しかし、スウォッチを使用したSVGをRiveでインポートすると、スウォッチが設定されているオブジェクトの色が全て消えてしまいます。
 オブジェクトのFills and Strokes設定を見ると、値が完全に抜け落ちていることが確認できます。
 
-![紫のFillをスウォッチで設定していた部分が、Riveでは透明になっている](/post-media/swatch_empty.png)
+![紫のFillをスウォッチで設定していた部分が、Riveでは透明になっている](https://media.9rtm.dev/notes/issue-inkscape-to-rive/swatch-empty-65341a23be8a.png)
 
 ### 原因
 
@@ -82,11 +82,11 @@ Inkscapeには、「スウォッチ」という複数オブジェクト間で色
 
 上記のイメージを踏まえて、`<stop>`が1つだけのパスと、同色の`<stop>`が2つあるパスを含んだSVGを作ります。
 
-![水色がfillに設定された2つの四角形。左がカラーストップが1つ、右がカラーストップが2つ](/post-media/stops-svg.png)
+![水色がfillに設定された2つの四角形。左がカラーストップが1つ、右がカラーストップが2つ](https://media.9rtm.dev/notes/issue-inkscape-to-rive/stops-svg-4651c58e2b0b.png)
 
 このSVGをRiveにインポートすると、`<stop>`が1つだけのパスのみ色が消えることが確認できます。
 
-![2つの四角形のうち左のfill色が消える](/post-media/stops-svg-import.png)
+![2つの四角形のうち左のfill色が消える](https://media.9rtm.dev/notes/issue-inkscape-to-rive/stops-svg-import-1fe23d088c6c.png)
 
 ### 解決策
 
@@ -102,7 +102,7 @@ Inkscapeでは、レイヤーやグループを作って複数のパスをグル
 
 キャラクターのベクターを作る際、体の部位ごとにグルーピングすると、体の部位ごとのアニメーション設定が実装しやすくなります。
 
-![Inkscapeのレイヤーとオブジェクトタブにて、体の部位の名前(face, ear_l, ear_r)でレイヤーが切られ、その子要素にパスが入っている](/post-media/inkscape-layers.png)
+![Inkscapeのレイヤーとオブジェクトタブにて、体の部位の名前(face, ear_l, ear_r)でレイヤーが切られ、その子要素にパスが入っている](https://media.9rtm.dev/notes/issue-inkscape-to-rive/inkscape-layers-e93631e06da3.png)
 
 画像の通り、どのレイヤーがどの体の部位なのかをわかりやすくするためにラベルを設定していました。
 
@@ -110,7 +110,7 @@ Inkscapeで作成したレイヤーをインポートすると、Riveではグ�
 
 しかし実際には、自分で設定したラベルはRiveのオブジェクトに設定されず、代わりに`layer01`のような識別子が設定されました。
 
-![Riveのヒエラルキーでは、それぞれのレイヤーに指定されていた体の部位の名前が見られず、「layer01」のような汎用的な名前が代わりに見える](/post-media/layers-noname.png)
+![Riveのヒエラルキーでは、それぞれのレイヤーに指定されていた体の部位の名前が見られず、「layer01」のような汎用的な名前が代わりに見える](https://media.9rtm.dev/notes/issue-inkscape-to-rive/layers-noname-f7a4932c1add.png)
 
 ラベルが消えたことで、そのレイヤーが何をまとめていたのかがわからなくなってしまいました。
 
@@ -142,7 +142,7 @@ Inkscapeの「レイヤーとオブジェクト」タブから、各レイヤー
 
 注意点として、設定するIDが他のオブジェクトのIDと被らないようにする必要があります。
 
-![InkscapeのオブジェクトプロパティにIDとラベル欄がある](/post-media/layers-id.png)
+![InkscapeのオブジェクトプロパティにIDとラベル欄がある](https://media.9rtm.dev/notes/issue-inkscape-to-rive/layers-id-548628db1c9f.png)
 
 もしくは、[拡張機能](https://github.com/m21-cerutti/Inkscape-Label-To-ID)やスクリプトを使って対処できそうです。
 
@@ -156,22 +156,22 @@ Inkscapeでクリッピングを行う際は、
 
 を両方選択し、「クリップを設定」をクリックします。
 
-![耳Fillのコピー(クリップ領域用のオブジェクト)を包帯(クリップしたいオブジェクト)より前に移動し、両方選択したあとクリップ設定をクリックすると包帯が耳からはみ出なくなる](/post-media/set-clip.webp)
+![耳Fillのコピー(クリップ領域用のオブジェクト)を包帯(クリップしたいオブジェクト)より前に移動し、両方選択したあとクリップ設定をクリックすると包帯が耳からはみ出なくなる](https://media.9rtm.dev/notes/issue-inkscape-to-rive/set-clip-2eba52307d78.webp)
 
 クリップ設定を実行する前は、耳Fillのコピーは包帯と同階層に入っています。
 実行すると「レイヤーとオブジェクト」から見えなくなります。
 
 この状態でRiveにimportすると、クリップ設定に使われた耳Fillのコピーが`clipPath0`のような名前で出現しますが、もともとあった階層ではなくルート直下に配置されます。
 
-![Riveのヒエラルキーを見ると、耳FillのコピーがclipPath25という名前で、ベクター全体のルート直下に出現する](/post-media/clippath-parent.png)
+![Riveのヒエラルキーを見ると、耳FillのコピーがclipPath25という名前で、ベクター全体のルート直下に出現する](https://media.9rtm.dev/notes/issue-inkscape-to-rive/clippath-parent-aacc8380f5db.png)
 
 ヒエラルキー上の位置関係は変わってしまっていますが、包帯オブジェクトのClip設定には耳Fillのコピーが設定されており、クリップ関係は維持されています。
 
-![包帯オブジェクトのClip設定には耳Fillのコピーが設定されている](/post-media/clip-already-set.png)
+![包帯オブジェクトのClip設定には耳Fillのコピーが設定されている](https://media.9rtm.dev/notes/issue-inkscape-to-rive/clip-already-set-56fcf2e0032e.png)
 
 問題として、耳Fillのコピーが耳グループの中から外れた状態になってしまうため、耳グループを移動してもクリップ領域が移動せず、表示が崩れてしまいます。
 
-![耳グループを移動したところ、包帯は移動してもクリップ領域は移動せず、包帯の表示領域が耳本体からズレてしまう](/post-media/mimi-zure.png)
+![耳グループを移動したところ、包帯は移動してもクリップ領域は移動せず、包帯の表示領域が耳本体からズレてしまう](https://media.9rtm.dev/notes/issue-inkscape-to-rive/mimi-zure-2aef6bf08dae.png)
 
 ### 原因
 
