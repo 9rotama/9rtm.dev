@@ -40,7 +40,7 @@ export async function runMediaMigrate(
 ): Promise<number> {
   const args = argv[0] === "--" ? argv.slice(1) : argv;
   if (args.some((argument) => argument !== "--apply") || args.length > 1) {
-    console.error("Usage: pnpm media:migrate [--apply]");
+    console.error("Usage: node scripts/media-migrate.ts [--apply]");
     return 1;
   }
   const apply = args.includes("--apply");

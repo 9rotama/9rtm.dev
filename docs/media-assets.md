@@ -74,7 +74,7 @@ R2へ書き込むAPI tokenはローカルの認証情報として保存し、リ
 まずdry-runで記事とStorybookの参照、移行先URL、未参照ファイル、欠損ファイルを確認する。
 
 ```bash
-pnpm media:migrate
+node scripts/media-migrate.ts
 ```
 
 未参照の `static/post-media/discord-webhook-setting.png` は自動でアップロードも削除もしない。
@@ -83,7 +83,7 @@ pnpm media:migrate
 内容を確認したら、`--apply` でR2へアップロードし、全アップロードの成功後に記事とStorybookの参照を書き換える。
 
 ```bash
-pnpm media:migrate -- --apply
+node scripts/media-migrate.ts --apply
 ```
 
 アップロードが途中で失敗した場合、R2には成功済みオブジェクトが残るが、記事とStorybookのファイルは書き換わらない。
