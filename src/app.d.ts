@@ -7,21 +7,21 @@ declare module "*.sql?raw" {
   export default content;
 }
 
-// Cloudflare D1 & Secrets (extends Env from worker-configuration.d.ts)
-interface Env {
-  _9rtm_dev_db: D1Database;
-  DISCORD_WEBHOOK_URL: string;
-  LIKE_RATE_LIMITER: RateLimit;
-}
-
 declare global {
+  namespace Cloudflare {
+    interface Env {
+      _9rtm_dev_db: D1Database;
+      DISCORD_WEBHOOK_URL: string;
+      LIKE_RATE_LIMITER: RateLimit;
+    }
+  }
+
   namespace App {
     // interface Error {}
     // interface Locals {}
     // interface PageData {}
     // interface PageState {}
     interface Platform {
-      env: Env;
       cf: CfProperties;
       ctx: ExecutionContext;
     }

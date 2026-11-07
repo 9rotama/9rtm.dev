@@ -1,8 +1,9 @@
 import type { RequestHandler } from "./$types";
+import { env } from "cloudflare:workers";
 import { json } from "@sveltejs/kit";
-import { logger } from "$lib/logger";
+import { logger } from "#lib/logger.ts";
 import { z } from "zod";
-import { getSelfNoteSlugs, getSelfNoteTitle } from "$lib/content";
+import { getSelfNoteSlugs, getSelfNoteTitle } from "#lib/content.ts";
 import checkLikeExistsQuery from "./_queries/check-like-exists.sql?raw";
 import upsertLikeQuery from "./_queries/upsert-like.sql?raw";
 import insertLikeLogQuery from "./_queries/insert-like-log.sql?raw";
@@ -15,17 +16,10 @@ async function hashIP(ip: string): Promise<string> {
   return hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
 }
 
-export const POST: RequestHandler = async ({ params, platform, request }) => {
+export const POST: RequestHandler = async ({ params, request }) => {
   const { slug } = params;
 
   logger.debug({ slug }, "like request received");
-
-  // platform.env検証（vite devでは存在しない）
-  const env = platform?.env;
-  if (!env) {
-    logger.debug("platform.env not available (dev mode)");
-    return json({ success: true, dev: true });
-  }
 
   const db = env._9rtm_dev_db;
   const webhookUrl = env.DISCORD_WEBHOOK_URL;

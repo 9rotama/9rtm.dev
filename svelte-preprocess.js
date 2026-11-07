@@ -1,4 +1,3 @@
-import adapter from "@sveltejs/adapter-cloudflare";
 import { vitePreprocess } from "@sveltejs/vite-plugin-svelte";
 import { escapeSvelte, mdsvex } from "mdsvex";
 import path from "node:path";
@@ -37,7 +36,9 @@ const mdsvexOptions = {
   },
   remarkPlugins: [remarkGfm],
   rehypePlugins: [
+    // @ts-expect-error mdsvex still uses unified 9 types; these plugins accept HAST roots.
     rehypeSlug,
+    // @ts-expect-error mdsvex still uses unified 9 types; these plugins accept HAST roots.
     rehypeUnwrapImages,
     rehypeLinkPreview({
       baseUrl: process.env.PUBLIC_BASE_URL || "https://9rtm.dev",
@@ -74,15 +75,12 @@ const mdsvexOptions = {
   },
 };
 
-/** @type {import('@sveltejs/kit').Config} */
+/** @type {import('@sveltejs/kit/vite').Config} */
 const config = {
   extensions: [".svelte", ".md"],
   // Consult https://svelte.dev/docs/kit/integrations
   // for more information about preprocessors
   preprocess: [vitePreprocess(), mdsvex(mdsvexOptions)],
-  kit: {
-    adapter: adapter(),
-  },
 };
 
 export default config;

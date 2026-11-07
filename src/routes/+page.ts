@@ -1,5 +1,5 @@
 import type { Note } from "./notes/_lib/note";
-import { getSelfNotes } from "$lib/content";
+import { getSelfNotes } from "#lib/content.ts";
 import type { PageLoad } from "./$types";
 
 export const load: PageLoad = async () => {

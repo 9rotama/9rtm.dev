@@ -1,4 +1,4 @@
-import type { Result } from "$lib/result";
+import type { Result } from "#lib/result.ts";
 import { z } from "zod";
 
 const zennArticlesSchema = z.object({

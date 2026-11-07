@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { PUBLIC_BASE_URL } from "$env/static/public";
+  import { PUBLIC_BASE_URL } from "$app/env/public";
   import { goto } from "$app/navigation";
-  import { browser } from "$app/environment";
+  import { browser } from "$app/env";
   import { page } from "$app/state";
   import type { PageProps } from "./$types";
   import GradientBorder from "../_components/gradient-border.svelte";
@@ -31,13 +31,13 @@
   });
 
   function selectTag(tag: string | null) {
-    const url = new URL(page.url);
+    const url = new URL(page.url.href);
     if (tag) {
       url.searchParams.set("tag", tag);
     } else {
       url.searchParams.delete("tag");
     }
-    goto(url, { replaceState: true, noScroll: true });
+    goto(url, { replace: true, reset: false });
   }
 </script>
 
