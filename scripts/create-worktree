@@ -90,27 +90,17 @@ if [[ -e "$target_path" || -L "$target_path" ]]; then
   fail "target path already exists: $target_path"
 fi
 
-copy_env=false
-copy_answer=
-printf 'Copy .env.local and .dev.vars to the new worktree? [y/N] '
-read -r copy_answer || true
-case "$copy_answer" in
-  y | Y | yes | YES | Yes) copy_env=true ;;
-esac
-
 printf 'Creating %s at %s...\n' "$branch_name" "$target_path"
 git worktree add -b "$branch_name" "$target_path" main
 
-if [[ "$copy_env" == true ]]; then
-  for env_file in .env.local .dev.vars; do
-    if [[ -f "$main_worktree/$env_file" ]]; then
-      cp "$main_worktree/$env_file" "$target_path/$env_file"
-      printf 'Copied %s\n' "$env_file"
-    else
-      printf 'Warning: %s does not exist; skipping\n' "$main_worktree/$env_file" >&2
-    fi
-  done
-fi
+for env_file in .env.local .dev.vars; do
+  if [[ -f "$main_worktree/$env_file" ]]; then
+    cp "$main_worktree/$env_file" "$target_path/$env_file"
+    printf 'Copied %s\n' "$env_file"
+  else
+    printf 'Warning: %s does not exist; skipping\n' "$env_file" >&2
+  fi
+done
 
 printf 'Installing dependencies...\n'
 (cd "$target_path" && pnpm install --frozen-lockfile)

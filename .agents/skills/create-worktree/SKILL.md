@@ -13,7 +13,7 @@ description: Create and validate a sibling Git worktree for this project from a 
    ./scripts/create-worktree --type TYPE WORKTREE_NAME
    ```
 
-4. Let the script ask whether to copy `.env.local` and `.dev.vars`. Never bypass or answer this secret-copy confirmation on the user's behalf.
+4. The project policy is to copy `.env.local` and `.dev.vars` from the main worktree whenever they exist, without confirmation. The script performs this automatically; do not print their contents.
 5. Report success or the failure reason. On success, include the branch and worktree path printed by the script.
 
 The repository script owns all deterministic validation, creation, environment-file copying, dependency installation, and static checking. Do not duplicate those operations in this skill or manually reuse an existing branch or worktree after the script rejects it.
