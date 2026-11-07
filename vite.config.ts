@@ -16,7 +16,7 @@ export default defineConfig(({ mode }) => {
       sveltekit({ ...svelteOptions, adapter: adapter() }),
     ],
     ssr: {
-      // A hoisted cookie v0 from development tools cannot serve Kit 3's cookie v2 imports.
+      // Bundle Kit's cookie dependency so SSR cannot resolve an unrelated version outside this project.
       noExternal: ["cookie"],
     },
     define: {
