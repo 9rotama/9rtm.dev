@@ -1,6 +1,6 @@
-import { PUBLIC_BASE_URL } from "$env/static/public";
+import { PUBLIC_BASE_URL } from "$app/env/public";
 import { Feed } from "feed";
-import { getSelfNotes } from "$lib/content";
+import { getSelfNotes } from "#lib/content.ts";
 import type { RequestHandler } from "./$types";
 
 const SITE_URL = PUBLIC_BASE_URL.trim();

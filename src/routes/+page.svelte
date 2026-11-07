@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { PUBLIC_BASE_URL } from "$env/static/public";
+  import { PUBLIC_BASE_URL } from "$app/env/public";
   import { MoveRight } from "@lucide/svelte";
   import type { PageProps } from "./$types";
   import DeferredEmotiKun from "./_components/emoti-kun/deferred-emoti-kun.svelte";

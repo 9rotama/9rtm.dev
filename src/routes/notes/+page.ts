@@ -1,12 +1,11 @@
 import { error } from "@sveltejs/kit";
 import type { PageLoad } from "./$types";
 import type { Note } from "./_lib/note";
-import { getSelfNotes } from "$lib/content";
+import { getSelfNotes } from "#lib/content.ts";
 
 export const load: PageLoad = async () => {
   const selfRes = await getSelfNotes();
-  if (!selfRes.success)
-    return error(500, { message: "self: " + selfRes.error });
+  if (!selfRes.success) return error(500, "self: " + selfRes.error);
 
   const notes = [
     ...selfRes.data.notes.map(

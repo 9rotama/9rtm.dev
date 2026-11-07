@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { PUBLIC_BASE_URL } from "$env/static/public";
+  import { PUBLIC_BASE_URL } from "$app/env/public";
   import { ArrowLeft, Clock, Upload } from "@lucide/svelte";
   import { formatDate } from "date-fns";
   import Tag from "../_components/tag.svelte";

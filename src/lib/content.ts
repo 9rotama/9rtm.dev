@@ -1,4 +1,4 @@
-import type { Result } from "$lib/result";
+import type { Result } from "#lib/result.ts";
 import type { Component } from "svelte";
 import z from "zod";
 

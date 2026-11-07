@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { PUBLIC_BASE_URL } from "$env/static/public";
+  import { PUBLIC_BASE_URL } from "$app/env/public";
 
   import { ModeWatcher } from "mode-watcher";
   import "../app.css";
