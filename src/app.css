@@ -94,7 +94,7 @@
 
   --font-body:
     "Mona Sans", "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN",
-    "Hiragino Sans", Meiryo, sans-serif;
+    "Hiragino Sans", "Noto Sans JP", Meiryo, sans-serif;
   --font-code:
     "Mona Sans Mono", Consolas, "Courier New", Courier, Monaco, monospace;
   --font-display: "Michroma", "Helvetica Neue", Arial, sans-serif;
