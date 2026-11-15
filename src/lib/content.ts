@@ -99,6 +99,13 @@ export function getSelfNoteTitle(slug: string): string | undefined {
   return getParsedNotes().get(slug)?.metadata.title;
 }
 
+export function getSelfNoteSource(slug: string) {
+  const note = getParsedNotes().get(slug);
+  return note?.metadata.published
+    ? { metadata: note.metadata, raw: note.raw }
+    : null;
+}
+
 export function getSelfNotes(): Result<
   { notes: SelfNoteData[] },
   "metadata-error" | "error"

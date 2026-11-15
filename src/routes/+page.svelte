@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { profile } from "#lib/profile.ts";
   import { PUBLIC_BASE_URL } from "$app/env/public";
   import { MoveRight } from "@lucide/svelte";
   import type { PageProps } from "./$types";
@@ -24,17 +25,17 @@
         class="mt-4 h-32 w-32 rounded-full"
       />
       <div class="flex flex-col items-start">
-        <h1 class="mt-4 font-bold">9rotama / くろたま</h1>
-        <div class="text-muted mt-1 text-sm">front-end developer in 千葉</div>
+        <h1 class="mt-4 font-bold">{profile.name}</h1>
+        <div class="text-muted mt-1 text-sm">{profile.description}</div>
         <div class="mt-4 flex flex-row items-center gap-2 text-sm">
           <a
             class="size-6"
-            href="https://github.com/9rotama"
+            href={profile.github}
             aria-label="GitHubプロフィールを開く"><GitHub /></a
           >
           <a
             class="size-5"
-            href="https://zenn.dev/9rotama"
+            href={profile.zenn}
             aria-label="Zennプロフィールを開く"><Zenn /></a
           >
         </div>
@@ -47,17 +48,17 @@
         class="font-display text-foreground flex items-center gap-1 justify-self-end text-xs"
         >can<img alt="" src="/title-frame.svg" class="size-2" /></span
       >
-      <span>react (w/next.js) / svelte / three.js</span>
+      <span>{profile.skills}</span>
       <span
         class="font-display text-foreground flex items-center gap-1 justify-self-end text-xs"
         >interest<img alt="" src="/title-frame.svg" class="size-2" /></span
       >
-      <span>user-friendly / creative coding</span>
+      <span>{profile.interests}</span>
       <span
         class="font-display text-foreground flex items-center gap-1 justify-self-end text-xs"
         >hobby<img alt="" src="/title-frame.svg" class="size-2" /></span
       >
-      <span>rhythm games (jubeat, ez2on, etc...) </span>
+      <span>{profile.hobbies}</span>
     </div>
   </div>
 
