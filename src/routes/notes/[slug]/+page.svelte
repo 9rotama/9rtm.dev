@@ -8,10 +8,33 @@
   import NoteNav from "./_components/note-nav.svelte";
   const { data }: PageProps = $props();
 
-  const ogpUrl = new URL(
-    `/notes/${encodeURIComponent(data.slug)}/ogp.webp`,
-    PUBLIC_BASE_URL,
-  ).toString();
+  const ogpUrl = $derived(
+    new URL(
+      `/notes/${encodeURIComponent(data.slug)}/ogp.webp`,
+      PUBLIC_BASE_URL,
+    ).toString(),
+  );
+
+  const jsonLd = $derived(
+    JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      headline: data.metadata.title,
+      description: data.description,
+      datePublished: data.metadata.published_at.toISOString(),
+      inLanguage: "ja",
+      author: {
+        "@type": "Person",
+        name: "9rotama",
+        url: PUBLIC_BASE_URL,
+      },
+      image: ogpUrl,
+      mainEntityOfPage: new URL(
+        `/notes/${encodeURIComponent(data.slug)}`,
+        PUBLIC_BASE_URL,
+      ).toString(),
+    }).replace(/</g, "\\u003c"),
+  );
 
   const Component = $derived(data.component);
 </script>
@@ -21,6 +44,8 @@
   <meta name="description" content={data.description} />
   <meta property="og:title" content={data.metadata.title} />
   <meta property="og:image" content={ogpUrl} />
+  <!-- eslint-disable-next-line svelte/no-at-html-tags -->
+  {@html '<script type="application/ld+json">' + jsonLd + "<" + "/script>"}
 </svelte:head>
 
 <a
@@ -41,12 +66,15 @@
     </h1>
 
     <div class="text-muted mt-2 flex flex-row items-center gap-4 text-sm">
-      <span class="flex items-center gap-1">
+      <time
+        class="flex items-center gap-1"
+        datetime={data.metadata.published_at.toISOString()}
+      >
         <Upload class="size-4" />{formatDate(
           data.metadata.published_at,
           "MMM dd, yyyy",
         )}
-      </span>
+      </time>
       <span class="flex items-center gap-1">
         <Clock class="size-4" />{data.readingMinutes} min read
       </span>
