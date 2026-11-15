@@ -73,10 +73,23 @@ export async function handleAgentRequest(
     response.headers.delete("X-Robots-Tag");
   } else {
     response = await resolve(request);
-    if (!markdownPath) return response;
+    if (!markdownPath) {
+      const canonical = Object.entries(pages).find(
+        ([, path]) => path === url.pathname,
+      )?.[0];
+      if (!canonical) return response;
+      response = new Response(response.body, response);
+      response.headers.set("Content-Location", url.origin + canonical);
+      response.headers.append("Link", `<${canonical}>; rel="canonical"`);
+      return response;
+    }
     response = new Response(response.body, response);
   }
 
+  response.headers.append(
+    "Link",
+    `<${markdownPath}>; rel="alternate"; type="text/markdown", </rss.xml>; rel="alternate"; type="application/rss+xml"`,
+  );
   varyAccept(response.headers);
   // Cloudflare's shared cache does not generally key on Vary: Accept.
   response.headers.set("Cache-Control", "private, no-cache");
