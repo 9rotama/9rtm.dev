@@ -7,6 +7,71 @@ const pages = {
 };
 
 describe("content negotiation", () => {
+  it.each(["GET", "HEAD"])(
+    "returns a recoverable Markdown 404 for %s requests",
+    async (method) => {
+      const response = await handleAgentRequest(
+        new Request("https://9rtm.dev/missing", {
+          method,
+          headers: { Accept: "text/markdown" },
+        }),
+        async () =>
+          new Response("<h1>Not Found</h1>", {
+            status: 404,
+            headers: { "Content-Type": "text/html", ETag: '"html-error"' },
+          }),
+        { fetch: vi.fn() },
+        pages,
+      );
+      expect(response.status).toBe(404);
+      expect(response.headers.get("Content-Type")).toContain("text/markdown");
+      expect(response.headers.get("Vary")).toMatch(/Accept/i);
+      expect(response.headers.get("Cache-Control")).toBe("no-store");
+      expect(response.headers.has("ETag")).toBe(false);
+      const body = await response.text();
+      if (method === "HEAD") expect(body).toBe("");
+      else {
+        expect(body).toContain("could not be found");
+        expect(body).toContain("[Notes](/notes)");
+        expect(body).toContain("[Sitemap](/sitemap.xml)");
+      }
+    },
+  );
+
+  it("keeps the browser's existing HTML 404 body", async () => {
+    const response = await handleAgentRequest(
+      new Request("https://9rtm.dev/missing", {
+        headers: { Accept: "text/html" },
+      }),
+      async () =>
+        new Response("<h1>Not Found</h1>", {
+          status: 404,
+          headers: { "Content-Type": "text/html" },
+        }),
+      { fetch: vi.fn() },
+      pages,
+    );
+    expect(response.status).toBe(404);
+    expect(await response.text()).toBe("<h1>Not Found</h1>");
+    expect(response.headers.get("Vary")).toMatch(/Accept/i);
+  });
+
+  it("does not replace JSON API errors or redirects with Markdown", async () => {
+    for (const original of [
+      Response.json({ error: "missing" }, { status: 404 }),
+      new Response(null, { status: 308, headers: { Location: "/notes" } }),
+    ]) {
+      const response = await handleAgentRequest(
+        new Request("https://9rtm.dev/api/missing", {
+          headers: { Accept: "text/markdown" },
+        }),
+        async () => original,
+        { fetch: vi.fn() },
+        pages,
+      );
+      expect(response).toBe(original);
+    }
+  });
   it("advertises existing Markdown and RSS resources without replacing other Link values", async () => {
     const response = await handleAgentRequest(
       new Request("https://9rtm.dev/"),

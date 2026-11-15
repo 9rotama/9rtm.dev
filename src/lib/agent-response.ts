@@ -73,6 +73,31 @@ export async function handleAgentRequest(
     response.headers.delete("X-Robots-Tag");
   } else {
     response = await resolve(request);
+    if (
+      response.status === 404 &&
+      response.headers.get("Content-Type")?.includes("text/html")
+    ) {
+      const headers = new Headers(response.headers);
+      varyAccept(headers);
+      headers.set("Cache-Control", "no-store");
+      let body: BodyInit | null = response.body;
+      if (markdown) {
+        body =
+          "# 404 Not Found\n\nThe requested page could not be found.\n\n[Home](/) · [Notes](/notes) · [Sitemap](/sitemap.xml)\n";
+        headers.set("Content-Type", "text/markdown; charset=utf-8");
+        for (const header of [
+          "Content-Length",
+          "Content-Encoding",
+          "ETag",
+          "Last-Modified",
+        ])
+          headers.delete(header);
+      }
+      return new Response(request.method === "HEAD" ? null : body, {
+        status: 404,
+        headers,
+      });
+    }
     if (!markdownPath) {
       const canonical = Object.entries(pages).find(
         ([, path]) => path === url.pathname,
