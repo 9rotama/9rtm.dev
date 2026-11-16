@@ -63,14 +63,16 @@ export const GET: RequestHandler = async () => {
       changeFrequency: "daily",
       priority: 0.8,
     },
-    ...selfRes.data.notes.map(
-      (note): SitemapEntry => ({
-        url: `${SITE_URL}/notes/${note.slug}`,
-        lastModified: note.published_at,
-        changeFrequency: "monthly",
-        priority: 0.6,
-      }),
-    ),
+    ...selfRes.data.notes
+      .filter((note) => note.published)
+      .map(
+        (note): SitemapEntry => ({
+          url: `${SITE_URL}/notes/${note.slug}`,
+          lastModified: note.published_at,
+          changeFrequency: "monthly",
+          priority: 0.6,
+        }),
+      ),
   ];
 
   return new Response(buildSitemap(entries), {
