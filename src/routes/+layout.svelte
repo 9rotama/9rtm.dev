@@ -17,6 +17,8 @@
       name: "9rotama",
       url: "https://github.com/9rotama",
       jobTitle: "web developer",
+      description: "front-end developer in 千葉",
+      sameAs: ["https://github.com/9rotama", "https://zenn.dev/9rotama"],
     },
   });
 </script>
@@ -31,6 +33,7 @@
   />
   <title>9rtm.dev</title>
   <meta name="twitter:card" content={data.twitterCard} />
+  <meta property="og:type" content={data.ogType} />
   <!-- eslint-disable-next-line svelte/no-at-html-tags -->
   {@html '<script type="application/ld+json">' + jsonLd + "<" + "/script>"}
 </svelte:head>

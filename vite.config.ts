@@ -1,4 +1,4 @@
-import adapter from "@sveltejs/adapter-cloudflare";
+import { agentAdapter } from "./scripts/agent-adapter.ts";
 import svelteOptions from "./svelte-preprocess.js";
 import { enhancedImages } from "@sveltejs/enhanced-img";
 import { sveltekit } from "@sveltejs/kit/vite";
@@ -13,7 +13,7 @@ export default defineConfig(({ mode }) => {
       enhancedImages(),
       tailwindcss(),
       linkPreviewBuildPlugin({ baseUrl: env.PUBLIC_BASE_URL }),
-      sveltekit({ ...svelteOptions, adapter: adapter() }),
+      sveltekit({ ...svelteOptions, adapter: agentAdapter() }),
     ],
     ssr: {
       // Bundle Kit's cookie dependency so SSR cannot resolve an unrelated version outside this project.

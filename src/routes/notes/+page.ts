@@ -8,19 +8,21 @@ export const load: PageLoad = async () => {
   if (!selfRes.success) return error(500, "self: " + selfRes.error);
 
   const notes = [
-    ...selfRes.data.notes.map(
-      (note) =>
-        ({
-          slug: note.slug,
-          title: note.title,
-          publishedAt: new Date(note.published_at),
-          href: `/notes/${note.slug}`,
-          thumbnail: { type: "emoji", emoji: note.emoji },
-          platform: "self",
-          tags: note.tags,
-          excerpt: note.excerpt,
-        }) satisfies Note,
-    ),
+    ...selfRes.data.notes
+      .filter((note) => note.published)
+      .map(
+        (note) =>
+          ({
+            slug: note.slug,
+            title: note.title,
+            publishedAt: new Date(note.published_at),
+            href: `/notes/${note.slug}`,
+            thumbnail: { type: "emoji", emoji: note.emoji },
+            platform: "self",
+            tags: note.tags,
+            excerpt: note.excerpt,
+          }) satisfies Note,
+      ),
   ];
 
   notes.sort((a, b) => b.publishedAt.getTime() - a.publishedAt.getTime());

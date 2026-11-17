@@ -1,0 +1,6 @@
+/*
+  Content-Signal: search=yes, ai-input=yes, ai-train=yes
+
+/markdown/*
+  Content-Type: text/markdown; charset=utf-8
+  X-Robots-Tag: noindex
